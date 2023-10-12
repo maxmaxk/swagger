@@ -1,0 +1,439 @@
+openapi: "3.0.0"
+info:
+  version: "0.0.1"
+  title: "Swagger For IVI web application"
+  description: "IVI API Interface"
+servers:
+  - url: "https://test.zakaz-ivi.online:47001"
+    description: "IVI API Server"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
+    basicAuth:
+      type: http
+      scheme: basic
+  security:
+    - bearerAuth: [] 
+
+  # schemas part
+
+  schemas:
+    Auth:
+      type: object
+      properties:
+        login:
+          type: string
+          example: "login"
+        password:
+          type: string
+          example: "password"
+    AuthResponse:
+      type: object
+      properties:
+        buildInfo:
+          type: string
+          example: ""
+        refreshTokenExpiration:
+          type: string
+          example: "2023-10-18T11:54:35"
+        token:
+          type: string
+          example: "ew0KImFsZyI6ICJIUzI1NiIsDQoidHlwIjogIkpXVCINCn0..."
+    NewPassword:
+      type: object
+      properties:
+        id:
+          type: string
+          description: user id
+          example: "id"
+        password:
+          type: string
+          example: "password"
+    NewPasswordResponse:
+      type: object
+      properties:
+        buildInfo:
+          type: string
+          example: ""
+        refreshTokenExpiration:
+          type: string
+          example: "2023-10-18T11:54:35"
+        token:
+          type: string
+          example: "ew0KImFsZyI6ICJIUzI1NiIsDQoidHlwIjogIkpXVCINCn0..."
+    RegisterResponse:
+      type: object
+      properties:
+        buildInfo:
+          type: string
+          example: ""
+        refreshTokenExpiration:
+          type: string
+          example: "2023-10-18T11:54:35"
+        token:
+          type: string
+          example: "ew0KImFsZyI6ICJIUzI1NiIsDQoidHlwIjogIkpXVCINCn0..."    
+    GetRegistration:
+      type: object
+      properties:
+        email:
+          type: string
+          example: "email@mail.com"
+    GetRegistrationResponse:
+      type: object
+      properties:
+        email:
+          type: string
+          example: "email@mail.com"
+        id:
+          type: string
+          example: "id"
+    GetRegEmail:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "id"
+    GetUserResponse:
+      type: object
+      properties:
+        userName:
+          type: string
+          example: "userName"
+    GetRegEmailResponse:
+      type: object
+      properties:
+        email:
+          type: string
+          example: "email@mail.com"
+        userName?:
+          type: string
+          example: "userName"
+    Recovery:
+      type: object
+      properties:
+        email:
+          type: string
+          example: "email@mail.com"
+        userName:
+          type: string
+          example: "user"
+    RecoveryResponse:
+      type: object
+      properties:
+        OK:
+          type: boolean
+          example: true
+    Register:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "id"
+        login:
+          type: string
+          example: "user"
+        password:
+          type: string
+          example: "password"
+    GetUserInfoResponse:
+      type: object
+      properties:
+        userName:
+          type: string
+          example: "userName"
+        email:
+          type: string
+          example: "user@mail.com"
+        phone:
+          type: string
+          example: "+7 905 703-44-03"  
+        surname:
+          type: string
+          example: "Вельяминов-Зернов"
+          description: "Фамилия"
+        name:
+          type: string
+          example: "Мухаммад-Юсуф"
+          description: "Имя"
+        secondName:
+          type: string
+          example: "Александрович"
+          description: "Отчество"
+        counterparties:
+          type: array
+          items:
+            type: object
+            properties:
+              companyName:
+                type: string
+                example: "МясГазСтрой"
+                description: "Название организации"
+              INN:
+                type: string
+                example: "7810348720"
+                description: "ИНН"
+              KPP:
+                type: string
+                example: "000000000"
+                description: "КПП"
+              OKPO:
+                type: string
+                example: "000000000"
+                description: "ОКПО"
+              lawAddress:
+                type: string
+                example: "СПб, Антоновская ул., д. 14, офис 58"
+                description: "Юридический адрес" 
+              factAddress:
+                type: string
+                example: "СПб, пр. Маршала Жукова, д. 27, офис 629"
+                description: "Фактический адрес"
+              BIK:
+                type: string
+                example: "000000000"
+                description: "БИК банка"
+              bankName:
+                type: string
+                example: "РоссельхозБанк"
+                description: "Наименование банка"
+              privateBankAccount:
+                type: string
+                example: "40802810000000000000"
+                description: "Расчетный счет"
+              corrBankAccount:
+                type: string
+                example: "40802810000000000000"
+                description: "Корреспондентский счет"
+              phone:
+                type: string
+                example: "+7 (812) 747-65-93"
+                description: "Телефон организации"
+              lawStatus:
+                type: string
+                default: ИП
+                description: "Правовой статус: ИП | ЮЛ"
+                enum:
+                  - ИП
+                  - ЮЛ
+                
+tags:
+  - name: auth
+    description: Авторизация/регистрация
+  - name: products
+    description: Изделия
+  - name: profile
+    description: Страница профиля
+paths:
+
+  # auth part
+
+  /api/auth/login:
+    post:
+      tags:
+        - auth
+      summary: "Авторизация по логину и паролю"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Auth'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+  /api/auth/setPassword:
+    post:
+      tags:
+        - auth
+      summary: "Установить новый пароль"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewPassword'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewPasswordResponse'
+  /api/auth/getRegistration:
+    post:
+      tags:
+        - auth
+      summary: "Получить на почту ссылку на регистрацию"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetRegistration'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRegistrationResponse'
+  /api/auth/getRegEmail:
+    post:
+      tags:
+        - auth
+      summary: "Получить данные пользователя по id сессии"
+      description: "Отдает почту пользователя, который пытается зарегистрироваться или имя пользователя, если он сбрасывает пароль"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetRegEmail'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRegEmailResponse'
+  /Customer/getUser:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - auth
+      summary: "Получить текущего пользователя"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserResponse'
+  /api/auth/Recovery:
+    post:
+      tags:
+        - auth
+      summary: "Начать процедуру сброса пароля"
+      description: "Отправляет на почту пользователя инструкцию. Необходимо указать либо почту, либо логин"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Recovery'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecoveryResponse'
+  /api/auth/register:
+    post:
+      tags:
+        - auth
+      summary: "Завершение регистрации"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterResponse'
+
+  # products part
+              
+  /api/config/read:
+    get:
+      security:
+        - basicAuth: []
+      tags:
+        - products
+      summary: "Получить справочник из сервиса расчета"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /api/types?&title=1&bytarget=unf_product_t&input_schema=1:
+    get:
+      security:
+        - basicAuth: []
+      tags:
+        - products
+      summary: "Получить список изделий"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  api/call?&source={currentProduct}&target=unf_product_t:
+    post:
+      tags:
+        - products
+      security:
+        - basicAuth: []
+      parameters:
+        - in: path
+          name: currentProduct
+          schema:
+            type: string
+          required: true
+          description: ID изделия
+      summary: "Запросить расчет изделия"
+      requestBody:
+        content:
+          application/json: {}
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+
+  # profile part
+  /Profile/getUserInfo:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - profile
+      summary: "Получить данные профиля текущего пользователя"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserInfoResponse'
