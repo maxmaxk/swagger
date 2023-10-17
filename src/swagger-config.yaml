@@ -506,7 +506,7 @@ paths:
     post:
       tags:
         - auth
-      summary: "Подтверждение смены пароля"
+      summary: "Подтверждение смены почты"
       requestBody:
         content:
           application/json:
