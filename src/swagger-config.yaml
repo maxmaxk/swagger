@@ -346,6 +346,13 @@ components:
           type: string
           example: "7810348720"
           description: "ИНН организации"
+    Changemail:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "121-ab0-32312-00ff"
+          description: "id сессии"
 tags:
   - name: auth
     description: Авторизация/регистрация
@@ -495,6 +502,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RegisterResponse'
+  /api/auth/changemail:
+    post:
+      tags:
+        - auth
+      summary: "Подтверждение смены пароля"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Changemail'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
 
   # products part
               
