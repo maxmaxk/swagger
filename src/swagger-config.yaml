@@ -218,13 +218,6 @@ components:
           type: string
           example: "+7 (812) 747-65-93"
           description: "Телефон организации"
-        lawStatus:
-          type: string
-          default: ИП
-          description: "Правовой статус: ИП | ЮЛ"
-          enum:
-            - ИП
-            - ЮЛ
     ConfirmNewEmail:
       type: object
       properties:
@@ -323,13 +316,6 @@ components:
           type: string
           example: "+7 (812) 747-65-93"
           description: "Телефон организации"
-        lawStatus:
-          type: string
-          default: ИП
-          description: "Правовой статус: ИП | ЮЛ"
-          enum:
-            - ИП
-            - ЮЛ
     AddCounterpartyResponse:
       type: object
       properties:
