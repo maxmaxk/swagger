@@ -202,18 +202,10 @@ components:
           type: string
           example: "000000000"
           description: "БИК банка"
-        bankName:
-          type: string
-          example: "РоссельхозБанк"
-          description: "Наименование банка"
         privateBankAccount:
           type: string
           example: "40802810000000000000"
           description: "Расчетный счет"
-        corrBankAccount:
-          type: string
-          example: "40802810000000000000"
-          description: "Корреспондентский счет"
         phone:
           type: string
           example: "+7 (812) 747-65-93"
@@ -300,18 +292,10 @@ components:
           type: string
           example: "000000000"
           description: "БИК банка"
-        bankName:
-          type: string
-          example: "РоссельхозБанк"
-          description: "Наименование банка"
         privateBankAccount:
           type: string
           example: "40802810000000000000"
           description: "Расчетный счет"
-        corrBankAccount:
-          type: string
-          example: "40802810000000000000"
-          description: "Корреспондентский счет"
         phone:
           type: string
           example: "+7 (812) 747-65-93"
@@ -332,6 +316,24 @@ components:
           type: string
           example: "7810348720"
           description: "ИНН организации"
+    GetBankByBIK:
+      type: object
+      properties:
+        BIK:
+          type: string
+          example: "044030653"
+          description: "БИК банка"
+    GetBankByBIKResponse:
+      type: object
+      properties:
+        bankName:
+          type: string
+          example: "ПАО СБЕРБАНК"
+          description: "Название банка"
+        corrAccount:
+          type: string
+          example: "30101810500000000653"
+          description: "Корреспондентский счет"  
     Changemail:
       type: object
       properties:
@@ -738,3 +740,25 @@ paths:
           description: "Error"
         200:
           description: "OK"
+  /Profile/getBankByBIK:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - profile
+      summary: "Получить данные о реквизитах банка по его БИК"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetBankByBIK'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBankByBIKResponse'
