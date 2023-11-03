@@ -341,6 +341,161 @@ components:
           type: string
           example: "121-ab0-32312-00ff"
           description: "id сессии"
+    GetPacksInfo:
+      type: object
+      properties:
+        availCalcs:
+          type: number
+          example: 59264
+          description: "Доступно всего расчетов"
+        availDate:
+          type: string
+          example: "15.01.2024"
+          description: "Самая дальняя дата окончания действия из всех доступных пакетов"
+        schemaPackCountBuy:
+          type: array
+          example: [100, 300, 500, 1000, 2000]
+          description: "Возможные варианты покупки количества пакетов"
+          items:
+            type: number
+        schemaPackPeriodBuy:
+          type: array
+          example: [30, 60, 90, 120, 180]
+          description: "Возможные варианты покупки периода реализации пакетов"
+          items:
+            type: number
+        autoActivation:
+          type: boolean
+          example: false
+          description: "Статус режима автоактивации пакетов"
+        packs:
+          type: array
+          description: "Массив пакетов"
+          items:
+            $ref: '#/components/schemas/PacksItem'
+        total:
+          type: object
+          description: "Итоговые данные по пакетам"
+          properties:
+            packsCount:
+              type: number
+              example: 21
+              description: "Всего пакетов"
+            calcsCount:
+              type: number
+              example: 4300
+              description: "Всего расчетов"
+            calcSum:
+              type: number
+              example: 12000
+              description: "Стоимость всех пакетов"
+            calcsUsed:
+              type: number
+              example: 2948
+              description: "Всего использовано расчетов"
+            calcsLeft:
+              type: number
+              example: 1352
+              description: "Всего расчетов осталось"
+    PacksItem:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "000 000 000 000 000 153"
+          description: "id пакета"
+        order:
+          type: number
+          example: 1
+          description: "Порядок расположения неиспользованных / неполностью использованных пакетов, для остальных -1"
+        activateStatus:
+          type: boolean
+          example: false
+          description: "Статус активации пакета"
+        calcsCount:
+          type: number
+          example: 100
+          description: "Количество расчетов в пакете"
+        calcsPeriod:
+          type: number
+          example: 90
+          description: "Количество дней для расчетов в пакете"
+        calcPrice:
+          type: number
+          example: 10
+          description: "Цена одного расчета"
+        calcSum:
+          type: number
+          example: 1000
+          description: "Стоимость пакета"
+        paymentDate:
+          type: string
+          example: "04.12.2023"
+          description: "Дата оплаты" 
+        calcsUsed:
+          type: number
+          example: 68
+          description: "Расчетов использовано"
+        calcsLeft:
+          type: number
+          example: 32
+          description: "Расчетов осталось"
+        activateDate:
+          type: string
+          example: "07.12.2023"
+          description: "Дата активации пакета"
+        endDate:
+          type: string
+          example: "06.03.2024"
+          description: "Дата окончания действия пакета"
+    GetPacksBill:
+      type: object
+      properties:
+        packCountBuy:
+          type: number
+          example: 300
+          description: "Расчетов в заказе"
+        packPeriodBuy:
+          type: number
+          example: 60
+          description: "Период заказа"
+    GetPacksBillResponse:
+      type: object
+      properties:
+        documentId:
+          type: string
+          example: "4602259e-56fe-4614-affb-f6e8c7ed573f"
+          description: "id документа счета для скачивания"
+    GetDocumentById:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "4602259e-56fe-4614-affb-f6e8c7ed573f"
+          description: "id документа для скачивания"
+    GetDocumentByIdResponse:
+      type: file
+    SetAutoActivation:
+      type: object
+      properties:
+        autoActivation:
+          type: boolean
+          example: true
+          description: "Установить режим автоактивации пакетов"
+    SetPacksOrder:
+      type: array
+      example: [{"id": "000 000 000 000 000 153", "order": 0}, {"id": "000 000 000 000 000 158", "order": 1}]
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            example: "000 000 000 000 000 153"
+            description: "id пакета"
+          order:
+            type: number
+            example: 1
+            description: "Порядок расположения"
 tags:
   - name: auth
     description: Авторизация/регистрация
@@ -348,6 +503,10 @@ tags:
     description: Изделия
   - name: profile
     description: Страница профиля
+  - name: packs
+    description: Страница пакетов расчета
+  - name: files
+    description: Работа с документами
 paths:
 
   # auth part
@@ -762,3 +921,102 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetBankByBIKResponse'
+  # packs part
+  /Packs/getInfo:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - packs
+      summary: "Получить данные о пакетах расчета для текущего пользователя"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPacksInfo'
+  /Packs/getBill:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - packs
+      summary: "Получить счет"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetPacksBill'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPacksBillResponse'
+  /Packs/setAutoActivation:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - packs
+      summary: "Изменить режим автоактивации"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetAutoActivation'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /Packs/setOrder:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - packs
+      summary: "Изменить порядок следования пакетов"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetPacksOrder'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+
+  # files part
+  /Files/getDocumentById:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - files
+      summary: "Получить документ по id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetDocumentById'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDocumentByIdResponse'
