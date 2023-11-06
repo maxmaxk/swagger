@@ -352,18 +352,6 @@ components:
           type: string
           example: "15.01.2024"
           description: "Самая дальняя дата окончания действия из всех доступных пакетов"
-        schemaPackCountBuy:
-          type: array
-          example: [100, 300, 500, 1000, 2000]
-          description: "Возможные варианты покупки количества пакетов"
-          items:
-            type: number
-        schemaPackPeriodBuy:
-          type: array
-          example: [30, 60, 90, 120, 180]
-          description: "Возможные варианты покупки периода реализации пакетов"
-          items:
-            type: number
         autoActivation:
           type: boolean
           example: false
@@ -397,6 +385,22 @@ components:
               type: number
               example: 1352
               description: "Всего расчетов осталось"
+    GetBuySchema:
+      type: object
+      properties:
+        buySchema:
+          type: array
+          example: [{packCount: 100, periods: [30, 60]}, {packCount: 300, periods: [90, 120]}]
+          description: "Возможные варианты покупки количества пакетов / периодов"
+          items:
+            type: object
+            properties:
+              packCount: 
+                type: number
+              periods: 
+                type: array
+                items:
+                  type: number
     PacksItem:
       type: object
       properties:
@@ -938,6 +942,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetPacksInfo'
+  /Packs/getBuySchema:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - packs
+      summary: "Получить данные о вариантах покупки пакетов"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBuySchema'
   /Packs/getBill:
     post:
       security:
