@@ -202,6 +202,14 @@ components:
           type: string
           example: "000000000"
           description: "БИК банка"
+        bankName:
+          type: string
+          example: "АКБ Абсолют Банк (ПАО)"
+          description: "Название банка"        
+        corrBankAccount:
+          type: string
+          example: "40802810000000000000"
+          description: "Корреспондентский счет"
         privateBankAccount:
           type: string
           example: "40802810000000000000"
@@ -308,7 +316,48 @@ components:
           example: "131a-23bc2213-12aa-00ff"
           description: "Уникальный идентификатор организации"
     EditCounterparty:
-      $ref: '#/components/schemas/Counterparty'
+      type: object
+      properties:
+        id:
+          type: string
+          example: "131a-23bc2213-12aa-00ff"
+          description: "Уникальный идентификатор организации"
+        companyName:
+          type: string
+          example: "МясГазСтрой"
+          description: "Название организации"
+        INN:
+          type: string
+          example: "7810348720"
+          description: "ИНН"
+        KPP:
+          type: string
+          example: "000000000"
+          description: "КПП"
+        OKPO:
+          type: string
+          example: "000000000"
+          description: "ОКПО"
+        lawAddress:
+          type: string
+          example: "СПб, Антоновская ул., д. 14, офис 58"
+          description: "Юридический адрес" 
+        factAddress:
+          type: string
+          example: "СПб, пр. Маршала Жукова, д. 27, офис 629"
+          description: "Фактический адрес"
+        BIK:
+          type: string
+          example: "000000000"
+          description: "БИК банка"       
+        privateBankAccount:
+          type: string
+          example: "40802810000000000000"
+          description: "Расчетный счет"
+        phone:
+          type: string
+          example: "+7 (812) 747-65-93"
+          description: "Телефон организации"
     GetCounterpartyByINN:
       type: object
       properties:
@@ -390,7 +439,7 @@ components:
       properties:
         buySchema:
           type: array
-          example: [{packCount: 100, periods: [30, 60]}, {packCount: 300, periods: [90, 120]}]
+          example: [{packCount: 100, periods: [{period: 30, sum: 300, price: 3},{period: 60, sum: 350, price: 3.5}]},{packCount: 300, periods: [{period: 90, sum: 600, price: 2}, {period: 120, sum: 700, price: 2.33}]}]
           description: "Возможные варианты покупки количества пакетов / периодов"
           items:
             type: object
@@ -400,7 +449,19 @@ components:
               periods: 
                 type: array
                 items:
-                  type: number
+                  $ref: '#/components/schemas/BuyItem'
+    BuyItem:
+      type: object
+      properties:
+        period:
+          type: number
+          description: "Кол-во дней, доступных для расчетов"
+        sum:
+          type: number
+          description: "Стоимость пакета"
+        price:
+          type: number
+          description: "Стоимость одного расчета"
     PacksItem:
       type: object
       properties:
