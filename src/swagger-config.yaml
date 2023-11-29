@@ -561,6 +561,13 @@ components:
             type: number
             example: 1
             description: "Порядок расположения"
+    PacksActivate:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "000 000 000 000 000 153"
+          description: "id пакета для ручной активации"
 tags:
   - name: auth
     description: Авторизация/регистрация
@@ -1077,7 +1084,24 @@ paths:
           description: "Error"
         200:
           description: "OK"
-
+  /Packs/activate:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - packs
+      summary: "Ручная активация пакета"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PacksActivate'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
   # files part
   /Files/getDocumentById:
     post:
