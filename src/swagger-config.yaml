@@ -568,6 +568,125 @@ components:
           type: string
           example: "000 000 000 000 000 153"
           description: "id пакета для ручной активации"
+    GetOrderList:
+      type: object
+      example: {"orderBy": "objectNameInc", "filters": [{"fieldName": "orderDate", "searchFilter": "12.04.1961"}, {"fieldName": "comment", "searchFilter": "УрЮрВКос!"}]}
+      properties:
+        orderBy:
+          type: string
+          description: "Задание сортировки: имя поля + Inc/Dec на конце"
+          default: none
+          enum:
+            - none
+            - objectNameInc
+            - orderDateInc
+            - shipmentDateInc
+            - commentInc
+            - summInc
+            - orderStatusInc
+            - paymentStatusInc
+            - shipmentStatusInc
+            - objectNameDec
+            - orderDateDec
+            - shipmentDateDec
+            - commentDec
+            - summDec
+            - orderStatusDec
+            - paymentStatusDec
+            - shipmentStatusDec
+        filters:
+          type: array
+          description: "Массив фильтров по полям"
+          items:
+            type: object
+            properties:
+              fieldName:
+                type: string
+                description: "Имя поля"
+                enum:
+                  - objectName
+                  - orderDate
+                  - shipmentDate
+                  - comment
+                  - summ
+                  - orderStatus
+              searchFilter:
+                type: string
+                description: "Строка фильтрации"
+    GetOrderListResponse:
+      type: array
+      example: [{"id": "34de-21abc-12-00e",	"objectName": "Эрмитаж", "objectAddress":"СПБ, Дворцовая наб., д.38", "orderName":"35724/22-17", "orderDate": "2023-10-01T00:00:00", "shipmentDate":"2023-10-21T00:00:00", "comment":"Лучший заказ в моей жизни", "summ":27340, "orderStatus":"ordered", "paymentStatus":"partpay", "shipmentStatus":"partoverdue"}]
+      items:
+        $ref: '#/components/schemas/OrderItem'
+    OrderItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "ID заказа"
+        objectName:
+          type: string
+          description: "Название объекта"
+        objectAddress:
+          type: string
+          description: "Адрес объекта"        
+        orderName:
+          type: string
+          description: "Номер заказа"
+        orderDate:
+          type: string
+          description: "Дата заказа"
+        shipmentDate:
+          type: string
+          description: "Дата отгрузки"
+        comment:
+          type: string
+          description: "Комментарий к заказу"
+        summ:
+          type: number
+          description: "Сумма заказа"
+        orderStatus:
+          type: string
+          description: "Статус заказа: Новый(new), Заказано(ordered), Размещён(publish), В работе(inwork), Завершён(done), Отменён(cancel)"
+          enum:
+            - new
+            - ordered
+            - publish
+            - inwork
+            - done
+            - cancel
+        paymentStatus:
+          type: string
+          description: "Статус оплаты: Не оплачен(none), Частично оплачен(partpay), Просрочен(overdue), Оплачен(paid)"
+          enum:
+            - none
+            - partpay
+            - overdue
+            - paid
+        shipmentStatus:
+          type: string
+          description: "Статус отгрузки: Не отгружен(none), Отгружен частично(partshipment), Частично отгружен/просрочен(partoverdue), Просрочен(overdue), Отгружен(done)"
+          enum:
+            - none
+            - partshipment
+            - partoverdue
+            - overdue
+            - done
+    CreateNewOrder:
+      type: array
+      description: "Если нужно создать новый заказ, то передается пустой массив, иначе передается массив с id заказов, позициями которых нужно наполнить новый заказ"
+      example: ["34de-21abc-12-001", "34de-21abc-12-002", "34de-21abc-12-003"]
+      items:
+        type: string
+        description: "id заказа на основе которого нужно создать новый"
+    CreateNewOrderResponse:
+      type: object
+      example: {"id":"34de-21abc-12-004"}
+      description: "id нового заказа"
+      properties:
+        id:
+          type: string
+        
 tags:
   - name: auth
     description: Авторизация/регистрация
@@ -579,6 +698,8 @@ tags:
     description: Страница пакетов расчета
   - name: files
     description: Работа с документами
+  - name: orders
+    description: Работа с заказами
 paths:
 
   # auth part
@@ -1125,3 +1246,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDocumentByIdResponse'
+  # order list part
+  /Orders/getList:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - orders
+      summary: "Получить список заказов текущего пользователя"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOrderList'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrderListResponse'
+  /Orders/create:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - orders
+      summary: "Создать новый заказ / создать заказ на основе других заказов"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNewOrder'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateNewOrderResponse'
