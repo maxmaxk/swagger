@@ -686,7 +686,386 @@ components:
       properties:
         id:
           type: string
-        
+    GetOrder:
+      type: object
+      example: {"id":"34de-21abc-12-004"}
+      description: "id заказа"
+      properties:
+        id:
+          type: string
+    GetOrderResponse:
+      type: object
+      example: {"id": "34de-21abc-12-004", "manufacturerName": "ООО ПО Трубное Решение", "orderName": "394/270-615", "orderDate": "2023-10-18T00:00:00", "orderStatus": "new", "customerName": "ИП Джумаев Мухаммади Фуркатович", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "positions":[{"id": "15ef-1255-ab13", "isActual": true, "name": "Отвод х/к ст. 1.2мм, сварн., 700х400, 90град, шея1=100, шея2=100, фл25/фл25, грунт красн-кор", "count": 17, "units": "шт", "price": 6828, "altCount": 23.09, "altUnits": "пог.м", "altUnitsList": ["пог.м","м2"], "altPrice": 4496, "weight": 361.3, "square": 28.051, "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция", "taxRate": "20/120", "taxSumm": 456.2, "discountRate": 10.7, "discountSumm": 1395.3, "summ": 116097}], "total": {"count": 17, "weight": 361.3, "square": 28.051, "taxSumm": 456.2, "discountAvg": 10.7, "discountSumm": 1395.3, "summ": 116097}}
+      properties:
+        id:
+          type: string
+          description: "ID заказа"
+        manufacturerName:
+          type: string
+          description: "Наименование производителя"
+        orderName:
+          type: string
+          description: "Номер заказа"
+        orderDate:
+          type: string
+          description: "Дата заказа"  
+        orderStatus:
+          type: string
+          description: "Статус заказа: Новый(new), Заказано(ordered), Размещён(publish), В работе(inwork), Завершён(done), Отменён(cancel)"
+          enum:
+            - new
+            - ordered
+            - publish
+            - inwork
+            - done
+            - cancel
+        customerName:
+          type: string
+          description: "Наименование покупателя"
+        wishShipmentDate:
+          type: string
+          description: "Желаемая дата отгрузки"
+        realShipmentDate:
+          type: string
+          description: "Согласованная дата отгрузки"
+        comment:
+          type: string
+          description: "Комментарий к заказу"
+        positions:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderPositionItem'
+        total:
+          type: object
+          properties:  
+            count:
+              type: number
+              description: "Количество единиц изделий"
+            weight:
+              type: number
+              description: "Общий вес, кг"
+            square:
+              type: number
+              description: "Общая площадь, м2"
+            taxSumm:
+              type: number
+              description: "Общая сумма НДС"
+            discountAvg:
+              type: number
+              description: "Усредненная по всем позициям скидка"
+            discountSumm:
+              type: number
+              description: "Общая сумма скидки"
+            summ:
+              type: number
+              description: "Сумма заказа"
+    OrderPositionItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "id изделия"
+        isActual:
+          type: boolean
+          description: "Актуальность данных"
+        name:
+          type: string
+          description: "Наименование поменклатуры"
+        count:
+          type: number
+          description: "Количество в основных единицах"
+        units:
+          type: string
+          description: "Наименование основных единиц"
+        price:
+          type: number
+          description: "Цена за основную единицу"
+        altCount:
+          type: number
+          description: "Количество в дополнительных единицах"
+        altUnits:
+          type: string
+          description: "Наименование дополнительных единиц"
+        altUnitsList:
+          type: array
+          description: "Список допустимых для позиции дополнительных единиц"
+          items:
+            type: string 
+        altPrice:
+          type: number
+          description: "Цена за дополнительную единицу"
+        weight:
+          type: number
+          description: "Вес, кг"
+        square:
+          type: number
+          description: "Площадь, м2"
+        system:
+          type: string
+          description: "Наименование системы"
+        comment:
+          type: string
+          description: "Комментарий"
+        taxRate:
+          type: string
+          description: "Ставка НДС"
+        taxSumm:
+          type: number
+          description: "Сумма НДС"
+        discountRate:
+          type: number
+          description: "Скидка в %"
+        discountSumm:
+          type: number
+          description: "Сумма скидки"
+        summ:
+          type: number
+          description: "Стоимость позиции"
+    SaveOrderPositionItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "id изделия"
+        count:
+          type: number
+          description: "Количество в основных единицах"
+        altCount:
+          type: number
+          description: "Количество в дополнительных единицах"
+        altUnits:
+          type: string
+          description: "Наименование дополнительных единиц"
+        system:
+          type: string
+          description: "Наименование системы"
+        comment:
+          type: string
+          description: "Комментарий"
+    GetCustomersSchema:
+      type: array
+      example: [{"id": "34de-21abc-12-004", "name": "ИП Джумаев Мухаммади Фуркатович"}, {"id": "34de-21abc-12-005", "name": "ООО Веселый воздуховод"}, {"id": "34de-21abc-12-006", "name": "ООО Грустный фланец"}]
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: "id покупателя"
+          name:
+            type: string
+            description: "Наименование покупателя"
+    GetOptionsResponse:
+      type: object
+      example: {"id": "34de-21abc-12-004", 'altUnitsVisible': true, "linearMeterRounded": "normal", "squareMeterRounded": "ceil", "systemVisible": false, "commentVisible": false}
+      properties:
+        id:
+          type: string
+          description: "id заказа"
+        altUnitsVisible:
+          type: boolean
+          description: "Показывать ли в заказе колонки дополнительные параметры"
+        linearMeterRounded:
+          type: string
+          description: "Способ округления погонных метров: Не округлять (none), Арифметически (normal), В большую сторону(ceil), В меньшую сторону (floor)"
+          enum:
+            - none
+            - normal
+            - ceil
+            - floor
+        squareMeterRounded:
+          type: string
+          description: "Способ округления квадратных метров: Не округлять (none), Арифметически (normal), В большую сторону(ceil), В меньшую сторону (floor)"
+          enum:
+            - none
+            - normal
+            - ceil
+            - floor
+        systemVisible:
+          type: boolean
+          description: "Показывать ли в заказе колонку 'Система'"
+        commentVisible:
+          type: boolean
+          description: "Показывать ли в заказе колонку 'Комментарий'"
+    GetSpecOptionsResponse:
+      type: object
+      example: {"id": "34de-21abc-12-004", "nomenclature:": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "sendEmail": "name@mail.ru", "fileFormat": "xlsx"}
+      properties:
+        id:
+          type: string
+          description: "id заказа"
+        name:
+          type: boolean
+          description: "Выгружать номенклатуру в спецификацию"
+        count:
+          type: boolean
+          description: "Выгружать количество в спецификацию"
+        units:
+          type: boolean
+          description: "Выгружать единицы изменения в спецификацию"
+        price:
+          type: boolean
+          description: "Выгружать цену в спецификацию"
+        altCount:
+          type: boolean
+          description: "Выгружать количество доп. единиц в спецификацию"
+        altUnits:
+          type: boolean
+          description: "Выгружать доп. единицы изменения в спецификацию"
+        altPrice:
+          type: boolean
+          description: "Выгружать цену доп. единиц в спецификацию"
+        weight:
+          type: boolean
+          description: "Выгружать вес в спецификацию" 
+        square:
+          type: boolean
+          description: "Выгружать площадь в спецификацию"
+        system:
+          type: boolean
+          description: "Выгружать систему в спецификацию" 
+        comment:
+          type: boolean
+          description: "Выгружать комментарий в спецификацию"
+        taxRate:
+          type: boolean
+          description: "Выгружать ставку НДС в спецификацию"
+        taxSumm:
+          type: boolean
+          description: "Выгружать сумму НДС в спецификацию"
+        discountRate:
+          type: boolean
+          description: "Выгружать процент скидки в спецификацию"
+        discountSumm:
+          type: boolean
+          description: "Выгружать сумму скидки в спецификацию"
+        summ:
+          type: boolean
+          description: "Выгружать общую сумму в спецификацию"
+        systemGroup:
+          type: boolean
+          description: "Группировать по системам"
+        sendEmail:
+          type: string
+          description: "Адрес эл. почты для отправки спецификации"
+        fileFormat:
+          type: string
+          description: "Формат файла спецификации"
+          enum:
+            - pdf
+            - xls
+            - xlsx
+            - docx
+            - ods
+    SearchPositions:
+      type: object
+      example: {"search": "100 200"}
+      properties:
+        search:
+          type: string
+          description: "Строка для поиска"
+    SearchPositionsResponse:
+      type: array
+      example: [{"id": "101d-1311-0e0a", "name": "Воздуховод прямоугольный 100х200"}, {"id": "101d-1311-0e0b", "name": "Отвод 100х200"}, {"id": "101d-1311-0e0b", "name": "Зонт вытяжной 100х200"}]
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: "id найденной позиции"
+          name:
+            type: string
+            description: "Наименование поменклатуры"
+    ChangePosition:
+      type: object
+      example: {"id": "101d-1311-0e0a", "count": 17, "altCount": 15.22, "altUnits": "пог.м", "changeField": "altCount"}
+      properties:
+        id:
+          type: string
+          description: "id запрашиваемой позиции"
+        count:
+          type: number
+          description: "Количество в основных единицах"
+        altCount:
+          type: number
+          description: "Количество в дополнительных единицах"
+        altUnits:
+          type: string
+          description: "Наименование дополнительных единиц"
+        changeField:
+          type: string
+          description: "Поле, которое пользователь изменил при редактировании"
+          enum:
+            - count
+            - altCount
+            - altUnits
+    ChangePositionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "id изделия"
+        count:
+          type: number
+          description: "Количество в основных единицах"
+        price:
+          type: number
+          description: "Цена за основную единицу"
+        altCount:
+          type: number
+          description: "Количество в дополнительных единицах"
+        altUnits:
+          type: string
+          description: "Наименование дополнительных единиц"
+        altPrice:
+          type: number
+          description: "Цена за дополнительную единицу"
+        weight:
+          type: number
+          description: "Вес, кг"
+        square:
+          type: number
+          description: "Площадь, м2"
+        taxRate:
+          type: string
+          description: "Ставка НДС"
+        taxSumm:
+          type: number
+          description: "Сумма НДС"
+        discountRate:
+          type: number
+          description: "Скидка в %"
+        discountSumm:
+          type: number
+          description: "Сумма скидки"
+        summ:
+          type: number
+          description: "Стоимость позиции"
+    SaveOrder:
+      type: object
+      example: {"id": "34de-21abc-12-004", "orderDate": "2023-10-18T00:00:00", "customerNameId": "12c0-1aa3-1411", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "positions":[{"id": "15ef-1255-ab13", "count": 17, "altCount": 23.09, "altUnits": "пог.м", "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция"}]}
+      properties:
+        id:
+          type: string
+          description: "ID заказа"
+        orderDate:
+          type: string
+          description: "Дата заказа"  
+        customerNameId:
+          type: string
+          description: "Id покупателя"
+        wishShipmentDate:
+          type: string
+          description: "Желаемая дата отгрузки"
+        realShipmentDate:
+          type: string
+          description: "Согласованная дата отгрузки"
+        comment:
+          type: string
+          description: "Комментарий к заказу"
+        positions:
+          type: array
+          items:
+            $ref: '#/components/schemas/SaveOrderPositionItem'
 tags:
   - name: auth
     description: Авторизация/регистрация
@@ -700,6 +1079,8 @@ tags:
     description: Работа с документами
   - name: orders
     description: Работа с заказами
+  - name: order
+    description: Работа с заказом
 paths:
 
   # auth part
@@ -1291,3 +1672,219 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreateNewOrderResponse'
+  /Order/getOrder:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Получение данных для карточки заказа"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOrder'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrderResponse'
+  /Order/getCustomers:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Получить список возможных покупателей"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCustomersSchema'
+  /Order/getOptions:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Получение дополнительных настроек для заказа"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOrder'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOptionsResponse'
+  /Order/getSpecOptions:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Получение настроек выгрузки спецификации для заказа"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOrder'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSpecOptionsResponse'
+  /Order/recalc:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Пересчитать все неактуальные позиции заказа"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOrder'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /Order/searchPositions:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Найти соответствие позиций вводимому запросу"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchPositions'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchPositionsResponse'
+  /Order/changePosition:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Запрос позиции на изменение"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePosition'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangePositionResponse'
+  /Order/save:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Сохранение заказа"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveOrder'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /Order/makeOrder:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Выполнить заказ"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOrder'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /Order/saveOptions:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Сохранить дополнительные настройки для заказа"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOptionsResponse'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /Order/saveSpecOptions:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Сохранить настройки выгрузки спецификации для заказа"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSpecOptionsResponse'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
