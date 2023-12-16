@@ -673,19 +673,13 @@ components:
             - overdue
             - done
     CreateNewOrder:
-      type: array
-      description: "Если нужно создать новый заказ, то передается пустой массив, иначе передается массив с id заказов, позициями которых нужно наполнить новый заказ"
-      example: ["34de-21abc-12-001", "34de-21abc-12-002", "34de-21abc-12-003"]
-      items:
-        type: string
-        description: "id заказа на основе которого нужно создать новый"
-    CreateNewOrderResponse:
       type: object
-      example: {"id":"34de-21abc-12-004"}
-      description: "id нового заказа"
+      description: "id заказа, позициями которого нужно наполнить новый заказ"
+      example: {"id": "34de-21abc-12-001"}
       properties:
         id:
           type: string
+          description: "id заказа на основе которого нужно создать новый"
     GetOrder:
       type: object
       example: {"id":"34de-21abc-12-004"}
@@ -695,7 +689,7 @@ components:
           type: string
     GetOrderResponse:
       type: object
-      example: {"id": "34de-21abc-12-004", "manufacturerName": "ООО ПО Трубное Решение", "orderName": "394/270-615", "orderDate": "2023-10-18T00:00:00", "orderStatus": "new", "customerName": "ИП Джумаев Мухаммади Фуркатович", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "positions":[{"id": "15ef-1255-ab13", "isActual": true, "name": "Отвод х/к ст. 1.2мм, сварн., 700х400, 90град, шея1=100, шея2=100, фл25/фл25, грунт красн-кор", "count": 17, "units": "шт", "price": 6828, "altCount": 23.09, "altUnits": "пог.м", "altUnitsList": ["пог.м","м2"], "altPrice": 4496, "weight": 361.3, "square": 28.051, "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция", "taxRate": "20/120", "taxSumm": 456.2, "discountRate": 10.7, "discountSumm": 1395.3, "summ": 116097}], "total": {"count": 17, "weight": 361.3, "square": 28.051, "taxSumm": 456.2, "discountAvg": 10.7, "discountSumm": 1395.3, "summ": 116097}}
+      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "manufacturerName": "ООО ПО Трубное Решение", "orderName": "394/270-615", "orderDate": "2023-10-18T00:00:00", "orderStatus": "new", "customerName": "ИП Джумаев Мухаммади Фуркатович", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "positions":[{"id": "15ef-1255-ab13", "isActual": true, "name": "Отвод х/к ст. 1.2мм, сварн., 700х400, 90град, шея1=100, шея2=100, фл25/фл25, грунт красн-кор", "count": 17, "units": "шт", "price": 6828, "altCount": 23.09, "altUnits": "пог.м", "altUnitsList": ["пог.м","м2"], "altPrice": 4496, "weight": 361.3, "square": 28.051, "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция", "taxRate": "20/120", "taxSumm": 456.2, "discountRate": 10.7, "discountSumm": 1395.3, "summ": 116097}], "total": {"count": 17, "weight": 361.3, "square": 28.051, "taxSumm": 456.2, "discountAvg": 10.7, "discountSumm": 1395.3, "summ": 116097}}
       properties:
         id:
           type: string
@@ -854,6 +848,18 @@ components:
           name:
             type: string
             description: "Наименование покупателя"
+    GetManufactorsSchema:
+      type: array
+      example: [{"id": "34de-21abc-12-004", "name": "ИП Джумаев Мухаммади Фуркатович"}, {"id": "34de-21abc-12-005", "name": "ООО Веселый воздуховод"}, {"id": "34de-21abc-12-006", "name": "ООО Грустный фланец"}]
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: "id производителя"
+          name:
+            type: string
+            description: "Наименование производтеля"
     GetOptionsResponse:
       type: object
       example: {"id": "34de-21abc-12-004", 'altUnitsVisible': true, "linearMeterRounded": "normal", "squareMeterRounded": "ceil", "systemVisible": false, "commentVisible": false}
@@ -1042,7 +1048,7 @@ components:
           description: "Стоимость позиции"
     SaveOrder:
       type: object
-      example: {"id": "34de-21abc-12-004", "orderDate": "2023-10-18T00:00:00", "customerNameId": "12c0-1aa3-1411", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "positions":[{"id": "15ef-1255-ab13", "count": 17, "altCount": 23.09, "altUnits": "пог.м", "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция"}]}
+      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "orderDate": "2023-10-18T00:00:00", "customerId": "12c0-1aa3-1411", "manufactorId": "12c0-1aa3-1412", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "positions":[{"id": "15ef-1255-ab13", "count": 17, "altCount": 23.09, "altUnits": "пог.м", "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция"}]}
       properties:
         id:
           type: string
@@ -1050,9 +1056,12 @@ components:
         orderDate:
           type: string
           description: "Дата заказа"  
-        customerNameId:
+        customerId:
           type: string
           description: "Id покупателя"
+        manufactorId:
+          type: string
+          description: "Id производителя"
         wishShipmentDate:
           type: string
           description: "Желаемая дата отгрузки"
@@ -1656,7 +1665,7 @@ paths:
         - bearerAuth: []
       tags:
         - orders
-      summary: "Создать новый заказ / создать заказ на основе других заказов"
+      summary: "Создать заказ на основе другого заказа"
       requestBody:
         content:
           application/json:
@@ -1671,7 +1680,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateNewOrderResponse'
+                $ref: '#/components/schemas/GetOrderResponse'
   /Order/getOrder:
     post:
       security:
@@ -1700,7 +1709,7 @@ paths:
         - bearerAuth: []
       tags:
         - order
-      summary: "Получить список возможных покупателей"
+      summary: "Получить список возможных покупателей (для случая, когда пользователь - это производитель)"
       responses:
         401:
           description: "Error"
@@ -1710,6 +1719,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetCustomersSchema'
+  /Order/getManufactors:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Получить список возможных производителей"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManufactorsSchema'
   /Order/getOptions:
     post:
       security:
