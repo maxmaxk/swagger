@@ -1028,6 +1028,11 @@ components:
         altUnits:
           type: string
           description: "Наименование дополнительных единиц"
+        altUnitsList:
+          type: array
+          description: "Список допустимых для позиции дополнительных единиц"
+          items:
+            type: string
         altPrice:
           type: number
           description: "Цена за дополнительную единицу"
