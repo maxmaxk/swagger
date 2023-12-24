@@ -1019,6 +1019,9 @@ components:
         count:
           type: number
           description: "Количество в основных единицах"
+        units:
+          type: string
+          description: "Наименование основных единиц"
         price:
           type: number
           description: "Цена за основную единицу"
