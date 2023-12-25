@@ -989,7 +989,7 @@ components:
             description: "Наименование поменклатуры"
     ChangePosition:
       type: object
-      example: {"id": "101d-1311-0e0a", "count": 17, "altCount": 15.22, "altUnits": "пог.м", "changeField": "altCount"}
+      example: {"id": "101d-1311-0e0a", "count": 17, "altCount": 15.22, "altUnits": "пог.м", "changeField": "altCount", "linearMeterRounded": "none", "squareMeterRounded":"normal"}
       properties:
         id:
           type: string
@@ -1010,6 +1010,22 @@ components:
             - count
             - altCount
             - altUnits
+        linearMeterRounded:
+          type: string
+          description: "Способ округления погонных метров: Не округлять (none), Арифметически (normal), В большую сторону(ceil), В меньшую сторону (floor)"
+          enum:
+            - none
+            - normal
+            - ceil
+            - floor
+        squareMeterRounded:
+          type: string
+          description: "Способ округления квадратных метров: Не округлять (none), Арифметически (normal), В большую сторону(ceil), В меньшую сторону (floor)"
+          enum:
+            - none
+            - normal
+            - ceil
+            - floor        
     ChangePositionResponse:
       type: object
       properties:
