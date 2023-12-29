@@ -689,11 +689,14 @@ components:
           type: string
     GetOrderResponse:
       type: object
-      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "manufacturerName": "ООО ПО Трубное Решение", "orderName": "394/270-615", "orderDate": "2023-10-18T00:00:00", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "orderStatus": "new", "customerName": "ИП Джумаев Мухаммади Фуркатович", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "positions":[{"id": "15ef-1255-ab13", "isActual": true, "name": "Отвод х/к ст. 1.2мм, сварн., 700х400, 90град, шея1=100, шея2=100, фл25/фл25, грунт красн-кор", "count": 17, "units": "шт", "price": 6828, "altCount": 23.09, "altUnits": "пог.м", "altUnitsList": ["пог.м","м2"], "altPrice": 4496, "weight": 361.3, "square": 28.051, "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция", "taxRate": "20/120", "taxSumm": 456.2, "discountRate": 10.7, "discountSumm": 1395.3, "summ": 116097}], "total": {"count": 17, "weight": 361.3, "square": 28.051, "taxSumm": 456.2, "discountAvg": 10.7, "discountSumm": 1395.3, "summ": 116097}}
+      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "manufacturerId":"34de-21abc-12-005", "manufacturerName": "ООО ПО Трубное Решение", "orderName": "394/270-615", "orderDate": "2023-10-18T00:00:00", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "orderStatus": "new", "customerId":"34de-21abc-12-006", "customerName": "ИП Джумаев Мухаммади Фуркатович", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "positions":[{"id": "15ef-1255-ab13", "isActual": true, "name": "Отвод х/к ст. 1.2мм, сварн., 700х400, 90град, шея1=100, шея2=100, фл25/фл25, грунт красн-кор", "count": 17, "units": "шт", "price": 6828, "altCount": 23.09, "altUnits": "пог.м", "altUnitsList": ["пог.м","м2"], "altPrice": 4496, "weight": 361.3, "square": 28.051, "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция", "taxRate": "20/120", "taxSumm": 456.2, "discountRate": 10.7, "discountSumm": 1395.3, "summ": 116097}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "normal", "squareMeterRounded": "ceil", "systemVisible": false, "commentVisible": false}, "orderSpecOptions":{"name:": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "sendEmail": "name@mail.ru", "fileFormat": "xlsx"}, "total": {"count": 17, "weight": 361.3, "square": 28.051, "taxSumm": 456.2, "discountAvg": 10.7, "discountSumm": 1395.3, "summ": 116097}}
       properties:
         id:
           type: string
           description: "ID заказа"
+        manufacturerId:
+          type: string
+          description: "Id производителя"
         manufacturerName:
           type: string
           description: "Наименование производителя"
@@ -719,6 +722,9 @@ components:
             - inwork
             - done
             - cancel
+        customerId:
+          type: string
+          description: "Id покупателя"
         customerName:
           type: string
           description: "Наименование покупателя"
@@ -759,6 +765,10 @@ components:
             summ:
               type: number
               description: "Сумма заказа"
+        orderOptions:
+          $ref: '#/components/schemas/GetOptionsResponse'
+        specOptions:
+          $ref: '#/components/schemas/GetSpecOptionsResponse'
     OrderPositionItem:
       type: object
       properties:
@@ -868,11 +878,8 @@ components:
             description: "Наименование производтеля"
     GetOptionsResponse:
       type: object
-      example: {"id": "34de-21abc-12-004", 'altUnitsVisible': true, "linearMeterRounded": "normal", "squareMeterRounded": "ceil", "systemVisible": false, "commentVisible": false}
+      example: {'altUnitsVisible': true, "linearMeterRounded": "normal", "squareMeterRounded": "ceil", "systemVisible": false, "commentVisible": false}
       properties:
-        id:
-          type: string
-          description: "id заказа"
         altUnitsVisible:
           type: boolean
           description: "Показывать ли в заказе колонки дополнительные параметры"
@@ -900,11 +907,8 @@ components:
           description: "Показывать ли в заказе колонку 'Комментарий'"
     GetSpecOptionsResponse:
       type: object
-      example: {"id": "34de-21abc-12-004", "nomenclature:": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "sendEmail": "name@mail.ru", "fileFormat": "xlsx"}
+      example: {"name:": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "sendEmail": "name@mail.ru", "fileFormat": "xlsx"}
       properties:
-        id:
-          type: string
-          description: "id заказа"
         name:
           type: boolean
           description: "Выгружать номенклатуру в спецификацию"
@@ -1032,6 +1036,9 @@ components:
         id:
           type: string
           description: "id изделия"
+        isActual:
+          type: boolean
+          description: "Актуальность"
         count:
           type: number
           description: "Количество в основных единицах"
@@ -1111,6 +1118,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SaveOrderPositionItem'
+    SaveOrderResponse:
+      type: object
+      properties:
+        id: 
+          type: string
+          description: "id заказа"
 tags:
   - name: auth
     description: Авторизация/регистрация
@@ -1895,6 +1908,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveOrderResponse'
   /Order/makeOrder:
     post:
       security:
