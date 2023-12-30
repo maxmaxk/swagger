@@ -974,11 +974,14 @@ components:
             - ods
     SearchPositions:
       type: object
-      example: {"search": "100 200"}
+      example: {"search": "100 200", "manufacturerId": "05494d3d-7633-11ee-816c-c860006cd176"}
       properties:
         search:
           type: string
           description: "Строка для поиска"
+        manufacturerId:
+          type: string
+          description: "id производителя"
     SearchPositionsResponse:
       type: array
       example: [{"id": "101d-1311-0e0a", "name": "Воздуховод прямоугольный 100х200"}, {"id": "101d-1311-0e0b", "name": "Отвод 100х200"}, {"id": "101d-1311-0e0b", "name": "Зонт вытяжной 100х200"}]
