@@ -615,7 +615,7 @@ components:
                 description: "Строка фильтрации"
     GetOrderListResponse:
       type: array
-      example: [{"id": "34de-21abc-12-00e",	"objectName": "Эрмитаж", "objectAddress":"СПБ, Дворцовая наб., д.38", "orderName":"35724/22-17", "orderDate": "2023-10-01T00:00:00", "shipmentDate":"2023-10-21T00:00:00", "comment":"Лучший заказ в моей жизни", "summ":27340, "orderStatus":"ordered", "paymentStatus":"partpay", "shipmentStatus":"partoverdue"}]
+      example: [{"id": "34de-21abc-12-00e",	"objectName": "Эрмитаж", "objectAddress":"СПБ, Дворцовая наб., д.38", "orderName":"35724/22-17", "manufactorName": "ООО Вентретейл", "customerName": "ИП Джанушвили", "orderDate": "2023-10-01T00:00:00", "shipmentDate":"2023-10-21T00:00:00", "comment":"Лучший заказ в моей жизни", "summ":27340, "orderStatus":"ordered", "paymentStatus":"partpay", "shipmentStatus":"partoverdue"}]
       items:
         $ref: '#/components/schemas/OrderItem'
     OrderItem:
@@ -633,6 +633,12 @@ components:
         orderName:
           type: string
           description: "Номер заказа"
+        manufactorName:
+          type: string
+          description: "Имя поставщика"
+        customerName:
+          type: string
+          description: "Имя покупателя"
         orderDate:
           type: string
           description: "Дата заказа"
