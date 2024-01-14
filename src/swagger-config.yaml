@@ -570,7 +570,7 @@ components:
           description: "id пакета для ручной активации"
     GetOrderList:
       type: object
-      example: {"orderBy": "objectNameInc", "filters": [{"fieldName": "orderDate", "searchFilter": "12.04.1961"}, {"fieldName": "comment", "searchFilter": "УрЮрВКос!"}]}
+      example: {"orderBy": "objectNameInc", "filters": [{"fieldName": "orderDate", "searchFilter": "12.04.1961"}, {"fieldName": "comment", "searchFilter": "УрЮрВКос!"}, {"fieldName": "stateName", "searchFilter": "Открыт"}]}
       properties:
         orderBy:
           type: string
@@ -609,7 +609,7 @@ components:
                   - shipmentDate
                   - comment
                   - summ
-                  - orderStatusId
+                  - stateName
               searchFilter:
                 type: string
                 description: "Строка фильтрации"
