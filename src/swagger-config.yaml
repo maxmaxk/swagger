@@ -605,7 +605,9 @@ components:
                 description: "Имя поля"
                 enum:
                   - objectName
-                  - orderDate
+                  - orderDateFrom
+                  - orderDateTo
+                  - manufactorName
                   - shipmentDate
                   - comment
                   - summ
@@ -680,16 +682,19 @@ components:
             - done
     GetOrderStates:
       type: array
-      example: [{"id": "34de-21abc-12-001",	"stateName": "Новый"}, {"id": "34de-21abc-12-002",	"stateName": "Открыт"}, {"id": "34de-21abc-12-002",	"stateName": "Актуальные"}]
+      example: [{"id": "34de-21abc-12-001",	"stateName": "Новый", "isDefault": false}, {"id": "34de-21abc-12-002",	"stateName": "Открыт", "isDefault": true}, {"id": "34de-21abc-12-002",	"stateName": "Актуальные", "isDefault": false}]
       items:
         type: object
         properties:
           id:
             type: string
-            description: "id статуса заказа"
+            description: "id статуса заказа, либо значение 'split' для отображения разделителя"
           stateName:
             type: string
             description: "Наименование статуса заказа"
+          isDefault:
+            type: boolean
+            descrition: "Является ли опция значением по умолчанию"
     CreateNewOrder:
       type: object
       description: "id заказа, позициями которого нужно наполнить новый заказ"
