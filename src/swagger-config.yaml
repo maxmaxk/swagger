@@ -730,7 +730,7 @@ components:
           type: string
     GetOrderResponse:
       type: object
-      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "manufacturerId":"34de-21abc-12-005", "manufacturerName": "ООО ПО Трубное Решение", "orderName": "394/270-615", "orderDate": "2023-10-18T00:00:00", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "orderStatus": "new", "customerId":"34de-21abc-12-006", "customerName": "ИП Джумаев Мухаммади Фуркатович", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "positions":[{"id": "15ef-1255-ab13", "isActual": true, "name": "Отвод х/к ст. 1.2мм, сварн., 700х400, 90град, шея1=100, шея2=100, фл25/фл25, грунт красн-кор", "count": 17, "units": "шт", "price": 6828, "altCount": 23.09, "altUnits": "пог.м", "altUnitsList": ["пог.м","м2"], "altPrice": 4496, "weight": 361.3, "square": 28.051, "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция", "taxRate": "20/120", "taxSumm": 456.2, "discountRate": 10.7, "discountSumm": 1395.3, "summ": 116097}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "normal", "squareMeterRounded": "ceil", "systemVisible": false, "commentVisible": false, "ndsVisible": false}, "orderSpecOptions":{"name": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "sendEmail": "name@mail.ru", "fileFormat": "xlsx"}, "total": {"count": 17, "weight": 361.3, "square": 28.051, "taxSumm": 456.2, "discountAvg": 10.7, "discountSumm": 1395.3, "summ": 116097}}
+      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "manufacturerId":"34de-21abc-12-005", "manufacturerName": "ООО ПО Трубное Решение", "orderName": "394/270-615", "orderDate": "2023-10-18T00:00:00", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "orderStatus": "new", "customerId":"34de-21abc-12-006", "customerName": "ИП Джумаев Мухаммади Фуркатович", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "positions":[{"id": "15ef-1255-ab13", "isActual": true, "name": "Отвод х/к ст. 1.2мм, сварн., 700х400, 90град, шея1=100, шея2=100, фл25/фл25, грунт красн-кор", "count": 17, "units": "шт", "price": 6828, "altCount": 23.09, "altUnits": "пог.м", "altUnitsList": ["пог.м","м2"], "altPrice": 4496, "weight": 361.3, "square": 28.051, "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция", "taxRate": "20/120", "taxSumm": 456.2, "discountRate": 10.7, "discountSumm": 1395.3, "summ": 116097}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "normal", "squareMeterRounded": "ceil", "systemVisible": false, "commentVisible": false, "ndsVisible": false}, "orderSpecOptions":{"name": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}, "total": {"count": 17, "weight": 361.3, "square": 28.051, "taxSumm": 456.2, "discountAvg": 10.7, "discountSumm": 1395.3, "summ": 116097}}
       properties:
         id:
           type: string
@@ -949,7 +949,7 @@ components:
           description: "Показывать ли в заказе колонку 'НДС'"
     GetSpecOptionsResponse:
       type: object
-      example: {"name": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "sendEmail": "name@mail.ru", "fileFormat": "xlsx"}
+      example: {"name": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}
       properties:
         name:
           type: boolean
@@ -1003,6 +1003,9 @@ components:
           type: boolean
           description: "Группировать по системам"
         sendEmail:
+          type: boolean
+          description: "Отправлять ли спецификацию на почту"
+        email:
           type: string
           description: "Адрес эл. почты для отправки спецификации"
         fileFormat:
@@ -1128,7 +1131,7 @@ components:
           description: "Стоимость позиции"
     SaveOrder:
       type: object
-      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "orderDate": "2023-10-18T00:00:00", "customerId": "12c0-1aa3-1411", "manufactorId": "12c0-1aa3-1412", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "positions":[{"id": "15ef-1255-ab13", "count": 17, "altCount": 23.09, "altUnits": "пог.м", "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция"}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "normal", "squareMeterRounded": "ceil", "systemVisible": false, "commentVisible": false, "ndsVisible": false}, "orderSpecOptions":{"name": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "sendEmail": "name@mail.ru", "fileFormat": "xlsx"}}
+      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "orderDate": "2023-10-18T00:00:00", "customerId": "12c0-1aa3-1411", "manufactorId": "12c0-1aa3-1412", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "positions":[{"id": "15ef-1255-ab13", "count": 17, "altCount": 23.09, "altUnits": "пог.м", "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция"}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "normal", "squareMeterRounded": "ceil", "systemVisible": false, "commentVisible": false, "ndsVisible": false}, "orderSpecOptions":{"name": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}}
       properties:
         id:
           type: string
