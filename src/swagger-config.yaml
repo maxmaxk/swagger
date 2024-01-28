@@ -947,10 +947,116 @@ components:
         ndsVisible:
           type: boolean
           description: "Показывать ли в заказе колонку 'НДС'"
+    SetOptionsResponse:
+      type: object
+      example: {'id':'011-ed11-0015-1111', 'altUnitsVisible': true, "linearMeterRounded": "normal", "squareMeterRounded": "ceil", "systemVisible": false, "commentVisible": false, "ndsVisible": false}
+      properties:
+        id:
+          type: string
+          descrition: "id заказа"
+        altUnitsVisible:
+          type: boolean
+          description: "Показывать ли в заказе колонки дополнительные параметры"
+        linearMeterRounded:
+          type: string
+          description: "Способ округления погонных метров: Арифметически (normal), В большую сторону(ceil), В меньшую сторону (floor)"
+          enum:
+            - normal
+            - ceil
+            - floor
+        squareMeterRounded:
+          type: string
+          description: "Способ округления квадратных метров: Арифметически (normal), В большую сторону(ceil), В меньшую сторону (floor)"
+          enum:
+            - normal
+            - ceil
+            - floor
+        systemVisible:
+          type: boolean
+          description: "Показывать ли в заказе колонку 'Система'"
+        commentVisible:
+          type: boolean
+          description: "Показывать ли в заказе колонку 'Комментарий'"
+        ndsVisible:
+          type: boolean
+          description: "Показывать ли в заказе колонку 'НДС'"
     GetSpecOptionsResponse:
       type: object
       example: {"name": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}
       properties:
+        name:
+          type: boolean
+          description: "Выгружать номенклатуру в спецификацию"
+        count:
+          type: boolean
+          description: "Выгружать количество в спецификацию"
+        units:
+          type: boolean
+          description: "Выгружать единицы изменения в спецификацию"
+        price:
+          type: boolean
+          description: "Выгружать цену в спецификацию"
+        altCount:
+          type: boolean
+          description: "Выгружать количество доп. единиц в спецификацию"
+        altUnits:
+          type: boolean
+          description: "Выгружать доп. единицы изменения в спецификацию"
+        altPrice:
+          type: boolean
+          description: "Выгружать цену доп. единиц в спецификацию"
+        weight:
+          type: boolean
+          description: "Выгружать вес в спецификацию" 
+        square:
+          type: boolean
+          description: "Выгружать площадь в спецификацию"
+        system:
+          type: boolean
+          description: "Выгружать систему в спецификацию" 
+        comment:
+          type: boolean
+          description: "Выгружать комментарий в спецификацию"
+        taxRate:
+          type: boolean
+          description: "Выгружать ставку НДС в спецификацию"
+        taxSumm:
+          type: boolean
+          description: "Выгружать сумму НДС в спецификацию"
+        discountRate:
+          type: boolean
+          description: "Выгружать процент скидки в спецификацию"
+        discountSumm:
+          type: boolean
+          description: "Выгружать сумму скидки в спецификацию"
+        summ:
+          type: boolean
+          description: "Выгружать общую сумму в спецификацию"
+        systemGroup:
+          type: boolean
+          description: "Группировать по системам"
+        sendEmail:
+          type: boolean
+          description: "Отправлять ли спецификацию на почту"
+        email:
+          type: string
+          description: "Адрес эл. почты для отправки спецификации"
+        fileFormat:
+          type: string
+          description: "Формат файла спецификации"
+          enum:
+            - pdf
+            - xls
+            - xlsx
+            - docx
+            - ods
+    SetSpecOptionsResponse:
+      type: object
+      example: {"id": "001-ef11-0015-1111", "name": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}
+      properties:
+        id:
+          type: string
+          description: "id заказа"
         name:
           type: boolean
           description: "Выгружать номенклатуру в спецификацию"
@@ -2029,7 +2135,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GetOptionsResponse'
+              $ref: '#/components/schemas/SetOptionsResponse'
         required: true
       responses:
         401:
@@ -2047,7 +2153,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GetSpecOptionsResponse'
+              $ref: '#/components/schemas/SetSpecOptionsResponse'
         required: true
       responses:
         401:
