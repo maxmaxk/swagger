@@ -2054,3 +2054,12 @@ paths:
           description: "Error"
         200:
           description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {"id": "011-ef01-156d-1111"}
+                properties:
+                  id:
+                    type: string
+                    description: "id документа для выгрузки"
