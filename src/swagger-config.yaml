@@ -1280,6 +1280,34 @@ components:
         id: 
           type: string
           description: "id заказа"
+    GetMaterialsResponse:
+      type: array
+      example: [{"id": "015-01ef-0011", "name": "Внутренний корпус ГТК из сетки оц. стали, диаметр 315, L 900", "units": "шт.", "count": 12, "childs": [{"id": "011-1ef-0012", "name": "Сетка ПВС TR1606/0.7/1.47/880-5000/Zn08ПС","units": "м²" ,"count": 10.524 ,"waste": 0.000}]}]
+      items:
+        $ref: '#/components/schemas/OrderMaterialItem'
+    OrderMaterialItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "id материала"
+        name:
+          type: string
+          description: "Наименование материала"
+        units:
+          type: string
+          description: "Единицы измерения"
+        count:
+          type: number
+          description: "Количество"
+        waste:
+          type: number
+          description: "Отход, поле может отсутствовать"
+        childs:
+          type: array
+          description: "Вложенный список сборочных единиц в таком же формате [id, name, units, count, waste, childs]. Может отсутствовать, может быть рекурсивным"
+          items:
+            $ref: '#/components/schemas/OrderMaterialItem'
 tags:
   - name: auth
     description: Авторизация/регистрация
@@ -2169,3 +2197,19 @@ paths:
                   id:
                     type: string
                     description: "id документа для выгрузки"
+  /Order/getMaterials:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Получить список материалов"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMaterialsResponse'
