@@ -2198,12 +2198,17 @@ paths:
                     type: string
                     description: "id документа для выгрузки"
   /Order/getMaterials:
-    get:
+    post:
       security:
         - bearerAuth: []
       tags:
         - order
       summary: "Получить список материалов"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOrder'
       responses:
         401:
           description: "Error"
