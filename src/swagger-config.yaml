@@ -1308,6 +1308,27 @@ components:
           description: "Вложенный список сборочных единиц в таком же формате [id, name, units, count, waste, childs]. Может отсутствовать, может быть рекурсивным"
           items:
             $ref: '#/components/schemas/OrderMaterialItem'
+    GetProductById:
+      type: object
+      example: {"id": "0011-11ef-1111"}
+      properties:
+        id:
+          type: string
+          description: "id изделия"
+    GetProductByIdResponse:
+      type: object
+      example: {"type": "RoundStraightIncut_t", "properties": {"SteelType": "galvanized", "SteelThickness": 0.45, "D": 200, "FireResistanceClass": "none"}}
+      properties:
+        type:
+          type: string
+          description: "Тип изделия"
+        properties:
+          type: object
+          description: "Индивидуальные параметры изделия"
+          properties:
+            SteelType:
+              type: string
+              description: "Тип стали (итд)"
 tags:
   - name: auth
     description: Авторизация/регистрация
@@ -1508,7 +1529,7 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  api/call?&source={currentProduct}&target=unf_product_t:
+  /api/call?&source={currentProduct}&target=unf_product_t:
     post:
       tags:
         - products
@@ -1531,7 +1552,28 @@ paths:
           description: "Error"
         200:
           description: "OK"
-
+  /Product/getProductById:
+    post:
+      tags:
+        - products
+      security:
+        - basicAuth: []
+      summary: "Получить данные об изделии"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetProductById'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProductByIdResponse'
   # profile part
   /Profile/getUserInfo:
     get:
