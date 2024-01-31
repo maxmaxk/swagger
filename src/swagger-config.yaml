@@ -1282,7 +1282,7 @@ components:
           description: "id заказа"
     GetMaterialsResponse:
       type: array
-      example: [{"id": "015-01ef-0011", "name": "Внутренний корпус ГТК из сетки оц. стали, диаметр 315, L 900", "units": "шт.", "count": 12, "childs": [{"id": "011-1ef-0012", "name": "Сетка ПВС TR1606/0.7/1.47/880-5000/Zn08ПС","units": "м²" ,"count": 10.524 ,"waste": 0.000}]}]
+      example: [{"id": "015-01ef-0011", "name": "Внутренний корпус ГТК из сетки оц. стали, диаметр 315, L 900", "units": "шт.", "count": 12, "waste": 0.000, "childs": [{"id": "011-1ef-0012", "name": "Сетка ПВС TR1606/0.7/1.47/880-5000/Zn08ПС" ,"count": 12 ,"waste": 0.000}]}]
       items:
         $ref: '#/components/schemas/OrderMaterialItem'
     OrderMaterialItem:
@@ -1305,7 +1305,7 @@ components:
           description: "Отход, поле может отсутствовать"
         childs:
           type: array
-          description: "Вложенный список сборочных единиц в таком же формате [id, name, units, count, waste, childs]. Может отсутствовать, может быть рекурсивным"
+          description: "Вложенный список сборочных единиц в таком же формате [id, name, count, waste, childs]. Может отсутствовать, может быть рекурсивным"
           items:
             $ref: '#/components/schemas/OrderMaterialItem'
     GetProductById:
