@@ -1552,28 +1552,6 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Product/getProductById:
-    post:
-      tags:
-        - products
-      security:
-        - basicAuth: []
-      summary: "Получить данные об изделии"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GetProductById'
-        required: true
-      responses:
-        401:
-          description: "Error"
-        200:
-          description: "OK"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetProductByIdResponse'
   # profile part
   /Profile/getUserInfo:
     get:
@@ -2260,3 +2238,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetMaterialsResponse'
+  /Order/getProductById:
+    post:
+      tags:
+        - order
+      security:
+        - basicAuth: []
+      summary: "Получить данные об изделии"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetProductById'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProductByIdResponse'
