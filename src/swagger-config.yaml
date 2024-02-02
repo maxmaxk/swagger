@@ -1191,6 +1191,9 @@ components:
         isActual:
           type: boolean
           description: "Актуальность"
+        name:
+          type: string
+          description: "Наименование изделия"
         count:
           type: number
           description: "Количество в основных единицах"
