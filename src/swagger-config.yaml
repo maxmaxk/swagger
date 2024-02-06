@@ -1311,6 +1311,29 @@ components:
           description: "Вложенный список сборочных единиц в таком же формате [id, name, count, waste, childs]. Может отсутствовать, может быть рекурсивным"
           items:
             $ref: '#/components/schemas/OrderMaterialItem'
+    GetPaymentsResponse:
+      type: array
+      example: [{"id": "015-01ef-0011", "billDate": "03.11.2022T00:00:00", "paymentDate": "09.11.2022T00:00:00", "name": "Покупка вентизделий для дома-музея Фредди Меркьюри на ул. Фучика", "summ": 42057.08}]
+      items:
+        $ref: '#/components/schemas/OrderPaymentItem'
+    OrderPaymentItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "id платежа"
+        billDate:
+          type: string
+          description: "Дата выставления счета"
+        paymentDate:
+          type: string
+          description: "Дата оплаты"
+        name:
+          type: string
+          description: "Наименование платежа"
+        summ:
+          type: number
+          description: "Сумма платежа"  
     GetProductById:
       type: object
       example: {"id": "0011-11ef-1111"}
@@ -2263,3 +2286,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetMaterialsResponse'
+  /Order/getPayments:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Получить список платежных документов"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOrder'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPaymentsResponse'
