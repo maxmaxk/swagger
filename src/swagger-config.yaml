@@ -1355,6 +1355,26 @@ components:
             SteelType:
               type: string
               description: "Тип стали (итд)"
+    GetHistoryResponse:
+      type: array
+      example: [{"id": "015-01ef-0011", "date": "03.11.2022T09:57:00", "name": "Событие: Тексты событий формируются беком", "user": "Фамилия И. О."}]
+      items:
+        $ref: '#/components/schemas/OrderHistoryItem'
+    OrderHistoryItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "id события"
+        date:
+          type: string
+          description: "Дата/время события"
+        name:
+          type: string
+          description: "Наименование события"
+        user:
+          type: string
+          description: "Пользователь"
 tags:
   - name: auth
     description: Авторизация/регистрация
@@ -2307,3 +2327,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetPaymentsResponse'
+  /Order/getHistory:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Получить историю событий для заказа"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOrder'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetHistoryResponse'
