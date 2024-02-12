@@ -1328,6 +1328,37 @@ components:
           description: "Вложенный список сборочных единиц в таком же формате [id, name, count, waste, childs]. Может отсутствовать, может быть рекурсивным"
           items:
             $ref: '#/components/schemas/OrderMaterialItem'
+    GetOperationsResponse:
+      type: object
+      example: {"planLaborIntensity": 197, "planPreparationTime": "32:46", operations: [{"id": "015-01ef-0011", "name": "Лазерная резка", "standardTime": "01:37", "childs": [{"id": "011-1ef-0012", "name": "Протяжка рулона на лазере", "standardTime": "00:24", "childs": [{"id": "011-1ef-0013", "name": "Тройник прямой оц.ст. 0.65 мм 1300х1100 / Ф70 / 1300х1100 L=1700 мм h=100 мм отб40 / вырезной / загл Эмаль ПФ115", "standardTime": "00:09"}]}]}]}
+      properties:
+        planLaborIntensity:
+          type: number
+          description: "Плановая трудоёмкость заказа (человеко-час)"
+        planPreparationTime:
+          type: string
+          description: "Плановое время изготовления Заказа (час:мин)"
+        operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderOperationItem'
+    OrderOperationItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "id операции"
+        name:
+          type: string
+          description: "Наименование операции"
+        standardTime:
+          type: string
+          description: "Норма времени (час:мин)"
+        childs:
+          type: array
+          description: "Вложенный список операций в таком же формате [id, name, standardTime, childs]. Может отсутствовать, может быть рекурсивным"
+          items:
+            $ref: '#/components/schemas/OrderOperationItem'
     GetPaymentsResponse:
       type: array
       example: [{"id": "015-01ef-0011", "billDate": "03.11.2022T00:00:00", "paymentDate": "09.11.2022T00:00:00", "name": "Покупка вентизделий для дома-музея Фредди Меркьюри на ул. Фучика", "summ": 42057.08}]
@@ -2462,3 +2493,24 @@ paths:
           description: "Error"
         200:
           description: "OK"
+  /Order/getOperations:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Получить список операций"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOrder'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOperationsResponse'
