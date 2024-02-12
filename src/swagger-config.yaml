@@ -540,6 +540,13 @@ components:
           description: "id документа для скачивания"
     GetDocumentByIdResponse:
       type: file
+    FileUploadResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "4602259e-56fe-4614-affb-f6e8c7ed573f"
+          description: "id файла"
     SetAutoActivation:
       type: object
       properties:
@@ -728,6 +735,16 @@ components:
       properties:
         id:
           type: string
+    OrderFile:
+      type: object
+      example: {"orderId":"34de-21abc-12-004", "fileId": "34de-21abc-12-005"}
+      properties:
+        orderId:
+          type: string
+          description: "id заказа"
+        fileId:
+          type: string
+          description: "id файла"
     GetOrderResponse:
       type: object
       example: {"id": "34de-21abc-12-004 | 0 (если новый)", "manufacturerId":"34de-21abc-12-005", "manufacturerName": "ООО ПО Трубное Решение", "orderName": "394/270-615", "orderDate": "2023-10-18T00:00:00", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "orderStatus": "new", "customerId":"34de-21abc-12-006", "customerName": "ИП Джумаев Мухаммади Фуркатович", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "positions":[{"id": "15ef-1255-ab13", "isActual": true, "name": "Отвод х/к ст. 1.2мм, сварн., 700х400, 90град, шея1=100, шея2=100, фл25/фл25, грунт красн-кор", "count": 17, "units": "шт", "price": 6828, "altCount": 23.09, "altUnits": "пог.м", "altUnitsList": ["пог.м","м2"], "altPrice": 4496, "weight": 361.3, "square": 28.051, "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция", "taxRate": "20/120", "taxSumm": 456.2, "discountRate": 10.7, "discountSumm": 1395.3, "summ": 116097}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "normal", "squareMeterRounded": "ceil", "systemVisible": false, "commentVisible": false, "ndsVisible": false}, "orderSpecOptions":{"name": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}, "total": {"count": 17, "weight": 361.3, "square": 28.051, "taxSumm": 456.2, "discountAvg": 10.7, "discountSumm": 1395.3, "summ": 116097}}
@@ -1375,6 +1392,26 @@ components:
         user:
           type: string
           description: "Пользователь"
+    GetFilesResponse:
+      type: array
+      example: [{"id": "015-01ef-0011", "name": "Name_loading_file.docx", "date": "03.11.2022T00:00:00", "size": "36942"}]
+      items:
+        $ref: '#/components/schemas/OrderHistoryItem'
+    OrderFileItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "id файла"
+        name:
+          type: string
+          description: "Имя файла"
+        date:
+          type: string
+          description: "Дата загрузки файла"
+        size:
+          type: string
+          description: "Размер файла, КВ"
 tags:
   - name: auth
     description: Авторизация/регистрация
@@ -1957,6 +1994,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDocumentByIdResponse'
+  /Files/upload:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - files
+      summary: "Загрузить файл на сервер"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: file
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileUploadResponse'
   # order list part
   /Orders/getList:
     post:
@@ -2348,3 +2407,58 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetHistoryResponse'
+  /Order/getFiles:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Получить список файлов для заказа"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOrder'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFilesResponse'
+  /Order/putFile:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Добавить файл в заказ"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderFile'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /Order/removeFile:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Удалить файл из заказа"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderFile'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
