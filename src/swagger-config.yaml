@@ -735,13 +735,10 @@ components:
       properties:
         id:
           type: string
-    OrderFile:
+    RemoveFile:
       type: object
-      example: {"orderId":"34de-21abc-12-004", "fileId": "34de-21abc-12-005"}
+      example: {"fileId": "34de-21abc-12-005"}
       properties:
-        orderId:
-          type: string
-          description: "id заказа"
         fileId:
           type: string
           description: "id файла"
@@ -2379,15 +2376,6 @@ paths:
           description: "Error"
         200:
           description: "OK"
-          content:
-            application/json:
-              schema:
-                type: object
-                example: {"id": "011-ef01-156d-1111"}
-                properties:
-                  id:
-                    type: string
-                    description: "id документа для выгрузки"
   /Order/getMaterials:
     post:
       security:
@@ -2500,7 +2488,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrderFile'
+              $ref: '#/components/schemas/RemoveFile'
       responses:
         401:
           description: "Error"
@@ -2527,3 +2515,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOperationsResponse'
+  /Order/getSpec:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Получить спецификацию заказа в соответствии с настройками /Order/saveSpecOptions"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOrder'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            multipart/form-data:
+              schema:
+                type: file
