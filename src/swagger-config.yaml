@@ -764,7 +764,7 @@ components:
           description: "Имя файла"
     GetOrderResponse:
       type: object
-      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "manufacturerId":"34de-21abc-12-005", "manufacturerName": "ООО ПО Трубное Решение", "orderName": "394/270-615", "orderDate": "2023-10-18T00:00:00", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "orderStatus": "new", "customerId":"34de-21abc-12-006", "customerName": "ИП Джумаев Мухаммади Фуркатович", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "deliveryWayId": "017-ef11-0011-00af", "loadAddress": "Склад готовой продукции", "cargoWeight": 19.365, "cargoMaxSize": 2150, "cargoVolume": 5.39, "recipient": "Бари Алибасов", "deliveryCost": 2197, "deliveryInclude": false, "deliveryComment": "Пусть заказ доставят мулаточки", "positions":[{"id": "15ef-1255-ab13", "isActual": true, "name": "Отвод х/к ст. 1.2мм, сварн., 700х400, 90град, шея1=100, шея2=100, фл25/фл25, грунт красн-кор", "docName": "Отвод  х/к ст. 1.2мм", "count": 17, "units": "шт", "price": 6828, "altCount": 23.09, "altUnits": "пог.м", "altUnitsList": ["пог.м","м2"], "altPrice": 4496, "weight": 361.3, "square": 28.051, "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция", "taxRate": "20/120", "taxSumm": 456.2, "discountRate": 10.7, "discountSumm": 1395.3, "summ": 116097}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "docNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false}, "orderSpecOptions":{"name": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "draft": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}, "total": {"count": 17, "weight": 361.3, "square": 28.051, "taxSumm": 456.2, "discountAvg": 10.7, "discountSumm": 1395.3, "summ": 116097}}
+      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "manufacturerId":"34de-21abc-12-005", "manufacturerName": "ООО ПО Трубное Решение", "orderName": "394/270-615", "orderDate": "2023-10-18T00:00:00", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "orderStatus": "new", "customerId":"34de-21abc-12-006", "customerName": "ИП Джумаев Мухаммади Фуркатович", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "deliveryWayId": "017-ef11-0011-00af", "loadAddress": "Склад готовой продукции", "cargoWeight": 19.365, "cargoMaxSize": 2150, "cargoVolume": 5.39, "recipient": "Бари Алибасов", "deliveryCost": 2197, "deliveryInclude": false, "deliveryComment": "Пусть заказ доставят мулаточки", "positions":[{"id": "15ef-1255-ab13", "isActual": true, "name": "Отвод х/к ст. 1.2мм, сварн., 700х400, 90град, шея1=100, шея2=100, фл25/фл25, грунт красн-кор", "printName": "Отвод  х/к ст. 1.2мм", "count": 17, "units": "шт", "price": 6828, "altCount": 23.09, "altUnits": "пог.м", "altUnitsList": ["пог.м","м2"], "altPrice": 4496, "weight": 361.3, "square": 28.051, "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция", "taxRate": "20/120", "taxSumm": 456.2, "discountRate": 10.7, "discountSumm": 1395.3, "summ": 116097}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "printNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false}, "orderSpecOptions":{"name": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "draft": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}, "total": {"count": 17, "weight": 361.3, "square": 28.051, "taxSumm": 456.2, "discountAvg": 10.7, "discountSumm": 1395.3, "summ": 116097}}
       properties:
         id:
           type: string
@@ -883,7 +883,7 @@ components:
         name:
           type: string
           description: "Наименование поменклатуры"
-        docName:
+        printName:
           type: string
           description: "Наименование поменклатуры для документов"
         count:
@@ -983,7 +983,7 @@ components:
             description: "Наименование производтеля"
     GetOptionsResponse:
       type: object
-      example: {'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "docNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false}
+      example: {'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "printNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false}
       properties:
         altUnitsVisible:
           type: boolean
@@ -1000,7 +1000,7 @@ components:
           enum:
             - ceil
             - floor
-        docNameVisible:
+        printNameVisible:
           type: boolean
           description: "Показывать ли в заказе колонку 'Наименование в документах'"
         systemVisible:
@@ -1014,7 +1014,7 @@ components:
           description: "Показывать ли в заказе колонку 'НДС'"
     SetOptionsResponse:
       type: object
-      example: {'id':'011-ed11-0015-1111', 'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "docNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false}
+      example: {'id':'011-ed11-0015-1111', 'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "printNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false}
       properties:
         id:
           type: string
@@ -1034,7 +1034,7 @@ components:
           enum:
             - ceil
             - floor
-        docNameVisible:
+        printNameVisible:
           type: boolean
           description: "Показывать ли в заказе колонку 'Наименование в документах'"
         systemVisible:
@@ -1264,6 +1264,9 @@ components:
         name:
           type: string
           description: "Наименование изделия"
+        printName:
+          type: string
+          description: "Наименование изделия для документов"
         count:
           type: number
           description: "Количество в основных единицах"
@@ -1310,7 +1313,7 @@ components:
           description: "Стоимость позиции"
     SaveOrder:
       type: object
-      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "orderDate": "2023-10-18T00:00:00", "customerId": "12c0-1aa3-1411", "manufactorId": "12c0-1aa3-1412", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "deliveryWayId": "00af-ac15-0011-0000", "recipient": "Илон Маск", "deliveryInclude": true, "deliveryComment": "Доставка на Марс",  "positions":[{"id": "15ef-1255-ab13", "count": 17, "altCount": 23.09, "altUnits": "пог.м", "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция"}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "docNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false}, "orderSpecOptions":{"name": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "draft": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}}
+      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "orderDate": "2023-10-18T00:00:00", "customerId": "12c0-1aa3-1411", "manufactorId": "12c0-1aa3-1412", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "deliveryWayId": "00af-ac15-0011-0000", "recipient": "Илон Маск", "deliveryInclude": true, "deliveryComment": "Доставка на Марс",  "positions":[{"id": "15ef-1255-ab13", "count": 17, "altCount": 23.09, "altUnits": "пог.м", "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция"}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "printNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false}, "orderSpecOptions":{"name": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "draft": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}}
       properties:
         id:
           type: string
@@ -1519,12 +1522,64 @@ components:
         size:
           type: string
           description: "Размер файла, КВ"
-    GetCommonConfigSchema:
+    GetLogCalcs:
+      type: object
+      example: {"configId": "015-01ef-0011", "search": "Самый лучший расчет", "from": "03.11.2022T00:00:00", "to": "13.11.2022T00:00:00"}
+      properties:
+        configId: 
+          type: string
+          description: "Фильтр по id конфигурации"
+        search:
+          type: string
+          description: "Фильтр по строке поиска"  
+        from:
+          type: string
+          description: "Фильтр по дате расчета (начало периода)"
+        to:
+          type: string
+          description: "Фильтр по дате расчета (окончание периода)"
+    GetLogCalcsResponse:
+      type: array
+      example: [{"id": "015-01ef-0011", "num": 1, "date": "31.08.2023T09:26:44", "name": "Тип изделия металл, размеры 1, размеры 2, особенности", "application": "1С — Клиент", "packId": "000000000000006203", "hash": "08e4328a6e00eb1050b837ec2404862c"}]
+      items:
+        $ref: '#/components/schemas/LogCalcItem'
+    LogCalcItem:  
       type: object
       properties:
-        params:
+        id:
           type: string
-            
+          description: "id расчета"
+        num:
+          type: number
+          description: "Порядковый номер расчета"
+        date:
+          type: string
+          description: "Дата и время расчета"
+        name:
+          type: string
+          description: "Наименование расчета"
+        application:
+          type: string
+          description: "Приложение для расчета"
+        packId:
+          type: string
+          description: "id пакета расчета"
+        hash:
+          type: string
+          description: "Хеш расчета"
+    GetConfigsResponse:
+      type: array
+      example: [{"id": "015-01ef-0011", "name": "ООО Трубное решение"}, {"id": "015-01ef-0012", "name": "ОАО Вентилятор"}]
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: "id конфигурации"
+          name:
+            type: "string"
+            description: "Наименовании конфигурации"
+
 tags:
   - name: auth
     description: Авторизация/регистрация
@@ -1540,8 +1595,8 @@ tags:
     description: Работа с заказами
   - name: order
     description: Работа с заказом
-  - name: config
-    description: Работа с конфигурацией расчета
+  - name: logcalcs
+    description: Работа с журналом расчетов
 paths:
 
   # auth part
@@ -2631,13 +2686,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDeliveryWaysResponse'
-  /Config/Common/getParams:
-    get:
+  /LogCalcs/getLogCalcs:
+    post:
       security:
         - bearerAuth: []
       tags:
-        - config
-      summary: "Получить список общих параметров"
+        - logcalcs
+      summary: "Получить журнал расчетов"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetLogCalcs'
       responses:
         401:
           description: "Error"
@@ -2646,4 +2706,20 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetCommonConfigSchema'
+                $ref: '#/components/schemas/GetLogCalcsResponse'
+  /LogCalcs/getConfigs:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - logcalcs
+      summary: "Получить список конфигураций"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConfigsResponse'
