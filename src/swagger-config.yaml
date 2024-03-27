@@ -1482,6 +1482,69 @@ components:
             SteelType:
               type: string
               description: "Тип стали (итд)"
+    GetProductList:
+      type: object
+      properties:
+        search:
+          type: string
+          description: "Строка поиска изделия"
+    GetProductListResponse:
+      type: object
+      properties:
+        availCalcs:
+          type: number
+          example: 59264
+          description: "Доступно расчетов"
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductListItem'
+    ProductListItem:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "011-ef12-0001"
+          description: "id изделия"
+        actual:
+          type: boolean
+          description: "Актуальность данных (true = не требудет пересчета)"
+        name:
+          type: string
+          example: "Врезка (адаптер) из оц. стали, класс 'B' для EI, 400х200, L=1500, исп.2"
+          description: "Наименование изделия"
+        units:
+          type: string
+          example: "шт."
+          description: "Единицы измерения"
+        matCost:
+          type: number
+          example: 986.74
+          description: "Стоимость материалов, руб"
+        workCost:
+          type: number
+          example: 564.00
+          description: "Стоимость работ, руб"
+        netCost:
+          type: number
+          example: 1472.58
+          description: "Себестоимость, руб"
+        minPrice:
+          type: number
+          example: 2453.49
+          description: "Себестоимость, руб"
+        price:
+          type: number
+          example: 2780.63
+          description: "Розница, руб"
+    RecalcProductList:
+      type: object
+      example: "{ids: ['015-01ef-0011', '015-01ef-0012', '015-01ef-0013']}"
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
     GetHistoryResponse:
       type: array
       example: [{"id": "015-01ef-0011", "date": "03.11.2022T09:57:00", "name": "Событие: Тексты событий формируются беком", "user": "Фамилия И. О."}]
@@ -1583,7 +1646,7 @@ components:
 tags:
   - name: auth
     description: Авторизация/регистрация
-  - name: products
+  - name: product
     description: Изделия
   - name: profile
     description: Страница профиля
@@ -1756,14 +1819,14 @@ paths:
         200:
           description: "OK"
 
-  # products part
+  # product part
               
   /api/config/read:
     get:
       security:
         - basicAuth: []
       tags:
-        - products
+        - product
       summary: "Получить справочник из сервиса расчета"
       responses:
         401:
@@ -1775,7 +1838,7 @@ paths:
       security:
         - basicAuth: []
       tags:
-        - products
+        - product
       summary: "Получить список изделий"
       responses:
         401:
@@ -1785,7 +1848,7 @@ paths:
   /api/call?&source={currentProduct}&target=unf_product_t:
     post:
       tags:
-        - products
+        - product
       security:
         - basicAuth: []
       parameters:
@@ -1808,7 +1871,7 @@ paths:
   /Product/getProductById:
     post:
       tags:
-        - products
+        - product
       security:
         - bearerAuth: []
       summary: "Получить данные об изделии"
@@ -1827,6 +1890,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetProductByIdResponse'
+  /Product/getProductsList:
+    post:
+      tags:
+        - product
+      security:
+        - bearerAuth: []
+      summary: "Получить список изделий"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetProductList'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProductListResponse'
+  /Product/recalcProductsList:
+    post:
+      tags:
+        - product
+      security:
+        - bearerAuth: []
+      summary: "Пересчитать список изделий"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecalcProductList'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
   # profile part
   /Profile/getUserInfo:
     get:
