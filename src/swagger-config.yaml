@@ -1470,7 +1470,7 @@ components:
           description: "id изделия"
     GetProductByIdResponse:
       type: object
-      example: {"type": "RoundStraightIncut_t", "properties": {"SteelType": "galvanized", "SteelThickness": 0.45, "D": 200, "FireResistanceClass": "none"}}
+      example: {"type": "RoundStraightIncut_t", "properties": {"SteelType": "galvanized", "SteelThickness": 0.45, "D": 200, "FireResistanceClass": "none"}, "common": {"name": "Тройник прямой оц.ст. 0.65 мм ", "printName": "Тройник прямой оц.ст. 0.65 мм ", "name3": "Тройник прямой оц.ст. 0.65 мм ", "name4": "Тройник прямой оц.ст. 0.65 мм ", "name5": "Тройник прямой оц.ст. 0.65 мм ", "name6": "Тройник прямой оц.ст. 0.65 мм "}, "prices": {"matCost": 1012.73, "workCost": 960.04, "netCost": 2236.61, "minPrice": 9300.49, "price": 10107.99}, "materials": [{"id": "015-01ef-0011", "name": "Внутренний корпус ГТК из сетки оц. стали, диаметр 315, L 900", "units": "шт.", "count": 12, "waste": 0, "childs": [{"id": "011-1ef-0012", "name": "Сетка ПВС TR1606/0.7/1.47/880-5000/Zn08ПС", "count": 12, "waste": 0}]}], "sizes": {"length": 2200, "width": 1750, "height": 1400, "weight": 6.073, "square": 1.25, "volume": 5.39}}
       properties:
         type:
           type: string
@@ -1482,6 +1482,101 @@ components:
             SteelType:
               type: string
               description: "Тип стали (итд)"
+        common:
+          type: object
+          properties:
+            name:
+              type: string
+              description: "Наименование поменклатуры основное"
+            printName:
+              type: string
+              description: "Наименование поменклатуры для печати"
+            name3:
+              type: string
+              description: "Наименование номер 3"
+            name4:
+              type: string
+              description: "Наименование номер 4"
+            name5:
+              type: string
+              description: "Наименование номер 5"
+            name6:
+              type: string
+              description: "Наименование номер 6"
+            actual:
+              type: boolean
+              description: "Актуальность данных (true = не требудет пересчета)"
+            recalcDate:
+              type: string
+              description: "Дата расчета"
+        prices:
+          type: object
+          properties:
+            matCost:
+              type: number
+              example: 986.74
+              description: "Стоимость материалов, руб"
+            workCost:
+              type: number
+              example: 564.00
+              description: "Стоимость работ, руб"
+            netCost:
+              type: number
+              example: 1472.58
+              description: "Себестоимость, руб"
+            minPrice:
+              type: number
+              example: 2453.49
+              description: "Минимальная цена, руб"
+            price:
+              type: number
+              example: 2780.63
+              description: "Розница, руб"
+        materials:
+          $ref: '#/components/schemas/GetMaterialsResponse'
+        operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/OperationItem'
+        sizes:
+          type: object
+          properties:
+            length:
+              type: number
+              description: "Длина изделия, мм"
+            width:
+              type: number
+              description: "Ширина изделия, мм"
+            height:
+              type: number
+              description: "Высота изделия, мм"
+            weight:
+              type: number
+              description: "Вес изделия, кг"
+            square:
+              type: number
+              description: "Площадь изделия, м2"
+            volume:
+              type: number
+              description: "Объем изделия, м3"
+    OperationItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "id операции"
+        stage:
+          type: string
+          description: "Этап"
+        area:
+          type: string
+          description: "Участок"
+        name:
+          type: string
+          description: "Наименование операции"
+        time:
+          type: string
+          description: "Время (час:мин)"
     GetProductList:
       type: object
       properties:
@@ -1532,7 +1627,7 @@ components:
         minPrice:
           type: number
           example: 2453.49
-          description: "Себестоимость, руб"
+          description: "Минимальная цена, руб"
         price:
           type: number
           example: 2780.63
