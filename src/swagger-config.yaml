@@ -1737,7 +1737,81 @@ components:
           name:
             type: "string"
             description: "Наименовании конфигурации"
-
+    GetVendors:
+      type: object
+      example: {"search": "Трубное решение"}
+      properties:
+        search: 
+          type: string
+          description: "Фильтр по строке поиска"
+    GetVendorsResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: "id поставщика"
+            example: "015-01ef-0011"
+          name:
+            type: string
+            description: "Наименовании поставщика"
+            example: "Трубное решение"
+          billTerm:
+            type: number
+            description: "Срок выставления счета (дней)"
+            example: 2
+          payTerm:
+            type: number
+            description: "Срок оплаты (дней)"
+            example: 3
+          deliveryTerm:
+            type: number
+            description: "Срок поставки (дней)"
+            example: 5
+          deliveryTypes:
+            type: string
+            description: "Виды доставки"
+            example: "Самовывоз, Доставка Поставщика"
+          mapAreas:
+            type: object
+            description: "Описание координат областей возможной доставки"
+            properties:
+              center:
+                type: array
+                description: "Центр карты"
+                example: [55.75, 37.62]
+                items:
+                  type: number
+              zoom:
+                type: number
+                description: "Масштаб карты по умолчанию"
+                example: 14
+              poligons:
+                type: array
+                description: "Массив областей с массивом координат"
+                example: [[[54.75, 36.62], [55.55, 37.52], [58.55, 39.52]], [[64.75, 36.62], [65.55, 37.52], [68.55, 39.52]]]
+                items:
+                  areas:
+                    type: array
+                    items:
+                      points:
+                        type: array
+                        items:
+                          point:
+                            type: number
+          loadAddress:
+            type: string
+            description: "Адрес погрузки"
+            example: "СПб, пр. Ветеранов, 56, строение 4"
+          site:
+            type: string
+            description: "Сайт производителя"
+            example: "https://name-site.com"
+          phone:
+            type: string
+            description: "Телефон производителя"
+            example: "+7 905 703-44-03"
 tags:
   - name: auth
     description: Авторизация/регистрация
@@ -1755,6 +1829,8 @@ tags:
     description: Работа с заказом
   - name: logcalcs
     description: Работа с журналом расчетов
+  - name: vendors
+    description: Работа со списком поставщиков
 paths:
 
   # auth part
@@ -2921,3 +2997,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetConfigsResponse'
+  /Vendors/getVendors:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - vendors
+      summary: "Получить список поставщиков"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetVendors'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVendorsResponse'
