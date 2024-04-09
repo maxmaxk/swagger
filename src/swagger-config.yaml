@@ -218,6 +218,10 @@ components:
           type: string
           example: "+7 (812) 747-65-93"
           description: "Телефон организации"
+        owner:
+          type: boolean
+          example: false
+          description: "Запретить удалять контрагента"
     ConfirmNewEmail:
       type: object
       properties:
@@ -1662,7 +1666,7 @@ components:
           description: "Пользователь"
     GetFilesResponse:
       type: array
-      example: [{"id": "015-01ef-0011", "name": "Name_loading_file.docx", "date": "03.11.2022T00:00:00", "size": "36942"}]
+      example: [{"id": "015-01ef-0011", "name": "Name_loading_file.docx", "date": "03.11.2022T00:00:00", "size": "36942", "readonly": false}]
       items:
         $ref: '#/components/schemas/OrderHistoryItem'
     OrderFileItem:
@@ -1680,6 +1684,9 @@ components:
         size:
           type: string
           description: "Размер файла, КВ"
+        readonly:
+          type: boolean
+          description: "Файл запрещен к удалению"
     GetLogCalcs:
       type: object
       example: {"configId": "015-01ef-0011", "search": "Самый лучший расчет", "from": "03.11.2022T00:00:00", "to": "13.11.2022T00:00:00"}
@@ -1812,6 +1819,64 @@ components:
             type: string
             description: "Телефон производителя"
             example: "+7 905 703-44-03"
+    GetMaterialsSectionsResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: "id секции"
+            example: "015-01ef-0011"
+          name:
+            type: string
+            description: "Наименовании секции"
+            example: "Листовой металл"
+    GetConfigMaterials:
+      type: object
+      properties:
+        section: 
+          type: string
+          description: "Фильтр по id секции"
+          example: "015-01ef-0011"
+        search: 
+          type: string
+          description: "Фильтр по строке поиска"
+          example: "Штрипс"
+    GetConfigMaterialsResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: "id материала"
+            example: "015-01ef-0011"
+          name:
+            type: string
+            description: "Наименование материала"
+            example: "Штрипс оц. 0.45/137"
+          price:
+            type: number
+            description: "Цена (с НДС), ₽"
+            example: 90
+          units:
+            type: string
+            description: "Единицы измерения"
+            example: "кг"
+    SetMaterialPrices:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: "id материала"
+            example: "015-01ef-0011"
+          price:
+            type: number
+            description: "Цена (с НДС), ₽"
+            example: 95
 tags:
   - name: auth
     description: Авторизация/регистрация
@@ -1831,6 +1896,8 @@ tags:
     description: Работа с журналом расчетов
   - name: vendors
     description: Работа со списком поставщиков
+  - name: config
+    description: Работа с конфигурацией
 paths:
 
   # auth part
@@ -3018,3 +3085,57 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetVendorsResponse'
+  /Config/Materials/getSections:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - config
+      summary: "Получить список разделов материалов"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMaterialsSectionsResponse'
+  /Config/Materials/getMaterials:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - config
+      summary: "Получить список материалов для конфигурации"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetConfigMaterials'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConfigMaterialsResponse'
+  /Config/Materials/setPrices:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - config
+      summary: "Сохранить цены для материалов"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetMaterialPrices'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
