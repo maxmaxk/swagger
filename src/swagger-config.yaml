@@ -1584,20 +1584,41 @@ components:
     GetProductList:
       type: object
       properties:
+        sectionId:
+          type: string
+          description: "id раздела"
         search:
           type: string
           description: "Строка поиска изделия"
+        offset:
+          type: number
+          description: "Сдвиг пагинации"
     GetProductListResponse:
       type: object
       properties:
-        availCalcs:
-          type: number
-          example: 59264
-          description: "Доступно расчетов"
+        end:
+          type: boolean
+          example: true
+          description: "Флаг полной выгрузки списка (для выключения пагинации)"
         products:
           type: array
           items:
             $ref: '#/components/schemas/ProductListItem'
+    GetUnactualCountResponse:
+      type: object
+      properties:
+        availCalcs:
+          type: number
+          example: 2719
+          description: "Доступно расчетов"
+        unactualTotal:
+          type: number
+          example: 537
+          description: "Всего неактуальных позиций"
+        unactualInSection:
+          type: number
+          example: 248
+          description: "Неактуальных позиций в текущем разделе"
     ProductListItem:
       type: object
       properties:
@@ -1606,8 +1627,12 @@ components:
           example: "011-ef12-0001"
           description: "id изделия"
         actual:
-          type: boolean
-          description: "Актуальность данных (true = не требудет пересчета)"
+          type: string
+          enum:
+            - actual
+            - notActual
+            - inProgress
+          description: "Актуальность данных (actual = актуально (не требует пересчета), notActual = неактуально, inProgress = в процессе пересчета)"
         name:
           type: string
           example: "Врезка (адаптер) из оц. стали, класс 'B' для EI, 400х200, L=1500, исп.2"
@@ -1636,7 +1661,21 @@ components:
           type: number
           example: 2780.63
           description: "Розница, руб"
-    RecalcProductList:
+    RecalcSectionProductList:
+      type: object
+      properties:
+        sectionId:
+          type: string
+          description: "id раздела"
+          example: "015-01ef-0011"
+    GetUnactualCount:
+      type: object
+      properties:
+        sectionId:
+          type: string
+          description: "id раздела"
+          example: "015-01ef-0011"
+    RecalcSelectProductList:
       type: object
       example: "{ids: ['015-01ef-0011', '015-01ef-0012', '015-01ef-0013']}"
       properties:
@@ -2150,24 +2189,78 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetProductListResponse'
-  /Product/recalcProductsList:
+  /Product/getUnactualCount:
     post:
       tags:
         - product
       security:
         - bearerAuth: []
-      summary: "Пересчитать список изделий"
+      summary: "Получить общее кол-во неактуальных изделий и кол-во неактуальных изделий в разделе"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RecalcProductList'
+              $ref: '#/components/schemas/GetUnactualCount'
         required: true
       responses:
         401:
           description: "Error"
         200:
           description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUnactualCountResponse'
+  /Product/recalcAllProductsList:
+    get:
+      tags:
+        - product
+      security:
+        - bearerAuth: []
+      summary: "Пересчитать все позиции в списке изделий"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /Product/recalcSectionProductsList:
+    post:
+      tags:
+        - product
+      security:
+        - bearerAuth: []
+      summary: "Пересчитать список изделий для выбранного раздела"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecalcSectionProductList'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /Product/recalcSelectProductsList:
+    post:
+      tags:
+        - product
+      security:
+        - bearerAuth: []
+      summary: "Пересчитать выбранные позиции в списке изделий"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecalcSelectProductList'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+
+
   # profile part
   /Profile/getUserInfo:
     get:
