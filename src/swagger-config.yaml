@@ -1903,6 +1903,33 @@ components:
             type: string
             description: "Единицы измерения"
             example: "кг"
+    GetConfigEconomic:
+      type: object
+      properties:
+        section: 
+          type: string
+          description: "Фильтр по наименованию секции"
+          example: "priceTypes"
+          enum:
+            - priceTypes
+            - formulas
+    GetConfigEconomicResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: "id параметра"
+            example: "015-01ef-0011"
+          name:
+            type: string
+            description: "Наименование параметра"
+            example: "Ставка нормо-часа рабочего (СНЧ), руб/час"
+          value:
+            type: number | string
+            description: "Значение параметра или формулы"
+            example: 390
     SetMaterialPrices:
       type: array
       items:
@@ -1916,6 +1943,19 @@ components:
             type: number
             description: "Цена (с НДС), ₽"
             example: 95
+    SetEconomicPrices:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: "id параметра"
+            example: "015-01ef-0011"
+          price:
+            type: number
+            description: "Значение"
+            example: 490 
 tags:
   - name: auth
     description: Авторизация/регистрация
@@ -3227,6 +3267,44 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/SetMaterialPrices'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /Config/Economic/getEconomic:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - config
+      summary: "Получить список экономических параметров"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetConfigEconomic'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConfigEconomicResponse'
+  /Config/Economic/setPrices:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - config
+      summary: "Сохранить цены для экономических параметров"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetEconomicPrices'
       responses:
         401:
           description: "Error"
