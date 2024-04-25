@@ -1943,7 +1943,7 @@ components:
             type: number
             description: "Цена (с НДС), ₽"
             example: 95
-    SetEconomicPrices:
+    SetEconomicParamValue:
       type: array
       items:
         type: object
@@ -3293,18 +3293,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetConfigEconomicResponse'
-  /Config/Economic/setPrices:
+  /Config/Economic/setParamValue:
     post:
       security:
         - bearerAuth: []
       tags:
         - config
-      summary: "Сохранить цены для экономических параметров"
+      summary: "Сохранить значения экономических параметров"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SetEconomicPrices'
+              $ref: '#/components/schemas/SetEconomicParamValue'
       responses:
         401:
           description: "Error"
