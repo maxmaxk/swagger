@@ -2706,7 +2706,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOrderStates'
-  /Order/getCurrectCount:
+  /Orders/getCurrectCount:
     get:
       security:
         - bearerAuth: []
