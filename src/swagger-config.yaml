@@ -706,6 +706,13 @@ components:
           isDefault:
             type: boolean
             descrition: "Является ли опция значением по умолчанию"
+    GetCurrectCount:
+      type: object
+      properties:
+        count:
+          type: number
+          descrition: "Количество заказов, требующих внимания"
+          example: 24
     CreateNewOrder:
       type: object
       description: "id заказа, позициями которого нужно наполнить новый заказ"
@@ -2699,6 +2706,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOrderStates'
+  /Order/getCurrectCount:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - orders
+      summary: "Получить количество требующих внимания заказов"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCurrectCount'
   /Orders/create:
     post:
       security:
