@@ -1481,17 +1481,11 @@ components:
           description: "id изделия"
     GetProductByIdResponse:
       type: object
-      example: {"type": "RoundStraightIncut_t", "typeName": "Тройник прям-прям-прям", "typeDescription": "Очень красивый тройник", "isActual": true, "calcDate": "2023-12-07T09:28:46", "properties": {"SteelType": "galvanized", "SteelThickness": 0.45, "D": 200, "FireResistanceClass": "none"}, "common": {"name": "Тройник прямой оц.ст. 0.65 мм ", "printName": "Тройник прямой оц.ст. 0.65 мм ", "name3": "Тройник прямой оц.ст. 0.65 мм ", "name4": "Тройник прямой оц.ст. 0.65 мм ", "name5": "Тройник прямой оц.ст. 0.65 мм ", "name6": "Тройник прямой оц.ст. 0.65 мм "}, "prices": {"matCost": 1012.73, "workCost": 960.04, "netCost": 2236.61, "minPrice": 9300.49, "price": 10107.99}, "materials": [{"id": "015-01ef-0011", "name": "Внутренний корпус ГТК из сетки оц. стали, диаметр 315, L 900", "units": "шт.", "count": 12, "waste": 0, "childs": [{"id": "011-1ef-0012", "name": "Сетка ПВС TR1606/0.7/1.47/880-5000/Zn08ПС", "count": 12, "waste": 0}]}], "operations": [{"id": "0011-ef15-0001", "stage": "Лазерная резка", "area": "Участок резки", "name": "Протяжка рулона на лазере", "time": "00:07", "laborIntensity": 0.6}], "sizes": {"length": 2200, "width": 1750, "height": 1400, "weight": 6.073, "square": 1.25, "volume": 5.39}}
+      example: {"type": "RoundStraightIncut_t", "isActual": true, "calcDate": "2023-12-07T09:28:46", "properties": {"SteelType": "galvanized", "SteelThickness": 0.45, "D": 200, "FireResistanceClass": "none"}, "common": {"name": "Тройник прямой оц.ст. 0.65 мм ", "printName": "Тройник прямой оц.ст. 0.65 мм ", "name3": "Тройник прямой оц.ст. 0.65 мм ", "name4": "Тройник прямой оц.ст. 0.65 мм ", "name5": "Тройник прямой оц.ст. 0.65 мм ", "name6": "Тройник прямой оц.ст. 0.65 мм "}, "prices": {"matCost": 1012.73, "workCost": 960.04, "netCost": 2236.61, "minPrice": 9300.49, "price": 10107.99}, "materials": [{"id": "015-01ef-0011", "name": "Внутренний корпус ГТК из сетки оц. стали, диаметр 315, L 900", "units": "шт.", "count": 12, "waste": 0, "childs": [{"id": "011-1ef-0012", "name": "Сетка ПВС TR1606/0.7/1.47/880-5000/Zn08ПС", "count": 12, "waste": 0}]}], "operations": [{"id": "0011-ef15-0001", "stage": "Лазерная резка", "area": "Участок резки", "name": "Протяжка рулона на лазере", "time": "00:07", "laborIntensity": 0.6}], "sizes": {"length": 2200, "width": 1750, "height": 1400, "weight": 6.073, "square": 1.25, "volume": 5.39}}
       properties:
         type:
           type: string
           description: "Тип изделия"
-        typeName:
-          type: string
-          description: "Название типа изделия"
-        typeDescription:
-          type: string
-          description: "Описание типа изделия"
         isActual:
           type: boolean
           description: "Актуальность расчета изделия"
