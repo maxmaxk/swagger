@@ -1980,7 +1980,7 @@ components:
             type: string
             description: "id параметра"
             example: "015-01ef-0011"
-          price:
+          value:
             type: number
             description: "Значение"
             example: 490 
