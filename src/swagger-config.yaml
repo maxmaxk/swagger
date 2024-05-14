@@ -2260,6 +2260,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetProductListResponse'
+  /Product/getSections:
+    get:
+      tags:
+        - product
+      security:
+        - bearerAuth: []
+      summary: "Получить наименования разделов изделий"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMaterialsSectionsResponse'
   /Product/getUnactualCount:
     post:
       tags:
