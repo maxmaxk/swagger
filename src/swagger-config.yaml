@@ -1919,27 +1919,37 @@ components:
           type: string
           description: "Фильтр по строке поиска"
           example: "Штрипс"
+        offset:
+          type: number
+          description: "Сдвиг пагинации"
     GetConfigMaterialsResponse:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-            description: "id материала"
-            example: "015-01ef-0011"
-          name:
-            type: string
-            description: "Наименование материала"
-            example: "Штрипс оц. 0.45/137"
-          price:
-            type: number
-            description: "Цена (с НДС), ₽"
-            example: 90
-          units:
-            type: string
-            description: "Единицы измерения"
-            example: "кг"
+      type: object
+      properties:
+        end:
+          type: boolean
+          example: true
+          description: "Флаг полной выгрузки списка (для выключения пагинации)"
+        list:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: "id материала"
+                example: "015-01ef-0011"
+              name:
+                type: string
+                description: "Наименование материала"
+                example: "Штрипс оц. 0.45/137"
+              price:
+                type: number
+                description: "Цена (с НДС), ₽"
+                example: 90
+              units:
+                type: string
+                description: "Единицы измерения"
+                example: "кг"
     GetConfigEconomic:
       type: object
       properties:
