@@ -83,10 +83,6 @@ components:
           type: string
           example: "email@mail.com"
           description: "Почта для регистрации пользователя"
-        isPhysical:
-          type: boolean
-          example: true
-          description: "true если пользователь - физическое лицо"
     GetRegistrationResponse:
       type: object
       properties:
@@ -144,16 +140,28 @@ components:
         password:
           type: string
           example: "password"
+        customerType:
+          type: string
+          example: "ФЛ"
+          description: "Юридическая форма заказчика"
+          enum:
+            - ФЛ
+            - ИП
+            - ЮР
     GetUserInfoResponse:
       type: object
       properties:
         userName:
           type: string
           example: "userName"
-        isPhysical:
-          type: boolean
-          example: true
-          description: "true если пользователь - физическое лицо"
+        customerType:
+          type: string
+          example: "ФЛ"
+          description: "Юридическая форма заказчика"
+          enum:
+            - ФЛ
+            - ИП
+            - ЮР
         email:
           type: string
           example: "user@mail.com"
