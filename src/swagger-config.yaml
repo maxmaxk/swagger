@@ -162,6 +162,14 @@ components:
             - ФЛ
             - ИП
             - ЮР
+        customerRole:
+          type: string
+          example: "buyer"
+          description: "Роль пользователя: покупатель (buyer), производитель (manufactor), поставщик (provider)"
+          enum:
+            - buyer
+            - manufactor
+            - provider
         email:
           type: string
           example: "user@mail.com"
@@ -403,7 +411,89 @@ components:
         corrAccount:
           type: string
           example: "30101810500000000653"
-          description: "Корреспондентский счет"  
+          description: "Корреспондентский счет"
+    ChangeToManufactor:
+      type: object
+      properties:
+        shortName:
+          type: string
+          example: "Вентустановки"
+          description: "Короткое название производителя"
+    ChangeToProvider:
+      type: object
+      properties:
+        canSellToPhysical:
+          type: boolean
+          example: true
+          description: "Разрешены продажи физическим лицам"
+        termCreateBill:
+          type: number
+          example: 1
+          description: "Срок выставления счёта (дни)"
+        termPaymentBill:
+          type: number
+          example: 1
+          description: "Срок оплаты счёта (дни)"
+        termSupply:
+          type: number
+          example: 1
+          description: "Срок поставки (минимальный, дни)"
+        manufactorCityId:
+          type: string
+          example: "0011-ef15-0001"
+          description: "id населенного пункта производства"
+        loadAddress:
+          type: string
+          example: "СПб, пр. Ветеранов, 56, строение 4"
+          description: "Адрес погрузки"
+        selfDelivery:
+          type: boolean
+          example: true
+          description: "Разрешен самовывоз"
+        providerDelivery:
+          type: boolean
+          example: true
+          description: "Разрешена доставка поставщиком"
+        deliveryRegions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: "011-ef15-001"
+                description: "id региона доставки"
+    GetCityList:
+      type: object
+      properties:
+        search:
+          type: string
+          example: "Александ"
+          description: "Строка поиска населенного пункта (поиск начинает работать при длине строки поиска >= 3)"
+    GetCityListResponse:
+      type: array
+      example: [{"id": "0011-ef15-0001", "name": "Александровка — село в Майминском районе респ. Алтай"}, {"id": "0011-ef15-0002", "name": "Александровка — посёлок в Благовещенском районе респ. Алтай"}, {"id": "0011-ef15-0003", "name": "Александровка — село в Завьяловском районе респ. Алтай"}, {"id": "0011-ef15-0004", "name": "А всего Александровок в России 329 штук по версии Википедии, а сколько в 1С?"}]
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: "id населенного пункта"
+          name:
+            type: string
+            description: "Наименование населенного пункта"
+    GetRegionListResponse:
+      type: array
+      example: [{"id": "0011-ef15-0001", "name": "Вся Россия"}, {"id": "0011-ef15-0002", "name": "Москва"}, {"id": "0011-ef15-0003", "name": "Московская обл."}, {"id": "0011-ef15-0004", "name": "СПб"}, {"id": "0011-ef15-0005", "name": "Ленинградская обл."}, {"id": "0011-ef15-0006", "name": "Адыгея"}, {"id": "0011-ef15-0007", "name": "Алтай"}, {"id": "0011-ef15-0008", "name": "Башкортостан"}, {"id": "0011-ef15-0009", "name": "Бурятия"}]
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: "id региона"
+          name:
+            type: string
+            description: "Наименование региона"    
     Changemail:
       type: object
       properties:
@@ -2582,6 +2672,80 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetBankByBIKResponse'
+  /Profile/changeToManufactor:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - profile
+      summary: "Сменить роль пользователя на Производитель"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeToManufactor'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /Profile/changeToProvider:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - profile
+      summary: "Сменить роль пользователя на Поставщик"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeToProvider'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /Profile/getCityList:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - profile
+      summary: "Получить список населенных пунктов"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetCityList'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCityListResponse'
+  /Profile/getRegionList:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - profile
+      summary: "Получить список регионов"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRegionListResponse'    
   # packs part
   /Packs/getInfo:
     get:
