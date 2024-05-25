@@ -170,6 +170,10 @@ components:
             - buyer
             - manufactor
             - provider
+        isBaseConfig:
+          type: boolean
+          example: true
+          description: "true, если пользователь использует базовую конфигурацию"
         email:
           type: string
           example: "user@mail.com"
