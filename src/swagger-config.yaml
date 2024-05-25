@@ -147,7 +147,7 @@ components:
           enum:
             - ФЛ
             - ИП
-            - ЮР
+            - ЮЛ
     GetUserInfoResponse:
       type: object
       properties:
@@ -161,7 +161,7 @@ components:
           enum:
             - ФЛ
             - ИП
-            - ЮР
+            - ЮЛ
         customerRole:
           type: string
           example: "buyer"
