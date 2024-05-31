@@ -863,7 +863,105 @@ components:
       description: "id производителя"
       properties:
         id:
-          type: string    
+          type: string
+    СhangeProviderResponse:
+      type: object
+      properties:
+        providers:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: "0101-ef15-0001"
+                description: "id поставщика"
+              name:
+                type: string
+                example: "АэроСетьКонтроль"
+                description: "Наименование поставщика"
+              owner:
+                type: boolean
+                example: false
+                description: "true, если это запись текущего поставщика"
+              summ:
+                type: number
+                example: 26394867
+                description: "Пересчитанная сумма заказа"
+              compareStatus:
+                type: string
+                example: "less"
+                description: "Статус результата пересчета заказа: less - сумма меньше, чем в исходном Заказе, equal - сумма равна исходному Заказу, more - сумма больше, чем в исходном Заказе, lack - нет расчёта по некоторым позициям"
+                enum:
+                  - less
+                  - equal
+                  - more
+                  - lack
+              comment:
+                type: string
+                example: "(исходный Заказ)"
+                description: "Комментарий поставщика"
+        positions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: "0101-ef15-0018"
+                description: "id позиции"
+              name:
+                type: string
+                example: "Отвод х/к ст. 1.2мм, сварн., 700х400"
+                description: "Наименование позиции"
+              count:
+                type: number
+                example: 17
+                description: "Количество в заказе"
+              unit:
+                type: string
+                example: "шт"
+                description: "Единицы измерения" 
+              price:
+                type: number
+                example: 623
+                description: "Исходная цена позиции"             
+              summ:
+                type: number
+                example: 10591
+                description: "Исходная сумма позиции"
+              providers:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: "0101-ef15-0001"
+                      description: "id поставщика"    
+                    price:
+                      type: number
+                      example: 623
+                      description: "Пересчитанная цена позиции"             
+                    summ:
+                      type: number
+                      example: 10591
+                      description: "Пересчитанная сумма позиции"
+                    compareStatus:
+                      type: string
+                      example: "equal"
+                      description: "Статус результата пересчета позиции: less - сумма меньше, чем в исходном Заказе, equal - сумма равна позиции в исходном Заказе, more - сумма больше, чем в исходном Заказе, lack - нет расчёта по этой позиции"
+                      enum:
+                        - less
+                        - equal
+                        - more
+                        - lack
+    CreateByProviders:
+      type: array
+      items:
+        type: string
+        example: "34de-21abc-12-005"
+        description: "id поставщика для создания заказа"   
     RemoveFile:
       type: object
       example: {"fileId": "34de-21abc-12-005"}
@@ -3411,6 +3509,18 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/GetDeliveryWays'
+  /Order/compareProviders:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Пересчитать заказ у других поставщиков"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOrder'
       responses:
         401:
           description: "Error"
@@ -3419,7 +3529,24 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetDeliveryWaysResponse'
+                $ref: '#/components/schemas/СhangeProviderResponse'
+  /Order/createByProviders:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Создать заказы у других поставщиков"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateByProviders'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
   /LogCalcs/getLogCalcs:
     post:
       security:
