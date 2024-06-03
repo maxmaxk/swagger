@@ -832,24 +832,6 @@ components:
         id:
           type: string
           description: "id заказа на основе которого нужно создать новый"
-    ChangeManufactor:
-      type: object
-      example: {"id": "34de-21abc-12-001", "manufactorIds": ["34de-21abc-12-002", "34de-21abc-12-003", "34de-21abc-12-004"]}
-      properties:
-        id:
-          type: string
-          description: "id заказа, который нужно пересчитать у других производителей"
-        manufactorIds:
-          type: array
-          description: "id производителей у которых нужно пересчитать заказ"
-          items:
-            type: string
-    ChangeManufactorResponse:
-      type: array
-      example: ["34de-21abc-12-00a", "34de-21abc-12-00b", "34de-21abc-12-00c"]
-      items:
-        type: string
-        description: "id новых заказов"
     GetOrder:
       type: object
       example: {"id":"34de-21abc-12-004"}
@@ -957,11 +939,25 @@ components:
                         - more
                         - lack
     CreateByProviders:
+      type: object
+      example: {"id": "34de-21abc-12-001", "manufactorIds": ["34de-21abc-12-002", "34de-21abc-12-003", "34de-21abc-12-004"]}
+      properties:
+        orderId:
+          type: string
+          example: "34de-21abc-12-005"
+          description: "id заказа"
+        providerIds:
+          type: array 
+          items:
+            type: string
+            example: "34de-21abc-12-005"
+            description: "id поставщика для создания заказа"
+    CreateByProvidersResponse:
       type: array
+      example: ["34de-21abc-12-00a", "34de-21abc-12-00b", "34de-21abc-12-00c"]
       items:
         type: string
-        example: "34de-21abc-12-005"
-        description: "id поставщика для создания заказа"   
+        description: "id новых заказов"
     RemoveFile:
       type: object
       example: {"fileId": "34de-21abc-12-005"}
@@ -3079,28 +3075,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOrder'
-  /Orders/changeManufactor:
-    post:
-      security:
-        - bearerAuth: []
-      tags:
-        - orders
-      summary: "Пересчитать заказ у других производителей"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ChangeManufactor'
-        required: true
-      responses:
-        401:
-          description: "Error"
-        200:
-          description: "OK"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ChangeManufactorResponse'
   /Order/getOrder:
     post:
       security:
@@ -3547,6 +3521,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateByProvidersResponse'
   /LogCalcs/getLogCalcs:
     post:
       security:
