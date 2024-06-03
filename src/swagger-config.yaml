@@ -940,7 +940,7 @@ components:
                         - lack
     CreateByProviders:
       type: object
-      example: {"id": "34de-21abc-12-001", "manufactorIds": ["34de-21abc-12-002", "34de-21abc-12-003", "34de-21abc-12-004"]}
+      example: {"orderId": "34de-21abc-12-001", "providerIds": ["34de-21abc-12-002", "34de-21abc-12-003", "34de-21abc-12-004"]}
       properties:
         orderId:
           type: string
