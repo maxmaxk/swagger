@@ -170,6 +170,10 @@ components:
             - buyer
             - manufactor
             - vendor
+        inModeration:
+          type: boolean
+          example: false
+          description: "true, если заявка на изменение роли находится в стадии модерации"
         isBaseConfig:
           type: boolean
           example: true
