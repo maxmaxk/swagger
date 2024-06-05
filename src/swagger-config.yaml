@@ -883,6 +883,10 @@ components:
               type: number
               example: 26394867
               description: "Пересчитанная сумма заказа"
+            planDelivery:
+              type: string
+              example: "17.06.2024"
+              description: "Расчетная дата поставки"
             compareStatus:
               type: string
               example: "less"
