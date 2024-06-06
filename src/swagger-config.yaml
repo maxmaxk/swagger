@@ -182,6 +182,10 @@ components:
             - none
             - checking
             - good
+        proxyBlankId:
+          type: string
+          example: "011-ef15-0001"
+          description: "id документа бланка доверенности для скачивания"
         isBaseConfig:
           type: boolean
           example: true
@@ -509,7 +513,14 @@ components:
             description: "id региона"
           name:
             type: string
-            description: "Наименование региона"    
+            description: "Наименование региона"
+    SetProxyId:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "121-ab0-32312-00ff"
+          description: "id загруженного документа доверенности"
     Changemail:
       type: object
       properties:
@@ -2854,7 +2865,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetRegionListResponse'    
+                $ref: '#/components/schemas/GetRegionListResponse'
+  /Profile/setProxyId:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - profile
+      summary: "Сохранить документ доверенности"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetProxyId'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
   # packs part
   /Packs/getInfo:
     get:
