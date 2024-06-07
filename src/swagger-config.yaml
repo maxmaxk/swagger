@@ -454,14 +454,14 @@ components:
           type: number
           example: 1
           description: "Срок поставки (минимальный, дни)"
-        manufactorCityId:
+        manufactorAddress:
           type: string
-          example: "0011-ef15-0001"
-          description: "id населенного пункта производства"
-        loadAddress:
+          example: "Санкт-Петербург, Пушкин, ул. Ахматовская, д. 21"
+          description: "Адрес производства"
+        loadCoordinates:
           type: string
-          example: "СПб, пр. Ветеранов, 56, строение 4"
-          description: "Адрес погрузки"
+          example: "30.422031, 59.726483"
+          description: "Координаты погрузки"
         selfDelivery:
           type: boolean
           example: true
@@ -517,6 +517,77 @@ components:
           type: string
           example: "121-ab0-32312-00ff"
           description: "id загруженного документа доверенности"
+    GetManufactorInfoResponse:
+      type: object
+      properties:
+        configPrefix:
+          type: string
+          description: "Префикс конфигурации производителя"
+          example: "prefix"
+        shortName:
+          type: string
+          description: "Краткое наименование производителя"
+          example: "Трубное решение"
+    GetVendorInfo:
+      type: object
+      properties:
+        configPrefix:
+          type: string
+          description: "Префикс конфигурации производителя"
+          example: "prefix"
+        shortName:
+          type: string
+          description: "Краткое наименование производителя"
+          example: "Трубное решение"
+        canSellToPhysical:
+          type: boolean
+          example: true
+          description: "Разрешены продажи физическим лицам"
+        termCreateBill:
+          type: number
+          example: 1
+          description: "Срок выставления счёта (дни)"
+        termPaymentBill:
+          type: number
+          example: 1
+          description: "Срок оплаты счёта (дни)"
+        termSupply:
+          type: number
+          example: 1
+          description: "Срок поставки (минимальный, дни)"
+        manufactorAddress:
+          type: string
+          example: "Санкт-Петербург, Пушкин, ул. Ахматовская, д. 21"
+          description: "Адрес производства"
+        loadCoordinates:
+          type: string
+          example: "30.422031, 59.726483"
+          description: "Координаты погрузки"
+        website:
+          type: string
+          example: "name-site.com"
+          description: "Сайт поставщика"
+        logo:
+          type: string
+          example: "121-ab0-32312-00ff"
+          description: "id документа изображения логотипа поставщика"          
+        selfDelivery:
+          type: boolean
+          example: true
+          description: "Разрешен самовывоз"
+        vendorDelivery:
+          type: boolean
+          example: true
+          description: "Разрешена доставка поставщиком"
+        deliveryRegions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: "011-ef15-001"
+                description: "id региона доставки"
     Changemail:
       type: object
       properties:
@@ -2880,6 +2951,38 @@ paths:
           description: "Error"
         200:
           description: "OK"
+  /Profile/getManufactorInfo:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - profile
+      summary: "Получить данные текущего пользователя - производителя"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManufactorInfoResponse'
+  /Profile/getVendorInfo:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - profile
+      summary: "Получить данные текущего пользователя - поставщика"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVendorInfo'
   # packs part
   /Packs/getInfo:
     get:
