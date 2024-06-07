@@ -182,10 +182,6 @@ components:
             - none
             - checking
             - good
-        proxyBlankId:
-          type: string
-          example: "011-ef15-0001"
-          description: "id документа бланка доверенности для скачивания"
         isBaseConfig:
           type: boolean
           example: true
@@ -3007,6 +3003,22 @@ paths:
             schema:
               $ref: '#/components/schemas/GetDocumentById'
         required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDocumentByIdResponse'
+  /Files/getBlankProxyDocument:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - files
+      summary: "Получить файл бланка доверенности"
       responses:
         401:
           description: "Error"
