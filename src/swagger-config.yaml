@@ -479,6 +479,58 @@ components:
                 type: string
                 example: "011-ef15-001"
                 description: "id региона доставки"
+    EditVendor:
+      type: object
+      properties:
+        canSellToPhysical:
+          type: boolean
+          example: true
+          description: "Разрешены продажи физическим лицам"
+        termCreateBill:
+          type: number
+          example: 1
+          description: "Срок выставления счёта (дни)"
+        termPaymentBill:
+          type: number
+          example: 1
+          description: "Срок оплаты счёта (дни)"
+        termSupply:
+          type: number
+          example: 1
+          description: "Срок поставки (минимальный, дни)"
+        manufactorAddress:
+          type: string
+          example: "Санкт-Петербург, Пушкин, ул. Ахматовская, д. 21"
+          description: "Адрес производства"
+        loadCoordinates:
+          type: string
+          example: "30.422031, 59.726483"
+          description: "Координаты погрузки"
+        website:
+          type: string
+          example: "name-site.com"
+          description: "Сайт поставщика"
+        logo:
+          type: string
+          example: "121-ab0-32312-00ff"
+          description: "id документа изображения логотипа поставщика"  
+        selfDelivery:
+          type: boolean
+          example: true
+          description: "Разрешен самовывоз"
+        vendorDelivery:
+          type: boolean
+          example: true
+          description: "Разрешена доставка поставщиком"
+        deliveryRegions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: "011-ef15-001"
+                description: "id региона доставки"    
     GetCityList:
       type: object
       properties:
@@ -2889,6 +2941,24 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/ChangeToVendor'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /Profile/editVendor:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - profile
+      summary: "Сменить роль пользователя на Поставщик"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditVendor'
         required: true
       responses:
         401:
