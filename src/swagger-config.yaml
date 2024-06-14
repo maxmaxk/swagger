@@ -454,7 +454,7 @@ components:
           type: number
           example: 1
           description: "Срок поставки (минимальный, дни)"
-        manufactorAddress:
+        loadAddress:
           type: string
           example: "Санкт-Петербург, Пушкин, ул. Ахматовская, д. 21"
           description: "Адрес производства"
@@ -498,7 +498,7 @@ components:
           type: number
           example: 1
           description: "Срок поставки (минимальный, дни)"
-        manufactorAddress:
+        loadAddress:
           type: string
           example: "Санкт-Петербург, Пушкин, ул. Ахматовская, д. 21"
           description: "Адрес производства"
@@ -607,7 +607,7 @@ components:
           type: number
           example: 1
           description: "Срок поставки (минимальный, дни)"
-        manufactorAddress:
+        loadAddress:
           type: string
           example: "Санкт-Петербург, Пушкин, ул. Ахматовская, д. 21"
           description: "Адрес производства"
