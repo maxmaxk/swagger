@@ -2957,7 +2957,7 @@ paths:
         - bearerAuth: []
       tags:
         - profile
-      summary: "Сменить роль пользователя на Поставщик"
+      summary: "Редактирование для роли Поставщика"
       requestBody:
         content:
           application/json:
