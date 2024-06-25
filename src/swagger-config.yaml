@@ -1249,14 +1249,137 @@ components:
         specOptions:
           $ref: '#/components/schemas/GetSpecOptionsResponse'
     GetDraftResponse:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-            example: "0011-ed15-0001"
-            description: "id позиции"
+      type: object
+      properties:
+        orderName:
+          type: string
+          example: "394/270-615"
+          description: "Наименование заказа"
+        orderDate:
+          type: string
+          example: "17.10.2023"
+          description: "Дата заказа"
+        vendorName:
+          type: string
+          example: "ООО ПО «Трубное Решение»"
+          description: "Наименование поставщика"
+        positions:
+          type: array
+          items:
+            $ref: '#/components/schemas/DraftItem'
+    DraftItem:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "0011-ed15-0001"
+          description: "id позиции"
+        included:
+          type: boolean
+          example: true
+          description: "true, если позиция включена в список для распознавания"
+        lineNo:
+          type: number
+          example: 4
+          description: "Номер строки спецификации в исходном файле"
+        posName:
+          type: string
+          example: "П1.1"
+          description: "Позиционное обозначение изделия в исходном файле"
+        name:
+          type: string
+          example: "Тройник ст. 1.2мм, 400х1200 - 1000х1200 - 400х1200, 90град, L=1200, h=100, фл32, х/к, грунт"
+          description: "Наименование и технические характеристики"
+        typeName:
+          type: string
+          example: "Тип, марка"
+          description: "Тип, марка"
+        code:
+          type: string
+          example: "Код"
+          description: "Код"
+        manufactor:
+          type: string
+          example: "Изготовитель"
+          description: "Изготовитель"
+        units:
+          type: string
+          example: "шт."
+          description: "Единицы измерения"
+        count:
+          type: number
+          example: 7
+          description: "Количество"
+        weight:
+          type: number
+          example: 15.312
+          description: "Масса, кг"
+        note:
+          type: string
+          example: "Текст примечания к позиции"
+          description: "Текст примечания к позиции"          
+        system:
+          type: string
+          example: "ПВС-1"
+          description: "Наименование системы"
+        recognizeId:
+          type: string
+          example: "0011-ef15-0001"
+          description: "id распознанного изделия"
+        recognizeType:
+          type: string
+          example: "Тройник Ø/Ø/Ø"
+          description: "Распознанный тип изделия"
+        recognizeName:
+          type: string
+          example: "Тройник ст. 1.2мм, 400х1200 - 1000х1200 - 400х1200, 90град, L=1200, h=100, фл32, х/к, грунт"
+          description: "Распознанная номенклатура"
+        recognizeUnits:
+          type: string
+          example: "шт."
+          description: "Распознанные единицы измерения"
+        recognizeCount:
+          type: number
+          example: 7
+          description: "Количество"
+    SaveDraftItem:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "0011-ed15-0001"
+          description: "id позиции"
+        included:
+          type: boolean
+          example: true
+          description: "true, если позиция включена в список для распознавания"
+        recognizeId:
+          type: string
+          example: "0011-ef15-1111"
+          description: "id распознанного изделия"
+        recognizeUnits:
+          type: string
+          example: "шт."
+          description: "Распознанные единицы измерения"
+        recognizeCount:
+          type: number
+          example: 7
+          description: "Количество"
+    SetExcelFileId:
+      type: object
+      properties:
+        orderId:
+          type: string
+          example: "0011-ed15-0002, либо 0"
+          description: "id заказа для внесения позиций из файла, либо 0, если заказа еще не существует"
+        vendorId:
+          type: string
+          example: "0011-ed15-0088"
+          description: "id поставщика для создания нового заказа"
+        fileId:
+          type: string
+          example: "0011-ed15-0002.xls"
+          description: "id файла со спецификацией"
     OrderPositionItem:
       type: object
       properties:
@@ -1750,7 +1873,18 @@ components:
         orderOptions:
           $ref: '#/components/schemas/GetOptionsResponse'
         specOptions:
-          $ref: '#/components/schemas/GetSpecOptionsResponse'  
+          $ref: '#/components/schemas/GetSpecOptionsResponse'
+    SaveDraft:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "id заказа"
+          example: "015-01ef-0011"
+        positions:
+          type: array
+          items:
+            $ref: '#/components/schemas/SaveDraftItem'
     SaveOrderResponse:
       type: object
       properties:
@@ -3396,6 +3530,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDraftResponse'
+  /Order/setExcelFileId:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Подключение к заказу загруженной Excel спецификации"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetExcelFileId'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrder'
   /Order/getCustomers:
     get:
       security:
@@ -3556,6 +3712,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SaveOrderResponse'
+  /Order/saveDraft:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Сохранение распознавания заказа"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveDraft'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
   /Order/makeOrder:
     post:
       security:
