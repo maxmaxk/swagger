@@ -569,6 +569,20 @@ components:
           type: string
           example: "121-ab0-32312-00ff"
           description: "id загруженного документа доверенности"
+    SetLogoId:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "121-ab0-32312-00ff.png"
+          description: "id загруженного документа логотипа"   
+    SetLogoIdResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "121-ab0-32312-1100"
+          description: "id для скачивания логотипа"      
     GetManufactorInfoResponse:
       type: object
       properties:
@@ -881,7 +895,7 @@ components:
                 description: "Строка фильтрации"
     GetOrderListResponse:
       type: array
-      example: [{"id": "34de-21abc-12-00e",	"objectName": "Эрмитаж", "objectAddress":"СПБ, Дворцовая наб., д.38", "orderName":"35724/22-17", "manufactorName": "ООО Вентретейл", "customerName": "ИП Джанушвили", "orderDate": "2023-10-01T00:00:00", "shipmentDate":"2023-10-21T00:00:00", "comment":"Лучший заказ в моей жизни", "summ":27340, "orderStatus":"ordered", "paymentStatus":"partpay", "shipmentStatus":"partoverdue"}]
+      example: [{"id": "34de-21abc-12-00e",	"objectName": "Эрмитаж", "objectAddress":"СПБ, Дворцовая наб., д.38", "orderName":"35724/22-17", "manufactorName": "ООО Вентретейл", "customerName": "ИП Джанушвили", "orderDate": "2023-10-01T00:00:00", "shipmentDate":"2023-10-21T00:00:00", "comment":"Лучший заказ в моей жизни", "summ":27340, "orderStatus":"ordered", "paymentStatus":"partpay", "shipmentStatus":"partoverdue", "isDraft": false}]
       items:
         $ref: '#/components/schemas/OrderItem'
     OrderItem:
@@ -944,6 +958,9 @@ components:
             - partoverdue
             - overdue
             - done
+        isDraft:
+          type: boolean
+          description: "true, если заказ в стадии распознавания спецификации"
     GetOrderStates:
       type: array
       example: [{"id": "34de-21abc-12-001",	"stateName": "Новый", "isDefault": false}, {"id": "34de-21abc-12-002",	"stateName": "Открыт", "isDefault": true}, {"id": "34de-21abc-12-002",	"stateName": "Актуальные", "isDefault": false}]
@@ -1231,6 +1248,15 @@ components:
           $ref: '#/components/schemas/GetOptionsResponse'
         specOptions:
           $ref: '#/components/schemas/GetSpecOptionsResponse'
+    GetDraftResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            example: "0011-ed15-0001"
+            description: "id позиции"
     OrderPositionItem:
       type: object
       properties:
@@ -3025,6 +3051,28 @@ paths:
           description: "Error"
         200:
           description: "OK"
+  /Profile/setLogoId:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - profile
+      summary: "Сохранить логотип"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetLogoId'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetLogoIdResponse'
   /Profile/getManufactorInfo:
     get:
       security:
@@ -3326,6 +3374,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOrderResponse'
+  /Order/getDraft:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Получение данных для страницы загрузки спецификации"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOrder'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDraftResponse'
   /Order/getCustomers:
     get:
       security:
