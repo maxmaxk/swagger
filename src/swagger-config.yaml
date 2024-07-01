@@ -1716,7 +1716,7 @@ components:
           description: "id производителя"
     SearchPositionsResponse:
       type: array
-      example: [{"id": "101d-1311-0e0a", "name": "Воздуховод прямоугольный 100х200"}, {"id": "101d-1311-0e0b", "name": "Отвод 100х200"}, {"id": "101d-1311-0e0b", "name": "Зонт вытяжной 100х200"}]
+      example: [{"id": "101d-1311-0e0a", "name": "Воздуховод прямоугольный 100х200", "typeName": "Прямая часть #"}, {"id": "101d-1311-0e0b", "name": "Отвод 100х200", "typeName": "Прямая часть #"}, {"id": "101d-1311-0e0b", "name": "Зонт вытяжной 100х200", "typeName": "Прямая часть #"}]
       items:
         type: object
         properties:
@@ -1726,6 +1726,9 @@ components:
           name:
             type: string
             description: "Наименование поменклатуры"
+          typeName:
+            type: string
+            description: "Наименование типа изделия"
     ChangePosition:
       type: object
       example: {"id": "101d-1311-0e0a", "count": 17, "altCount": 15.22, "altUnits": "пог.м", "changeField": "altCount", "linearMeterRounded": "none", "squareMeterRounded":"ceil"}
