@@ -1765,64 +1765,119 @@ components:
             - ceil
             - floor        
     ChangePositionResponse:
+      $ref: '#/components/schemas/ChangePositionItem'
+    ChangePositionItem:
       type: object
       properties:
         id:
           type: string
           description: "id изделия"
+          example: "0111-ef15-0001"
         isActual:
           type: boolean
           description: "Актуальность"
         name:
           type: string
           description: "Наименование изделия"
+          example: "Отвод х/к ст. 0.8мм, сварн., 700х400, 90град, шея1=100, шея2=100, фл25/фл25, грунт красн-кор"
         printName:
           type: string
           description: "Наименование изделия для документов"
+          example: "Отвод х/к ст. 0.8мм, сварн., 700х400, 90град, шея1=100, шея2=100, фл25/фл25, грунт красн-кор"
         count:
           type: number
           description: "Количество в основных единицах"
+          example: 17
         units:
           type: string
           description: "Наименование основных единиц"
+          example: "шт"
         price:
           type: number
           description: "Цена за основную единицу"
+          example: 623
         altCount:
           type: number
           description: "Количество в дополнительных единицах"
+          example: 50
         altUnits:
           type: string
           description: "Наименование дополнительных единиц"
+          example: "м2"
         altUnitsList:
           type: array
           description: "Список допустимых для позиции дополнительных единиц"
+          example: ["м2", "м.пог."]
           items:
             type: string
         altPrice:
           type: number
+          example: 15.8
           description: "Цена за дополнительную единицу"
         weight:
           type: number
+          example: 14.55
           description: "Вес, кг"
         square:
           type: number
+          example: 5.6
           description: "Площадь, м2"
         taxRate:
           type: string
+          example: 13
           description: "Ставка НДС"
         taxSumm:
           type: number
+          example: 144.5
           description: "Сумма НДС"
         discountRate:
           type: number
+          example: 20
           description: "Скидка в %"
         discountSumm:
           type: number
+          example: 158
           description: "Сумма скидки"
         summ:
           type: number
+          example: 10591
           description: "Стоимость позиции"
+        error:
+          type: string
+          example: "Сталь не может быть меньше 1.4"
+          description: "Текст ошибки при пересчете, иначе пустая строка"
+    ChangeSteel:
+      type: object
+      properties:
+        steelType:
+          type: string
+          example: "galvanized"
+          description: "Тип стали: blackcold=черная, galvanized=оцинкованная, stainless=нержавеющая"
+          enum:
+            - blackcold
+            - galvanized
+            - stainless
+        steelThickness:
+          type: number
+          description: "Толщина стали"
+          example: 1.2
+        positions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: "0111-ef15-0001"
+                description: "id номенклатурной позиции для пересчета"
+              count:
+                type: number
+                example: 17
+                description: "Количество в основных единицах"
+    ChangeSteelResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/ChangePositionItem'
     SaveOrder:
       type: object
       example: {"id": "34de-21abc-12-004 | 0 (если новый)", "orderDate": "2023-10-18T00:00:00", "customerId": "12c0-1aa3-1411", "manufactorId": "12c0-1aa3-1412", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "deliveryWayId": "00af-ac15-0011-0000", "recipient": "Илон Маск", "recipientPhone": "+7 911 111 1111", "deliveryInclude": true, "deliveryComment": "Доставка на Марс",  "positions":[{"id": "15ef-1255-ab13", "count": 17, "altCount": 23.09, "altUnits": "пог.м", "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция"}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "printNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false}, "orderSpecOptions":{"name": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "draft": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}}
@@ -3693,6 +3748,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChangePositionResponse'
+  /Order/changeSteel:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Запрос на изменение типа стали в позициях"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeSteel'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeSteelResponse'
   /Order/save:
     post:
       security:
