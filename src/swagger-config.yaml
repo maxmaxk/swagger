@@ -710,29 +710,17 @@ components:
       properties:
         buySchema:
           type: array
-          example: [{packCount: 100, periods: [{period: 30, sum: 300, price: 3},{period: 60, sum: 350, price: 3.5}]},{packCount: 300, periods: [{period: 90, sum: 600, price: 2}, {period: 120, sum: 700, price: 2.33}]}]
-          description: "Возможные варианты покупки количества пакетов / периодов"
+          example: [{packCount: 100, price: 8}, {packCount: 500, price: 6}, {packCount: 1000, price: 4.5}, {packCount: 5000, price: 3.5}]
+          description: "Тарифная сетка цены тикета в зависимости от кол-ва: packCount - порог изменения цены: поле price справедливо для кол-ва меньше либо равного, указанного в packCount"
           items:
             type: object
             properties:
               packCount: 
                 type: number
-              periods: 
-                type: array
-                items:
-                  $ref: '#/components/schemas/BuyItem'
-    BuyItem:
-      type: object
-      properties:
-        period:
-          type: number
-          description: "Кол-во дней, доступных для расчетов"
-        sum:
-          type: number
-          description: "Стоимость пакета"
-        price:
-          type: number
-          description: "Стоимость одного расчета"
+                description: "Порог изменения цены"
+              price: 
+                type: number
+                description: "Цена тикета для кол-ва <= порогу packCount"
     PacksItem:
       type: object
       properties:
@@ -2280,6 +2268,12 @@ components:
           type: array
           items:
             type: string
+    PictureByCalcInfo:
+      type: object
+      properties:
+        calcData:
+          type: object
+          description: "Результат расчета изделия как есть"
     GetHistoryResponse:
       type: array
       example: [{"id": "015-01ef-0011", "date": "03.11.2022T09:57:00", "name": "Событие: Тексты событий формируются беком", "user": "Фамилия И. О."}]
@@ -2926,7 +2920,24 @@ paths:
           description: "Error"
         200:
           description: "OK"
-
+  /Product/pictureByCalcInfo:
+    post:
+      tags:
+        - product
+      security:
+        - bearerAuth: []
+      summary: "Получить эскиз изделия по его рассчитанным параметрам"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PictureByCalcInfo'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"    
 
   # profile part
   /Profile/getUserInfo:
