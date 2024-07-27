@@ -707,10 +707,13 @@ components:
               description: "Всего расчетов осталось"
     GetBuySchema:
       type: object
+      example: {period: 30, buySchema: [{packCount: 100, price: 8}, {packCount: 500, price: 6}, {packCount: 1000, price: 4.5}, {packCount: 5000, price: 3.5}]}
       properties:
+        period:
+          type: number
+          description: "Период действия пакетов"
         buySchema:
           type: array
-          example: [{packCount: 100, price: 8}, {packCount: 500, price: 6}, {packCount: 1000, price: 4.5}, {packCount: 5000, price: 3.5}]
           description: "Тарифная сетка цены тикета в зависимости от кол-ва: packCount - порог изменения цены: поле price справедливо для кол-ва меньше либо равного, указанного в packCount"
           items:
             type: object
