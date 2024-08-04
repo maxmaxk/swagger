@@ -2277,6 +2277,13 @@ components:
         calcData:
           type: object
           description: "Результат расчета изделия как есть"
+    PictureById:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "id изделия"
+          example: "011-ef15-0001"
     GetHistoryResponse:
       type: array
       example: [{"id": "015-01ef-0011", "date": "03.11.2022T09:57:00", "name": "Событие: Тексты событий формируются беком", "user": "Фамилия И. О."}]
@@ -2941,7 +2948,24 @@ paths:
           description: "Error"
         200:
           description: "OK"    
-
+  /Product/pictureById:
+    post:
+      tags:
+        - product
+      security:
+        - bearerAuth: []
+      summary: "Получить эскиз изделия по его id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PictureById'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK" 
   # profile part
   /Profile/getUserInfo:
     get:
