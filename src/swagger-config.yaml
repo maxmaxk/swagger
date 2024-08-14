@@ -2571,6 +2571,28 @@ components:
             type: number
             description: "Значение"
             example: 490 
+    GetLegalSectionsResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: "id раздела"
+            example: "015-01ef-0011"
+          sectionName:
+            type: string
+            description: "Наименование раздела"
+            example: "Первый тематический раздел"
+          articles:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: "id документа"
+                  example: "015-01ef-0022"         
 tags:
   - name: auth
     description: Авторизация/регистрация
@@ -2592,6 +2614,8 @@ tags:
     description: Работа со списком поставщиков
   - name: config
     description: Работа с конфигурацией
+  - name: help
+    description: Работа с документацией
 paths:
 
   # auth part
@@ -4275,3 +4299,19 @@ paths:
           description: "Error"
         200:
           description: "OK"
+  /Help/getLegalSections:
+    get:
+      security:
+        - basicAuth: []
+      tags:
+        - help
+      summary: "Получить разделы юридической документации"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLegalSectionsResponse'
