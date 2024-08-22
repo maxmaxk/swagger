@@ -12,9 +12,6 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT 
-    basicAuth:
-      type: http
-      scheme: basic
   security:
     - bearerAuth: [] 
 
@@ -809,13 +806,6 @@ components:
           type: string
           example: "4602259e-56fe-4614-affb-f6e8c7ed573f"
           description: "id файла"
-    SetAutoActivation:
-      type: object
-      properties:
-        autoActivation:
-          type: boolean
-          example: true
-          description: "Установить режим автоактивации пакетов"
     SetPacksOrder:
       type: array
       example: [{"id": "000 000 000 000 000 153", "order": 0}, {"id": "000 000 000 000 000 158", "order": 1}]
@@ -830,13 +820,6 @@ components:
             type: number
             example: 1
             description: "Порядок расположения"
-    PacksActivate:
-      type: object
-      properties:
-        id:
-          type: string
-          example: "000 000 000 000 000 153"
-          description: "id пакета для ручной активации"
     GetOrderList:
       type: object
       example: {"orderBy": "objectNameInc", "filters": [{"fieldName": "orderDate", "searchFilter": "12.04.1961"}, {"fieldName": "comment", "searchFilter": "УрЮрВКос!"}, {"fieldName": "stateName", "searchFilter": "Открыт"}]}
@@ -967,13 +950,21 @@ components:
           isDefault:
             type: boolean
             descrition: "Является ли опция значением по умолчанию"
-    GetCurrectCount:
+    StatisticGetInfo:
       type: object
       properties:
-        count:
+        orderCount:
           type: number
           descrition: "Количество заказов, требующих внимания"
           example: 24
+        subscribe:
+          type: string
+          descrition: "Статус подписки: notActive - нет/закончилась, active - есть подписка, ending - заканчивается (10% от первоначального количества или 3 рабочих дня до окончания срока действия)"
+          example: "notActive"
+          enum:
+            - notActive
+            - active
+            - ending
     CreateNewOrder:
       type: object
       description: "id заказа, позициями которого нужно наполнить новый заказ"
@@ -1469,18 +1460,6 @@ components:
           name:
             type: string
             description: "Наименование покупателя"
-    GetManufactorsSchema:
-      type: array
-      example: [{"id": "34de-21abc-12-004", "name": "ИП Джумаев Мухаммади Фуркатович"}, {"id": "34de-21abc-12-005", "name": "ООО Веселый воздуховод"}, {"id": "34de-21abc-12-006", "name": "ООО Грустный фланец"}]
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-            description: "id производителя"
-          name:
-            type: string
-            description: "Наименование производтеля"
     GetOptionsResponse:
       type: object
       example: {'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "printNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false}
@@ -2616,6 +2595,8 @@ tags:
     description: Работа с конфигурацией
   - name: help
     description: Работа с документацией
+  - name: statistic
+    description: Статистические данные
 paths:
 
   # auth part
@@ -2780,10 +2761,27 @@ paths:
   /api/config/read:
     get:
       security:
-        - basicAuth: []
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: vendor_id
+          schema:
+            type: string
+          required: false
+          description: ID производителя
       tags:
         - product
-      summary: "Получить справочник из сервиса расчета"
+      summary: "Получить справочник из сервиса расчета (пользователь авторизован)"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /demo/api/config/read:
+    get:
+      tags:
+        - product
+      summary: "Получить справочник из сервиса расчета (пользователь неавторизован)"
       responses:
         401:
           description: "Error"
@@ -2792,10 +2790,27 @@ paths:
   /api/types?&title=1&bytarget=unf_product_t&input_schema=1:
     get:
       security:
-        - basicAuth: []
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: vendor_id
+          schema:
+            type: string
+          required: false
+          description: ID производителя
       tags:
         - product
-      summary: "Получить список изделий"
+      summary: "Получить список изделий (пользователь авторизован)"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /demo/api/types?&title=1&bytarget=unf_product_t&input_schema=1:
+    get:
+      tags:
+        - product
+      summary: "Получить список изделий (пользователь неавторизован)"
       responses:
         401:
           description: "Error"
@@ -2806,7 +2821,7 @@ paths:
       tags:
         - product
       security:
-        - basicAuth: []
+        - bearerAuth: []
       parameters:
         - in: path
           name: currentProduct
@@ -2814,7 +2829,34 @@ paths:
             type: string
           required: true
           description: ID изделия
-      summary: "Запросить расчет изделия"
+        - in: path
+          name: vendor_id
+          schema:
+            type: string
+          required: false
+          description: ID производителя
+      summary: "Запросить расчет изделия (пользователь авторизован)"
+      requestBody:
+        content:
+          application/json: {}
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /demo/api/call?&source={currentProduct}&target=unf_product_t:
+    post:
+      tags:
+        - product
+      parameters:
+        - in: path
+          name: currentProduct
+          schema:
+            type: string
+          required: true
+          description: ID изделия
+      summary: "Запросить расчет изделия (пользователь неавторизован)"
       requestBody:
         content:
           application/json: {}
@@ -3414,24 +3456,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetPacksBillResponse'
-  /Packs/setAutoActivation:
-    post:
-      security:
-        - bearerAuth: []
-      tags:
-        - packs
-      summary: "Изменить режим автоактивации"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SetAutoActivation'
-        required: true
-      responses:
-        401:
-          description: "Error"
-        200:
-          description: "OK"
   /Packs/setOrder:
     post:
       security:
@@ -3444,24 +3468,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/SetPacksOrder'
-        required: true
-      responses:
-        401:
-          description: "Error"
-        200:
-          description: "OK"
-  /Packs/activate:
-    post:
-      security:
-        - bearerAuth: []
-      tags:
-        - packs
-      summary: "Ручная активация пакета"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PacksActivate'
         required: true
       responses:
         401:
@@ -3568,22 +3574,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOrderStates'
-  /Orders/getCurrectCount:
-    get:
-      security:
-        - bearerAuth: []
-      tags:
-        - orders
-      summary: "Получить количество требующих внимания заказов"
-      responses:
-        401:
-          description: "Error"
-        200:
-          description: "OK"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetCurrectCount'
   /Orders/create:
     post:
       security:
@@ -3688,22 +3678,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetCustomersSchema'
-  /Order/getManufactors:
-    get:
-      security:
-        - bearerAuth: []
-      tags:
-        - order
-      summary: "Получить список возможных производителей"
-      responses:
-        401:
-          description: "Error"
-        200:
-          description: "OK"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetManufactorsSchema'
   /Order/getOptions:
     post:
       security:
@@ -4299,10 +4273,8 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Help/getLegalSections:
+  /demo/Help/getLegalSections:
     get:
-      security:
-        - basicAuth: []
       tags:
         - help
       summary: "Получить разделы юридической документации"
@@ -4315,3 +4287,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetLegalSectionsResponse'
+  /Statistic/getInfo:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - statistic
+      summary: "Получить общие данные для отображения фишек в главном меню"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatisticGetInfo'
