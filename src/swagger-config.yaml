@@ -799,6 +799,8 @@ components:
           description: "id документа для скачивания"
     GetDocumentByIdResponse:
       type: file
+    GetUserAgreementResponse:
+      type: file
     FileUploadResponse:
       type: object
       properties:
@@ -4287,6 +4289,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetLegalSectionsResponse'
+  /demo/Help/getUserAgreement:
+    get:
+      tags:
+        - help
+      summary: "Получить содержимое пользовательского соглашения (формат MarkDown)"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserAgreementResponse'
   /Statistic/getInfo:
     get:
       security:
