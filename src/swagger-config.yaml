@@ -439,15 +439,15 @@ components:
           type: boolean
           example: true
           description: "Разрешены продажи физическим лицам"
-        termCreateBill:
+        billTerm:
           type: number
           example: 1
           description: "Срок выставления счёта (дни)"
-        termPaymentBill:
+        payTerm:
           type: number
           example: 1
           description: "Срок оплаты счёта (дни)"
-        termSupply:
+        deliveryTerm:
           type: number
           example: 1
           description: "Срок поставки (минимальный, дни)"
