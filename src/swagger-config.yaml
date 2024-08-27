@@ -779,10 +779,6 @@ components:
           type: number
           example: 300
           description: "Расчетов в заказе"
-        packPeriodBuy:
-          type: number
-          example: 60
-          description: "Период заказа"
     GetPacksBillResponse:
       type: object
       properties:
@@ -790,6 +786,51 @@ components:
           type: string
           example: "4602259e-56fe-4614-affb-f6e8c7ed573f"
           description: "id документа счета для скачивания"
+    SbpMakeBillResponse:
+      type: object
+      properties:
+        billId:
+          type: string
+          example: "4602259e-56fe-4614-affb-f6e8c7ed573f"
+          description: "id счета, возвращенного платежной системой"
+        qrUrl:
+          type: string
+          example: "https://qr.nspk.ru/QR_ID"
+          description: "Ссылка на QR-код для выполнения оплаты"
+    SbpGetBillState:
+      type: object
+      properties:
+        billId:
+          type: string
+          example: "4602259e-56fe-4614-affb-f6e8c7ed573f"
+          description: "id платежа СБП"
+    SbpGetBillStateResponse:
+      type: object
+      properties:
+        billState:
+          type: string
+          example: "pending"
+          description: "Статус платежа: Ожидает оплаты (pending), Успешно совершен (succeeded), Отменен (canceled), Не найден (notFound)"
+          enum:
+            - pending
+            - succeeded
+            - canceled
+            - notFound
+    SbpBillStateWebhook:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "e44e8088-bd73-43b1-959a-954f3a7d0c54"
+          description: "id платежа"
+        event:
+          type: string
+          example: "payment.succeeded"
+          description: "Название события"
+        url:
+          type: string
+          example: "https://www.example.com/notification_url"
+          description: "URL, на который отправляются уведомления"
     GetDocumentById:
       type: object
       properties:
@@ -3470,6 +3511,66 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/SetPacksOrder'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /Packs/sbp/makeBill:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - packs
+      summary: "Создать в платежной системе заказ для оплаты через СБП"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetPacksBill'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SbpMakeBillResponse'
+  /Packs/sbp/getBillState:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - packs
+      summary: "Проверка статуса платежа СБП"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SbpGetBillState'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SbpGetBillStateResponse'
+  /demo/Packs/sbp/billStateWebhook:
+    get:
+      tags:
+      - packs
+      summary: "Webhook для оповещения системой СБП об изменении статуса платежей"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SbpBillStateWebhook'
         required: true
       responses:
         401:
