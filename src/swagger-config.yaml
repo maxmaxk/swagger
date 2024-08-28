@@ -2614,7 +2614,11 @@ components:
                 id:
                   type: string
                   description: "id документа"
-                  example: "015-01ef-0022"         
+                  example: "015-01ef-0022"
+                title:
+                  type: string
+                  description: "Заголовок документа"
+                  example: "Правила подписки и использования сервисов"     
 tags:
   - name: auth
     description: Авторизация/регистрация
