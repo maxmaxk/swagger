@@ -3600,6 +3600,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDocumentByIdResponse'
+  /demo/Files/getDocumentById:
+    post:
+      tags:
+        - files
+      summary: "Получить документ по id без авторизации пользователя"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetDocumentById'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDocumentByIdResponse'
   /Files/getBlankProxyDocument:
     get:
       security:
