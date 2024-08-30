@@ -183,6 +183,10 @@ components:
           type: boolean
           example: true
           description: "true, если пользователь использует базовую конфигурацию"
+        canHelpEdit:
+          type: boolean
+          example: false
+          description: "true, если у пользователя есть права на внесения изменений в документацию хелпа"
         email:
           type: string
           example: "user@mail.com"
@@ -849,6 +853,21 @@ components:
           type: string
           example: "4602259e-56fe-4614-affb-f6e8c7ed573f"
           description: "id файла"
+    HelpSaveHelpById:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "4602259e-56fe-4614-affb-f6e8c7ed573f"
+          description: "id документа для сохранения"
+        title:
+          type: string
+          example: "Пользовательское соглашение"
+          description: "Наименование документа для сохранения"
+        content:
+          type: file
+          example: "**ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ** Настоящее пользовательское соглашение рег..."
+          description: "Содержимое документа"
     SetPacksOrder:
       type: array
       example: [{"id": "000 000 000 000 000 153", "order": 0}, {"id": "000 000 000 000 000 158", "order": 1}]
@@ -4428,6 +4447,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetUserAgreementResponse'
+  /Help/saveHelpById:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - help
+      summary: "Сохранить документ хелпа по его id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HelpSaveHelpById'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
   /Statistic/getInfo:
     get:
       security:
