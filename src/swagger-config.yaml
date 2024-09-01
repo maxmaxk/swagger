@@ -145,6 +145,13 @@ components:
             - ФЛ
             - ИП
             - ЮЛ
+    Checklogin:
+      type: object
+      properties:
+        login:
+          type: string
+          description: "Логин для проверки"
+          example: "user"
     GetUserInfoResponse:
       type: object
       properties:
@@ -2805,6 +2812,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RegisterResponse'
+  /api/auth/checklogin:
+    post:
+      tags:
+        - auth
+      summary: "Проверка логина на существование"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Checklogin'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
   /api/auth/changemail:
     post:
       tags:
