@@ -186,10 +186,6 @@ components:
             - none
             - checking
             - good
-        isBaseConfig:
-          type: boolean
-          example: true
-          description: "true, если пользователь использует базовую конфигурацию"
         canHelpEdit:
           type: boolean
           example: false
@@ -2455,6 +2451,10 @@ components:
             type: string
             description: "Наименовании поставщика"
             example: "Трубное решение"
+          isBaseConfig:
+            type: boolean
+            example: true
+            description: "true, если поставщик использует базовую конфигурацию"
           billTerm:
             type: number
             description: "Срок выставления счета (дней)"
