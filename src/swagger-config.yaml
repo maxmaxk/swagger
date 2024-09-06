@@ -1790,6 +1790,8 @@ components:
             - count
             - altCount
             - altUnits
+            - discountRate
+            - discountSumm
         linearMeterRounded:
           type: string
           description: "Способ округления погонных метров: В большую сторону(ceil), В меньшую сторону (floor)"
