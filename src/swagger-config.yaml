@@ -1769,7 +1769,7 @@ components:
             description: "Наименование типа изделия"
     ChangePosition:
       type: object
-      example: {"id": "101d-1311-0e0a", "count": 17, "altCount": 15.22, "altUnits": "пог.м", "changeField": "altCount", "linearMeterRounded": "none", "squareMeterRounded":"ceil"}
+      example: {"id": "101d-1311-0e0a", "count": 17, "altCount": 15.22, "altUnits": "пог.м", "discountRate": 15, "discountSumm": 150.56, "changeField": "altCount", "linearMeterRounded": "none", "squareMeterRounded":"ceil"}
       properties:
         id:
           type: string
@@ -1783,6 +1783,12 @@ components:
         altUnits:
           type: string
           description: "Наименование дополнительных единиц"
+        discountRate:
+          type: string
+          description: "Скидка в процентах"
+        discountSumm:
+          type: string
+          description: "Скидка в рублях"
         changeField:
           type: string
           description: "Поле, которое пользователь изменил при редактировании"
