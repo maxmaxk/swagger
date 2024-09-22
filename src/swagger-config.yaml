@@ -2349,19 +2349,6 @@ components:
           type: array
           items:
             type: string
-    PictureByCalcInfo:
-      type: object
-      properties:
-        calcData:
-          type: object
-          description: "Результат расчета изделия как есть"
-    PictureById:
-      type: object
-      properties:
-        id:
-          type: string
-          description: "id изделия"
-          example: "011-ef15-0001"
     GetHistoryResponse:
       type: array
       example: [{"id": "015-01ef-0011", "date": "03.11.2022T09:57:00", "name": "Событие: Тексты событий формируются беком", "user": "Фамилия И. О."}]
@@ -2951,7 +2938,7 @@ paths:
           schema:
             type: string
           required: true
-          description: ID изделия
+          description: Тип изделия
         - in: path
           name: vendor_id
           schema:
@@ -2978,7 +2965,7 @@ paths:
           schema:
             type: string
           required: true
-          description: ID изделия
+          description: Тип изделия
       summary: "Запросить расчет изделия (пользователь неавторизован)"
       requestBody:
         content:
@@ -3001,7 +2988,7 @@ paths:
           schema:
             type: string
           required: true
-          description: ID изделия
+          description: Тип изделия
         - in: path
           name: x
           schema:
@@ -3040,7 +3027,7 @@ paths:
           schema:
             type: string
           required: true
-          description: ID изделия
+          description: Тип изделия
       summary: "Получить координаты камеры для наилучшего обзора изделия"
       requestBody:
         content:
@@ -3185,42 +3172,69 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Product/pictureByCalcInfo:
+  /demo/Product/getDraft?&source={currentProduct}&x={x}&y={y}&z={z}:
     post:
       tags:
         - product
-      security:
-        - bearerAuth: []
-      summary: "Получить эскиз изделия по его рассчитанным параметрам"
+      parameters:
+        - in: path
+          name: currentProduct
+          schema:
+            type: string
+          required: true
+          description: Тип изделия
+        - in: path
+          name: x
+          schema:
+            type: string
+          required: true
+          description: Координата камеры x
+        - in: path
+          name: y
+          schema:
+            type: string
+          required: true
+          description: Координата камеры y
+        - in: path
+          name: z
+          schema:
+            type: string
+          required: true
+          description: Координата камеры z
+      summary: "Получить эскиз изделия по его параметрам (проброс на сервис 3d-engine)"
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PictureByCalcInfo'
-        required: true
+          application/json: {}
+          required: true
       responses:
         401:
           description: "Error"
         200:
           description: "OK"    
-  /Product/pictureById:
+          content:
+            application/json: {}
+  /demo/Product/getModel?&source={currentProduct}:
     post:
       tags:
         - product
-      security:
-        - bearerAuth: []
-      summary: "Получить эскиз изделия по его id"
+      parameters:
+        - in: path
+          name: currentProduct
+          schema:
+            type: string
+          required: true
+      summary: "Получить математическую модель изделия по его параметрам (проброс на сервис 3d-engine)"
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PictureById'
+          application/json: {}
         required: true
       responses:
         401:
           description: "Error"
         200:
           description: "OK" 
+          content:
+            application/json: {}
   # profile part
   /Profile/getUserInfo:
     get:
