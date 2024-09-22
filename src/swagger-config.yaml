@@ -3172,7 +3172,7 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /demo/Product/getDraft?&source={currentProduct}&x={x}&y={y}&z={z}:
+  /demo/Product/get-draft?&source={currentProduct}&x={x}&y={y}&z={z}:
     post:
       tags:
         - product
@@ -3213,7 +3213,7 @@ paths:
           description: "OK"    
           content:
             application/json: {}
-  /demo/Product/getModel?&source={currentProduct}:
+  /demo/Product/get-model?&source={currentProduct}:
     post:
       tags:
         - product
