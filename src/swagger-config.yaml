@@ -801,6 +801,13 @@ components:
           type: string
           example: "4602259e-56fe-4614-affb-f6e8c7ed573f"
           description: "id документа счета для скачивания"
+    RefusePackById:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "4602259e-56fe-4614-affb-f6e8c7ed573f"
+          description: "id пакета для отзыва"    
     SbpMakeBillResponse:
       type: object
       properties:
@@ -3659,6 +3666,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetPacksBillResponse'
+  /Packs/refuseById:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - packs
+      summary: "Отказаться от пакета"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefusePackById'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
   /Packs/setOrder:
     post:
       security:
@@ -4561,6 +4586,20 @@ paths:
       tags:
         - help
       summary: "Получить разделы юридической документации"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLegalSectionsResponse'
+  /demo/Help/getTechSections:
+    get:
+      tags:
+        - help
+      summary: "Получить разделы технической документации"
       responses:
         401:
           description: "Error"
