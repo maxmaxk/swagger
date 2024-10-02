@@ -2356,6 +2356,28 @@ components:
           type: array
           items:
             type: string
+    ParamsAndCoords:
+      type: object
+      properties:
+        params:
+          type: object
+          description: "Параметры изделия"
+          example: {'A':100,'B':100,'End1':'so_flange20','End2':'so_flange20','FireResistanceClass':'none','InstallMethodFlange1':'press_screw'}
+        coords:
+          type: object
+          properties:
+            x:
+              type: number
+              description: "Координата камеры x"
+              example: "12.45345345"
+            y:
+              type: number
+              description: "Координата камеры y"
+              example: "8.45451"             
+            z:
+              type: number
+              description: "Координата камеры z"
+              example: "-1.599812" 
     GetHistoryResponse:
       type: array
       example: [{"id": "015-01ef-0011", "date": "03.11.2022T09:57:00", "name": "Событие: Тексты событий формируются беком", "user": "Фамилия И. О."}]
@@ -2983,7 +3005,7 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Product/setBestViewCoord?&source={currentProduct}&x={x}&y={y}&z={z}:
+  /Product/setBestViewCoord?&source={currentProduct}:
     post:
       tags:
         - product
@@ -2996,28 +3018,12 @@ paths:
             type: string
           required: true
           description: Тип изделия
-        - in: path
-          name: x
-          schema:
-            type: string
-          required: true
-          description: Координата камеры x
-        - in: path
-          name: y
-          schema:
-            type: string
-          required: true
-          description: Координата камеры y
-        - in: path
-          name: z
-          schema:
-            type: string
-          required: true
-          description: Координата камеры z
       summary: "Задать координаты камеры для наилучшего обзора изделия"
       requestBody:
         content:
-          application/json: {}
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParamsAndCoords'
         required: true
       responses:
         401:
@@ -3179,7 +3185,7 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /demo/Product/get-draft?&source={currentProduct}&x={x}&y={y}&z={z}:
+  /demo/Product/get-draft?&source={currentProduct}:
     post:
       tags:
         - product
@@ -3190,29 +3196,13 @@ paths:
             type: string
           required: true
           description: Тип изделия
-        - in: path
-          name: x
-          schema:
-            type: string
-          required: true
-          description: Координата камеры x
-        - in: path
-          name: y
-          schema:
-            type: string
-          required: true
-          description: Координата камеры y
-        - in: path
-          name: z
-          schema:
-            type: string
-          required: true
-          description: Координата камеры z
       summary: "Получить эскиз изделия по его параметрам (проброс на сервис 3d-engine)"
       requestBody:
         content:
-          application/json: {}
-          required: true
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParamsAndCoords'
+        required: true
       responses:
         401:
           description: "Error"
