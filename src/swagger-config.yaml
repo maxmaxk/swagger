@@ -2358,26 +2358,8 @@ components:
             type: string
     ParamsAndCoords:
       type: object
-      properties:
-        params:
-          type: object
-          description: "Параметры изделия"
-          example: {'A':100,'B':100,'End1':'so_flange20','End2':'so_flange20','FireResistanceClass':'none','InstallMethodFlange1':'press_screw'}
-        coords:
-          type: object
-          properties:
-            x:
-              type: number
-              description: "Координата камеры x"
-              example: "12.45345345"
-            y:
-              type: number
-              description: "Координата камеры y"
-              example: "8.45451"             
-            z:
-              type: number
-              description: "Координата камеры z"
-              example: "-1.599812" 
+      example: {'_front_par_coords': {'x': 12.45345345, 'y': 8.45451, "z": -1.599812}, 'A':100,'B':100,'End1':'so_flange20','End2':'so_flange20','FireResistanceClass':'none','InstallMethodFlange1':'press_screw'}
+      description: "Параметры изделия"         
     GetHistoryResponse:
       type: array
       example: [{"id": "015-01ef-0011", "date": "03.11.2022T09:57:00", "name": "Событие: Тексты событий формируются беком", "user": "Фамилия И. О."}]
