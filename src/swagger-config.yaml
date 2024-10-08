@@ -1178,6 +1178,27 @@ components:
       items:
         type: string
         description: "id новых заказов"
+    OrderSetState:
+      type: object
+      properties:
+        orderId:
+          type: string
+          example: "34de-21abc-12-005"
+          description: "id заказа"
+        newState:
+          type: string
+          example: "На согласовании"
+          description: "Новый статус заказа"   
+          enum:
+            - 'Новый'
+            - 'Открыт'
+            - 'На согласовании'
+            - 'К оплате'
+            - 'В работе'
+            - 'Отгружен'
+            - 'Просрочен'
+            - 'Завершен'
+            - 'Отменен' 
     RemoveFile:
       type: object
       example: {"fileId": "34de-21abc-12-005"}
@@ -2651,6 +2672,15 @@ components:
             type: number
             description: "Значение"
             example: 490 
+    GetConfigModelResponse:
+      type: object
+      description: "Конфигурация прав пользователей и статусная модель заказов"
+      example: {rightsRules: {discountRate: {buyer: { any: 'disabled' }}}, stateMachine: {open: {buyer: { buttons: [{ title: 'Запрос КП', newState: 'ordered'}]}}}}
+      properties:
+        rightsRules:
+          type: object
+        stateMachine:
+          type: object
     GetLegalSectionsResponse:
       type: array
       items:
@@ -4403,6 +4433,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreateByVendorsResponse'
+  /Order/setState:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Изменить состояние заказа"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderSetState'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
   /LogCalcs/getLogCalcs:
     post:
       security:
@@ -4553,6 +4600,22 @@ paths:
           description: "Error"
         200:
           description: "OK"
+  /Config/getModel:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - config
+      summary: "Получить JSON описывающий права пользователей и статусную модель управления заказами"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConfigModelResponse'
   /demo/Help/getLegalSections:
     get:
       tags:
