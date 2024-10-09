@@ -1803,6 +1803,10 @@ components:
           typeName:
             type: string
             description: "Наименование типа изделия"
+    ChangePositions:
+      type: array
+      items:
+        $ref: '#/components/schemas/ChangePosition'
     ChangePosition:
       type: object
       example: {"id": "101d-1311-0e0a", "count": 17, "altCount": 15.22, "altUnits": "пог.м", "discountRate": 15, "discountSumm": 150.56, "changeField": "altCount", "linearMeterRounded": "none", "squareMeterRounded":"ceil"}
@@ -1845,7 +1849,11 @@ components:
           description: "Способ округления квадратных метров: В большую сторону(ceil), В меньшую сторону (floor)"
           enum:
             - ceil
-            - floor        
+            - floor   
+    ChangePositionsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/ChangePositionResponse'
     ChangePositionResponse:
       $ref: '#/components/schemas/ChangePositionItem'
     ChangePositionItem:
@@ -4094,6 +4102,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChangePositionResponse'
+  /Order/changePositions:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - order
+      summary: "Запрос на изменение массива позиций"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePositions'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangePositionsResponse'
   /Order/changeSteel:
     post:
       security:
