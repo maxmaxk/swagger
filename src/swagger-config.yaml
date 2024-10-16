@@ -2434,7 +2434,7 @@ components:
           description: "Файл запрещен к удалению"
     GetLogCalcs:
       type: object
-      example: {"configId": "015-01ef-0011", "search": "Самый лучший расчет", "from": "03.11.2022T00:00:00", "to": "13.11.2022T00:00:00"}
+      example: {"configId": "015-01ef-0011", "search": "Самый лучший расчет", "from": "03.11.2022T00:00:00", "to": "13.11.2022T00:00:00", offset: 0}
       properties:
         configId: 
           type: string
@@ -2448,11 +2448,21 @@ components:
         to:
           type: string
           description: "Фильтр по дате расчета (окончание периода)"
+        offset:
+          type: number
+          description: "Сдвиг пагинации"
     GetLogCalcsResponse:
-      type: array
-      example: [{"id": "015-01ef-0011", "num": 1, "date": "31.08.2023T09:26:44", "name": "Тип изделия металл, размеры 1, размеры 2, особенности", "application": "1С — Клиент", "packId": "000000000000006203", "hash": "08e4328a6e00eb1050b837ec2404862c"}]
-      items:
-        $ref: '#/components/schemas/LogCalcItem'
+      example: {end: true, calcs: [{"id": "015-01ef-0011", "num": 1, "date": "31.08.2023T09:26:44", "name": "Тип изделия металл, размеры 1, размеры 2, особенности", "application": "1С — Клиент", "packId": "000000000000006203", "hash": "08e4328a6e00eb1050b837ec2404862c"}]}
+      type: object
+      properties:
+        end:
+          type: boolean
+          example: true
+          description: "Флаг полной выгрузки списка (для выключения пагинации)"
+        calcs:
+          type: array
+          items:
+            $ref: '#/components/schemas/LogCalcItem'
     LogCalcItem:  
       type: object
       properties:
