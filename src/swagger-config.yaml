@@ -794,6 +794,15 @@ components:
           type: number
           example: 300
           description: "Расчетов в заказе"
+        payment_method_data:
+          type: string
+          example: "sbp"
+          description: "Способ расчетов: По счету(bill), Система быстрых платежей(sbp), SberPay(sberbank), ЮMoney(yoo_money)"
+          enum:
+            - bill
+            - sbp
+            - sberbank
+            - yoo_money
     GetPacksBillResponse:
       type: object
       properties:
@@ -1045,6 +1054,39 @@ components:
             - notActive
             - active
             - ending
+    DownloadsGetList:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            example: "00cd-0011-5aff-0001"
+            descrition: "id для загрузки документа"
+          dateTime:
+            type: string
+            example: "02.05.2024T09:57:00"
+            descrition: "Дата, время"
+          fileName:
+            type: string
+            example: "1cv8c_17bit.exe"
+            descrition: "Имя файла"
+          version:
+            type: string
+            example: "8.03.5609"
+            descrition: "Версия файла"
+          size:
+            type: number
+            example: 584.27
+            descrition: "Размер в КВ"
+          md5:
+            type: string
+            example: "026f8e459c8f89ef75fa7a78265a0025"
+            descrition: "Хеш-код (MD5)"
+          note:
+            type: string
+            example: "Краткая заметка по файлу."
+            descrition: "Пояснение к файлу"
     CreateNewOrder:
       type: object
       description: "id заказа, позициями которого нужно наполнить новый заказ"
@@ -2750,6 +2792,8 @@ tags:
     description: Работа с документацией
   - name: statistic
     description: Статистические данные
+  - name: downloads
+    description: Работа со страницей загрузок
 paths:
 
   # auth part
@@ -3722,28 +3766,6 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Packs/sbp/makeBill:
-    post:
-      security:
-        - bearerAuth: []
-      tags:
-        - packs
-      summary: "Создать в платежной системе заказ для оплаты через СБП"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GetPacksBill'
-        required: true
-      responses:
-        401:
-          description: "Error"
-        200:
-          description: "OK"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SbpMakeBillResponse'
   /Packs/sbp/getBillState:
     post:
       security:
@@ -4731,3 +4753,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StatisticGetInfo'
+  /Downloads/getList:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - downloads
+      summary: "Получить список загрузок"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadsGetList'
