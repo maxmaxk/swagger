@@ -672,14 +672,10 @@ components:
           type: number
           example: 59264
           description: "Доступно всего расчетов"
-        availDate:
-          type: string
-          example: "15.01.2024"
-          description: "Самая дальняя дата окончания действия из всех доступных пакетов"
-        autoActivation:
+        agreement:
           type: boolean
           example: false
-          description: "Статус режима автоактивации пакетов"
+          description: "Статус соглашнения с тарифами и правилами расчетов"
         packs:
           type: array
           description: "Массив пакетов"
@@ -3692,6 +3688,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetPacksInfo'
+  /Packs/setAgreement:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - packs
+      summary: "Установить флаг соглашения с тарифами и правилами расчетов"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
   /Packs/getBuySchema:
     get:
       security:
