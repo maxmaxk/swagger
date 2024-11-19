@@ -793,10 +793,11 @@ components:
         payment_method_data:
           type: string
           example: "sbp"
-          description: "Способ расчетов: По счету(bill), Система быстрых платежей(sbp), SberPay(sberbank), ЮMoney(yoo_money)"
+          description: "Способ расчетов: По счету(bill), Система быстрых платежей(sbp), Банковская карта (bank_card), SberPay(sberbank), ЮMoney(yoo_money)"
           enum:
             - bill
             - sbp
+            - bank_card
             - sberbank
             - yoo_money
     GetPacksBillResponse:
@@ -843,6 +844,23 @@ components:
             - succeeded
             - canceled
             - notFound
+        description:
+          type: string
+          example: "Заказ №НФНФ-000147"
+          description: "Наименование заказа"
+        amount:
+          type: number
+          example: 2700.00
+          description: "Сумма заказа"
+        payment:
+          type: string
+          example: "bank_card"
+          description: "Форма оплаты: СБП (sbp), Банковская карта (bank_card), СберPay (sberbank), ЮMoney (yoo_money)"
+          enum:
+            - sbp
+            - bank_card
+            - sberbank
+            - yoo_money          
     SbpBillStateWebhook:
       type: object
       properties:
@@ -4280,6 +4298,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDocumentByIdResponse'
   /Order/getMaterials:
     post:
       security:
