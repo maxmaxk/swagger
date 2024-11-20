@@ -860,7 +860,11 @@ components:
             - sbp
             - bank_card
             - sberbank
-            - yoo_money          
+            - yoo_money    
+        url:
+          type: string
+          example: "https://yoomoney.ru/checkout/payments/v2/contract?orderId=2ecff0e8-000f-5000-8000-1e7eb1ab77d1"
+          description: "Ссылка на оплату"    
     SbpBillStateWebhook:
       type: object
       properties:
