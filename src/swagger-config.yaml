@@ -1056,17 +1056,21 @@ components:
             description: "Наименование статуса заказа"
           isDefault:
             type: boolean
-            descrition: "Является ли опция значением по умолчанию"
+            description: "Является ли опция значением по умолчанию"
     StatisticGetInfo:
       type: object
       properties:
         orderCount:
           type: number
-          descrition: "Количество заказов, требующих внимания"
+          description: "Количество заказов, требующих внимания"
           example: 24
+        newsCount:
+            type: number
+            description: "Количество непрочитанных новостей"
+            example: 16
         subscribe:
           type: string
-          descrition: "Статус подписки: notActive - нет/закончилась, active - есть подписка, ending - заканчивается (10% от первоначального количества или 3 рабочих дня до окончания срока действия)"
+          description: "Статус подписки: notActive - нет/закончилась, active - есть подписка, ending - заканчивается (10% от первоначального количества или 3 рабочих дня до окончания срока действия)"
           example: "notActive"
           enum:
             - notActive
@@ -1080,31 +1084,61 @@ components:
           id:
             type: string
             example: "00cd-0011-5aff-0001"
-            descrition: "id для загрузки документа"
+            description: "id для загрузки документа"
           dateTime:
             type: string
             example: "02.05.2024T09:57:00"
-            descrition: "Дата, время"
+            description: "Дата, время"
           fileName:
             type: string
             example: "1cv8c_17bit.exe"
-            descrition: "Имя файла"
+            description: "Имя файла"
           version:
             type: string
             example: "8.03.5609"
-            descrition: "Версия файла"
+            description: "Версия файла"
           size:
             type: number
             example: 584.27
-            descrition: "Размер в КВ"
+            description: "Размер в КВ"
           md5:
             type: string
             example: "026f8e459c8f89ef75fa7a78265a0025"
-            descrition: "Хеш-код (MD5)"
+            description: "Хеш-код (MD5)"
           note:
             type: string
             example: "Краткая заметка по файлу."
-            descrition: "Пояснение к файлу"
+            description: "Пояснение к файлу"
+    NewsGetList:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            example: "00cd-0011-5aff-0001"
+            description: "id новости"      
+          dateTime:
+            type: string
+            example: "02.05.2024T09:57:00"
+            description: "Дата, время"
+          message:
+            type: string
+            example: "Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты"
+            description: "Текст новости"
+    NewsSetReadFlag:
+      type: object
+      properties:
+        flag:
+          type: boolean
+          example: true
+          description: "Установить или снять флаг прочтения новостей"
+        ids:
+          type: array
+          items:
+            type: string
+            example: "00cd-0011-5aff-0001"
+            description: "id новости"
     CreateNewOrder:
       type: object
       description: "id заказа, позициями которого нужно наполнить новый заказ"
@@ -1661,7 +1695,7 @@ components:
       properties:
         id:
           type: string
-          descrition: "id заказа"
+          description: "id заказа"
         altUnitsVisible:
           type: boolean
           description: "Показывать ли в заказе колонки дополнительные параметры"
@@ -2812,6 +2846,8 @@ tags:
     description: Статистические данные
   - name: downloads
     description: Работа со страницей загрузок
+  - name: news
+    description: Работа со страницей новостей
 paths:
 
   # auth part
@@ -4803,3 +4839,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DownloadsGetList'
+  /News/getList:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - news
+      summary: "Получить список новостей"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsGetList'
+  /News/setReadFlag:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - news
+      summary: "Установить/снять флаг прочтения новостей"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsSetReadFlag'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
