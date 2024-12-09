@@ -1142,10 +1142,6 @@ components:
     GetPaymentsList:
       type: object
       properties:
-        search:
-          type: string
-          example: "Подписка"
-          description: "Строка для поиска платежа"
         dateFrom:
           type: string
           example: "2024-12-01"
