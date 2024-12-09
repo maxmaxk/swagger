@@ -1155,42 +1155,44 @@ components:
           example: "2024-12-31"
           description: "Фильтр окончания периода"
     GetPaymentsListResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          example: "34de-21abc-12-001"
-          description: "id платежа"
-        date:
-          type: string
-          example: "2024-12-01"
-          description: "Дата платежа"
-        name:
-          type: string
-          example: "Подписка на платные сервисы сайта zakaz-ivi.online на 30 дней"
-          description: "Наименование платежа"
-        billState:
-          type: string
-          example: "pending"
-          description: "Статус платежа: Ожидает оплаты (pending), Успешно совершен (succeeded), Отменен (canceled)"
-          enum:
-            - pending
-            - succeeded
-            - canceled
-        payment:
-          type: string
-          example: "bank_card"
-          description: "Форма оплаты: СБП (sbp), Банковская карта (bank_card), СберPay (sberbank), ЮMoney (yoo_money), По счету (bill)"
-          enum:
-            - sbp
-            - bank_card
-            - sberbank
-            - yoo_money
-            - bill
-        amount:
-          type: number
-          example: 2700.00
-          description: "Сумма заказа"
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            example: "34de-21abc-12-001"
+            description: "id платежа"
+          date:
+            type: string
+            example: "2024-12-01"
+            description: "Дата платежа"
+          name:
+            type: string
+            example: "Подписка на платные сервисы сайта zakaz-ivi.online на 30 дней"
+            description: "Наименование платежа"
+          billState:
+            type: string
+            example: "pending"
+            description: "Статус платежа: Ожидает оплаты (pending), Успешно совершен (succeeded), Отменен (canceled)"
+            enum:
+              - pending
+              - succeeded
+              - canceled
+          payment:
+            type: string
+            example: "bank_card"
+            description: "Форма оплаты: СБП (sbp), Банковская карта (bank_card), СберPay (sberbank), ЮMoney (yoo_money), По счету (bill)"
+            enum:
+              - sbp
+              - bank_card
+              - sberbank
+              - yoo_money
+              - bill
+          amount:
+            type: number
+            example: 2700.00
+            description: "Сумма заказа"
     CreateNewOrder:
       type: object
       description: "id заказа, позициями которого нужно наполнить новый заказ"
