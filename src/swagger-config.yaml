@@ -740,9 +740,13 @@ components:
           example: 1
           description: "Порядок расположения неиспользованных / неполностью использованных пакетов, для остальных -1"
         activateStatus:
-          type: boolean
-          example: false
-          description: "Статус активации пакета"
+          type: string
+          example: "active"
+          description: "Статус активации пакета: активен(active), неактивен(notActive), использован(used)"
+          enum:
+            - active
+            - notActive
+            - used
         calcsCount:
           type: number
           example: 100
