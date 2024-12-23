@@ -2440,9 +2440,14 @@ components:
         search:
           type: string
           description: "Строка поиска изделия"
-        offset:
-          type: number
-          description: "Сдвиг пагинации"
+        offsetId:
+          type: string
+          description: "id последнего принятого элемента"
+          example: "015-01ef-0011"
+        offsetName:
+          type: string
+          description: "Имя последнего принятого элемента"
+          example: "Врезка круг/прям оц. сталь 0.45, ф100, H=70"
     GetProductListResponse:
       type: object
       properties:
@@ -2754,9 +2759,14 @@ components:
           type: string
           description: "Фильтр по строке поиска"
           example: "Штрипс"
-        offset:
-          type: number
-          description: "Сдвиг пагинации"
+        offsetId:
+          type: string
+          description: "id последнего принятого элемента"
+          example: "015-01ef-0011"
+        offsetName:
+          type: string
+          description: "Имя последнего принятого элемента"
+          example: "Болт М8х20мм"
     GetConfigMaterialsResponse:
       type: object
       properties:
