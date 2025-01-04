@@ -1852,7 +1852,7 @@ components:
             - ods
     SetSpecOptionsResponse:
       type: object
-      example: {"id": "001-ef11-0015-1111", "name": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "draft": true, "1C": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}
+      example: {"id": "001-ef11-0015-1111", "name": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "draft": true, "to1C": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}
       properties:
         id:
           type: string
@@ -1911,7 +1911,7 @@ components:
         draft:
           type: boolean
           description: "Включить эскизы в спецификацию"
-        1C:
+        to1C:
           type: boolean
           description: "Генерировать файл обмена с 1С"
         sendEmail:
