@@ -1852,7 +1852,7 @@ components:
             - ods
     SetSpecOptionsResponse:
       type: object
-      example: {"id": "001-ef11-0015-1111", "name": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "draft": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}
+      example: {"id": "001-ef11-0015-1111", "name": true, "count": true, "units": true, "price": true, "altCount": true, "altUnits": true, "altPrice": true, "weight": true, "square": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": true, "draft": true, "1C": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}
       properties:
         id:
           type: string
@@ -1911,6 +1911,9 @@ components:
         draft:
           type: boolean
           description: "Включить эскизы в спецификацию"
+        1C:
+          type: boolean
+          description: "Генерировать файл обмена с 1С"
         sendEmail:
           type: boolean
           description: "Отправлять ли спецификацию на почту"
@@ -2735,6 +2738,33 @@ components:
             type: string
             description: "Телефон производителя"
             example: "+7 905 703-44-03"
+    SetRegionMapAreas:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "id региона"
+          example: "015-01ef-0011"
+        center:
+          type: array
+          description: "Координаты центра для отображения всего региона"
+          example: [37.616558, 55.751453]
+          items:
+            type: number
+        zoom:
+          type: number
+          description: "Масштаб карты для отображения всего региона"
+          example: 14
+        poligons:
+          type: array
+          description: "Массив массивов массивов [x,y] с географическими координатами границ региона"
+          example: [[[37.61249, 55.747689], [37.623876, 55.749519], [37.62079, 55.754326]],[[38.61249, 55.747689], [38.623876, 55.749519], [38.62079, 55.754326]]]
+          items:
+            type: array
+            items:
+              type: array
+              items:
+                type: number
     GetMaterialsSectionsResponse:
       type: array
       items:
@@ -4706,6 +4736,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetVendorsResponse'
+  /Vendors/setRegionMapAreas:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - vendors
+      summary: "Установить для региона географические координаты, центр, масштаб"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetRegionMapAreas'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
   /Config/Materials/getSections:
     get:
       security:
