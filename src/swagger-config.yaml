@@ -895,6 +895,49 @@ components:
       type: file
     GetUserAgreementResponse:
       type: file
+    GetContactsResponse:
+      type: object
+      properties:
+        phone:
+          type: string
+          description: "Телефон организации"
+          example: "+7 (905) 787-46-23"
+        eMail:
+          type: string
+          description: "Электронная почта организации"
+          example: "help@zakaz-ivi.online"
+        address:
+          type: string
+          description: "Почтовый адрес"
+          example: "188640, Ленинградская область, Всеволожский муниципальный район, город Всеволожск, улица Александровская, дом 80, помещение 16."
+        name:
+          type: string
+          description: "Наименование организации"
+          example: "ООО «17 Бит»"
+        INN:
+          type: string
+          description: "ИНН"
+          example: "4706079514"
+        OGRN:
+          type: string
+          description: "ОГРН"
+          example: "1244700021631"
+        privateBankAccount:
+          type: string
+          description: "Расчётный счёт"
+          example: "40702810228610002690" 
+        bankName:
+          type: string
+          description: "Название банка"
+          example: "Филиал «Центральный» банка ВТБ (ПАО)"
+        BIK:
+          type: string
+          description: "БИК банка"
+          example: "044525411"
+        corrBankAccount:
+          type: string
+          description: "Корреспондентский счет"
+          example: "30101810145250000411"                       
     FileUploadResponse:
       type: object
       properties:
@@ -4903,6 +4946,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetUserAgreementResponse'
+  /demo/Help/getContacts:
+    get:
+      tags:
+        - help
+      summary: "Получить собственные контактные данные"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetContactsResponse'
   /Help/saveHelpById:
     post:
       security:
