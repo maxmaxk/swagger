@@ -212,6 +212,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Counterparty'
+        tokenCountWarningLimit:
+          type: number
+          example: 30
+          description: "Лимит предупреждения окончания подписки (по остатку токенов)" 
+        tokenDaysWarningLimit:
+          type: number
+          example: 3
+          description: "Лимит предупреждения окончания подписки (дней осталось)"     
     Counterparty:
       type: object
       properties:
@@ -310,7 +318,18 @@ components:
         newPassword:
           type: string
           example: "newPassword" 
-          description: "Новый пароль"
+          description: "Новый пароль"   
+    SetTokenWarningLimits:
+      type: object
+      properties:
+        tokenCountWarningLimit:
+          type: number
+          example: 40
+          description: "Лимит предупреждения окончания подписки (по остатку токенов)"
+        tokenDaysWarningLimit:
+          type: number
+          example: 5
+          description: "Лимит предупреждения окончания подписки (дней осталось)"   
     RemoveCounterparty:
       type: object
       properties:
@@ -3600,6 +3619,24 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/SetNewPassword'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /Profile/setTokenWarningLimits:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - profile
+      summary: "Установить лимиты оповещений об окончании подписки"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetTokenWarningLimits'
         required: true
       responses:
         401:
