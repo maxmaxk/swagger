@@ -175,9 +175,9 @@ components:
             - manufactor
             - vendor
         inModeration:
-          type: boolean
-          example: false
-          description: "true, если заявка на изменение роли находится в стадии модерации"
+          type: string
+          example: "2025-01-30T20:53:32"
+          description: "Время подачи заявки на изменение роли, либо пустая строка, если заявки нет / заявка исполнена"
         proxyStatus:
           type: string
           example: "none"
