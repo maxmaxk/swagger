@@ -3920,10 +3920,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetVendorInfo'
-  /Profile/addAgreementEvent:
+  /demo/Profile/addAgreementEvent:
     post:
-      security:
-        - bearerAuth: []
       tags:
         - profile
       summary: "Добавить в лог соглашение пользователя"
