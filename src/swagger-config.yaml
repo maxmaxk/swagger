@@ -677,6 +677,21 @@ components:
                 type: string
                 example: "011-ef15-001"
                 description: "id региона доставки"
+    AddAgreementEvent:
+      type: object
+      properties:
+        email:
+          type: string
+          description: "Электронная почта пользователя"
+          example: "user@mail.ru"
+        eventId:
+          type: string
+          description: "Тип соглашения юзера: userAgreement(пользовательское соглашение), processPolicy(политика обработки данных), priceAgreement(прейскурант сервисов)"
+          example: "userAgreement"
+          enum:
+            - userAgreement
+            - processPolicy
+            - priceAgreement
     Changemail:
       type: object
       properties:
@@ -3905,6 +3920,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetVendorInfo'
+  /Profile/addAgreementEvent:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - profile
+      summary: "Добавить в лог соглашение пользователя"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddAgreementEvent'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
   # packs part
   /Packs/getInfo:
     get:
