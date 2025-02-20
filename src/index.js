@@ -6,4 +6,5 @@ const spec = require('./swagger-config.yaml');
 const ui = SwaggerUI({
   spec,
   dom_id: '#swagger',
+  withCredentials: true
 });

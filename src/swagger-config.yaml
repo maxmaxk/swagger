@@ -11,7 +11,11 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
-      bearerFormat: JWT 
+      bearerFormat: JWT
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: ibsession
   security:
     - bearerAuth: [] 
 
@@ -1446,7 +1450,7 @@ components:
           description: "Имя файла"
     GetOrderResponse:
       type: object
-      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "manufacturerId":"34de-21abc-12-005", "manufacturerName": "ООО ПО Трубное Решение", "orderName": "394/270-615", "orderDate": "2023-10-18T00:00:00", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "orderStatus": "new", "customerId":"34de-21abc-12-006", "amIAuthor": true, "customerName": "ИП Джумаев Мухаммади Фуркатович", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "deliveryWayId": "017-ef11-0011-00af", "loadAddress": "Склад готовой продукции", "cargoWeight": 19.365, "cargoMaxSize": 2150, "cargoVolume": 5.39, "recipient": "Бари Алибасов", "recipientPhone": "+7 911 111 11 11", "deliveryCost": 2197, "deliveryInclude": false, "deliveryComment": "Пусть заказ доставят мулаточки", "positions":[{"id": "15ef-1255-ab13", "isActual": true, "name": "Отвод х/к ст. 1.2мм, сварн., 700х400, 90град, шея1=100, шея2=100, фл25/фл25, грунт красн-кор", "printName": "Отвод  х/к ст. 1.2мм", "count": 17, "units": "шт", "price": 6828, "altCount": 23.09, "altUnits": "пог.м", "altUnitsList": ["пог.м","м2"], "altPrice": 4496, "weight": 361.3, "square": 28.051, "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция", "taxRate": "20/120", "taxSumm": 456.2, "discountRate": 10.7, "discountSumm": 1395.3, "summ": 116097}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "printNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false}, "orderSpecOptions":{"name": true, "printName": true, "count": true, "units": true, "price": true, "altUnits": true, "weight": true, "square": true, "maxSize": true, "sizeVolume": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": "system", "draft": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}, "total": {"count": 17, "weight": 361.3, "square": 28.051, "taxSumm": 456.2, "discountAvg": 10.7, "discountSumm": 1395.3, "summ": 116097}}
+      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "manufacturerId":"34de-21abc-12-005", "manufacturerName": "ООО ПО Трубное Решение", "orderName": "394/270-615", "orderDate": "2023-10-18T00:00:00", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "orderStatus": "new", "customerId":"34de-21abc-12-006", "amIAuthor": true, "customerName": "ИП Джумаев Мухаммади Фуркатович", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "deliveryWayId": "017-ef11-0011-00af", "loadAddress": "Склад готовой продукции", "cargoWeight": 19.365, "cargoMaxSize": 2150, "cargoVolume": 5.39, "recipient": "Бари Алибасов", "recipientPhone": "+7 911 111 11 11", "deliveryCost": 2197, "deliveryInclude": false, "deliveryComment": "Пусть заказ доставят мулаточки", "positions":[{"id": "15ef-1255-ab13", "isActual": true, "name": "Отвод х/к ст. 1.2мм, сварн., 700х400, 90град, шея1=100, шея2=100, фл25/фл25, грунт красн-кор", "printName": "Отвод  х/к ст. 1.2мм", "count": 17, "units": "шт", "price": 6828, "altCount": 23.09, "altUnits": "пог.м", "altUnitsList": ["пог.м","м2"], "altPrice": 4496, "weight": 361.3, "square": 28.051, "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция", "taxRate": "20/120", "taxSumm": 456.2, "discountRate": 10.7, "discountSumm": 1395.3, "summ": 116097}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "printNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false}, "orderSpecOptions":{"name": true, "printName": true, "count": true, "units": true, "price": true, "altUnits": true, "weight": true, "square": true, "maxSize": true, "sizeVolume": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "groupType": "system", "draft": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}, "total": {"count": 17, "weight": 361.3, "square": 28.051, "taxSumm": 456.2, "discountAvg": 10.7, "discountSumm": 1395.3, "summ": 116097}}
       properties:
         id:
           type: string
@@ -1856,7 +1860,7 @@ components:
           description: "Показывать ли в заказе колонку 'НДС'"
     GetSpecOptionsResponse:
       type: object
-      example: {"name": true, "printName": true, "count": true, "units": true, "price": true, "altUnits": true, "weight": true, "square": true, "maxSize": true, "sizeVolume": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": "system", "draft": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}
+      example: {"name": true, "printName": true, "count": true, "units": true, "price": true, "altUnits": true, "weight": true, "square": true, "maxSize": true, "sizeVolume": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "groupType": "system", "draft": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}
       properties:
         name:
           type: boolean
@@ -1909,7 +1913,7 @@ components:
         summ:
           type: boolean
           description: "Выгружать общую сумму в спецификацию"
-        systemGroup:
+        groupType:
           type: string
           description: "Способ группировки: не группировать (none), по системам (system), по номенклатуре (nomenclature)"
           enum:
@@ -1936,7 +1940,7 @@ components:
             - ods
     SetSpecOptionsResponse:
       type: object
-      example: {"id": "001-ef11-0015-1111", "name": true, "printName": true, "count": true, "units": true, "price": true, "altUnits": true, "weight": true, "square": true, "maxSize": true, "sizeVolume": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": "system", "draft": true, "to1C": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}
+      example: {"id": "001-ef11-0015-1111", "name": true, "printName": true, "count": true, "units": true, "price": true, "altUnits": true, "weight": true, "square": true, "maxSize": true, "sizeVolume": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "groupType": "system", "draft": true, "to1C": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}
       properties:
         id:
           type: string
@@ -1992,7 +1996,7 @@ components:
         summ:
           type: boolean
           description: "Выгружать общую сумму в спецификацию"
-        systemGroup:
+        groupType:
           type: string
           description: "Способ группировки: не группировать (none), по системам (system), по номенклатуре (nomenclature)"
           enum:
@@ -2212,7 +2216,7 @@ components:
         $ref: '#/components/schemas/ChangePositionItem'
     SaveOrder:
       type: object
-      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "orderDate": "2023-10-18T00:00:00", "customerId": "12c0-1aa3-1411", "manufactorId": "12c0-1aa3-1412", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "deliveryWayId": "00af-ac15-0011-0000", "recipient": "Илон Маск", "recipientPhone": "+7 911 111 1111", "deliveryCost": 1516, "deliveryInclude": true, "deliveryComment": "Доставка на Марс",  "positions":[{"id": "15ef-1255-ab13", "count": 17, "altCount": 23.09, "altUnits": "пог.м", "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция"}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "printNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false}, "orderSpecOptions":{"name": true, "printName": true, "count": true, "units": true, "price": true, "altUnits": true, "weight": true, "square": true, "maxSize": true, "sizeVolume": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "systemGroup": "system", "draft": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}}
+      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "orderDate": "2023-10-18T00:00:00", "customerId": "12c0-1aa3-1411", "manufactorId": "12c0-1aa3-1412", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "deliveryWayId": "00af-ac15-0011-0000", "recipient": "Илон Маск", "recipientPhone": "+7 911 111 1111", "deliveryCost": 1516, "deliveryInclude": true, "deliveryComment": "Доставка на Марс",  "positions":[{"id": "15ef-1255-ab13", "count": 17, "altCount": 23.09, "altUnits": "пог.м", "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция"}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "printNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false}, "orderSpecOptions":{"name": true, "printName": true, "count": true, "units": true, "price": true, "altUnits": true, "weight": true, "square": true, "maxSize": true, "sizeVolume": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "groupType": "system", "draft": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}}
       properties:
         id:
           type: string
@@ -3039,7 +3043,7 @@ paths:
 
   # auth part
 
-  /api/auth/login:
+  /fIVI/api/auth/login:
     post:
       tags:
         - auth
@@ -3059,7 +3063,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AuthResponse'
-  /api/auth/setPassword:
+  /sIVI/User/login:
+    get:
+      tags:
+        - auth
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: ibsession
+          in: header
+          required: true
+          type: string
+          example: "start"
+      summary: "Авторизация по токену, получение куки"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /fIVI/api/auth/setPassword:
     post:
       tags:
         - auth
@@ -3079,7 +3101,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NewPasswordResponse'
-  /api/auth/getRegistration:
+  /fIVI/api/auth/getRegistration:
     post:
       tags:
         - auth
@@ -3099,7 +3121,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetRegistrationResponse'
-  /api/auth/getRegEmail:
+  /fIVI/api/auth/getRegEmail:
     post:
       tags:
         - auth
@@ -3120,10 +3142,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetRegEmailResponse'
-  /Customer/getUser:
+  /sIVI/Customer/getUser:
     get:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - auth
       summary: "Получить текущего пользователя"
@@ -3136,7 +3158,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetUserResponse'
-  /api/auth/Recovery:
+  /fIVI/api/auth/Recovery:
     post:
       tags:
         - auth
@@ -3157,7 +3179,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RecoveryResponse'
-  /api/auth/register:
+  /fIVI/api/auth/register:
     post:
       tags:
         - auth
@@ -3177,7 +3199,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RegisterResponse'
-  /api/auth/checklogin:
+  /fIVI/api/auth/checklogin:
     post:
       tags:
         - auth
@@ -3193,7 +3215,7 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /api/auth/changemail:
+  /fIVI/api/auth/changemail:
     post:
       tags:
         - auth
@@ -3212,10 +3234,10 @@ paths:
 
   # product part
               
-  /api/config/read:
+  /sIVI/api/config/read:
     get:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       parameters:
         - in: path
           name: vendor_id
@@ -3231,7 +3253,7 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /demo/api/config/read:
+  /fIVI/demo/api/config/read:
     get:
       tags:
         - product
@@ -3241,10 +3263,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /api/types?&title=1&bytarget=unf_product_t&input_schema=1:
+  /sIVI/api/types?&title=1&bytarget=unf_product_t&input_schema=1:
     get:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       parameters:
         - in: path
           name: vendor_id
@@ -3260,7 +3282,7 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /demo/api/types?&title=1&bytarget=unf_product_t&input_schema=1:
+  /fIVI/demo/api/types?&title=1&bytarget=unf_product_t&input_schema=1:
     get:
       tags:
         - product
@@ -3270,12 +3292,12 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /api/call?&source={currentProduct}&target=unf_product_t:
+  /sIVI/api/call?&source={currentProduct}&target=unf_product_t:
     post:
       tags:
         - product
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       parameters:
         - in: path
           name: currentProduct
@@ -3299,7 +3321,7 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /demo/api/call?&source={currentProduct}&target=unf_product_t:
+  /fIVI/demo/api/call?&source={currentProduct}&target=unf_product_t:
     post:
       tags:
         - product
@@ -3320,12 +3342,12 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Product/setBestViewCoord?&source={currentProduct}:
+  /sIVI/Product/setBestViewCoord?&source={currentProduct}:
     post:
       tags:
         - product
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       parameters:
         - in: path
           name: currentProduct
@@ -3345,7 +3367,7 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /demo/Product/getBestViewCoord?&source={currentProduct}:
+  /fIVI/demo/Product/getBestViewCoord?&source={currentProduct}:
     post:
       tags:
         - product
@@ -3370,12 +3392,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetBestViewCoordResponse'
-  /Product/getProductById:
+  /sIVI/Product/getProductById:
     post:
       tags:
         - product
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       summary: "Получить данные об изделии"
       requestBody:
         content:
@@ -3392,12 +3414,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetProductByIdResponse'
-  /Product/getProductsList:
+  /sIVI/Product/getProductsList:
     post:
       tags:
         - product
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       summary: "Получить список изделий"
       requestBody:
         content:
@@ -3414,12 +3436,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetProductListResponse'
-  /Product/getSections:
+  /sIVI/Product/getSections:
     get:
       tags:
         - product
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       summary: "Получить наименования разделов изделий"
       responses:
         401:
@@ -3430,12 +3452,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetMaterialsSectionsResponse'
-  /Product/getUnactualCount:
+  /sIVI/Product/getUnactualCount:
     post:
       tags:
         - product
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       summary: "Получить общее кол-во неактуальных изделий и кол-во неактуальных изделий в разделе"
       requestBody:
         content:
@@ -3452,24 +3474,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetUnactualCountResponse'
-  /Product/recalcAllProductsList:
+  /sIVI/Product/recalcAllProductsList:
     get:
       tags:
         - product
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       summary: "Пересчитать все позиции в списке изделий"
       responses:
         401:
           description: "Error"
         200:
           description: "OK"
-  /Product/recalcSectionProductsList:
+  /sIVI/Product/recalcSectionProductsList:
     post:
       tags:
         - product
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       summary: "Пересчитать список изделий для выбранного раздела"
       requestBody:
         content:
@@ -3482,12 +3504,12 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Product/recalcSelectProductsList:
+  /sIVI/Product/recalcSelectProductsList:
     post:
       tags:
         - product
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       summary: "Пересчитать выбранные позиции в списке изделий"
       requestBody:
         content:
@@ -3500,7 +3522,7 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /demo/Product/get-draft?&source={currentProduct}:
+  /fIVI/demo/Product/get-draft?&source={currentProduct}:
     post:
       tags:
         - product
@@ -3525,7 +3547,7 @@ paths:
           description: "OK"    
           content:
             application/json: {}
-  /demo/Product/get-model?&source={currentProduct}:
+  /fIVI/demo/Product/get-model?&source={currentProduct}:
     post:
       tags:
         - product
@@ -3548,10 +3570,10 @@ paths:
           content:
             application/json: {}
   # profile part
-  /Profile/getUserInfo:
+  /sIVI/Profile/getUserInfo:
     get:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Получить данные профиля текущего пользователя"
@@ -3564,10 +3586,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetUserInfoResponse'
-  /Profile/confirmNewEmail:
+  /sIVI/Profile/confirmNewEmail:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Подтверждение новой почты"
@@ -3582,10 +3604,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Profile/sendSms:
+  /sIVI/Profile/sendSms:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Запрос на отправку смс для подтверждения номера телефона"
@@ -3600,10 +3622,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Profile/confirmPhone:
+  /sIVI/Profile/confirmPhone:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Подтверждение номера телефона"
@@ -3618,10 +3640,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Profile/setUserFullname:
+  /sIVI/Profile/setUserFullname:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Установить ФИО пользователя"
@@ -3636,10 +3658,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Profile/setNewPassword:
+  /sIVI/Profile/setNewPassword:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Сменить пароль"
@@ -3654,10 +3676,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Profile/setTokenWarningLimits:
+  /sIVI/Profile/setTokenWarningLimits:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Установить лимиты оповещений об окончании подписки"
@@ -3672,10 +3694,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Profile/removeCounterparty:
+  /sIVI/Profile/removeCounterparty:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Удалить контрагента"
@@ -3690,10 +3712,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Profile/addCounterparty:
+  /sIVI/Profile/addCounterparty:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Добавить контрагента"
@@ -3712,10 +3734,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AddCounterpartyResponse'
-  /Profile/editCounterparty:
+  /sIVI/Profile/editCounterparty:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Изменить контрагента"
@@ -3730,10 +3752,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Profile/getCounterpartyByINN:
+  /sIVI/Profile/getCounterpartyByINN:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Получить данные о реквизитах контрагента по его ИНН (через сервис dadata)"
@@ -3748,10 +3770,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Profile/getBankByBIK:
+  /sIVI/Profile/getBankByBIK:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Получить данные о реквизитах банка по его БИК"
@@ -3770,10 +3792,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetBankByBIKResponse'
-  /Profile/changeToManufactor:
+  /sIVI/Profile/changeToManufactor:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Сменить роль пользователя на Производитель"
@@ -3788,10 +3810,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Profile/changeToVendor:
+  /sIVI/Profile/changeToVendor:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Сменить роль пользователя на Поставщик"
@@ -3806,10 +3828,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Profile/editVendor:
+  /sIVI/Profile/editVendor:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Редактирование для роли Поставщика"
@@ -3824,10 +3846,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Profile/getCityList:
+  /sIVI/Profile/getCityList:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Получить список населенных пунктов"
@@ -3846,10 +3868,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetCityListResponse'
-  /Profile/getRegionList:
+  /sIVI/Profile/getRegionList:
     get:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Получить список регионов"
@@ -3862,10 +3884,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetRegionListResponse'
-  /Profile/setProxyId:
+  /sIVI/Profile/setProxyId:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Сохранить документ доверенности"
@@ -3880,10 +3902,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Profile/setLogoId:
+  /sIVI/Profile/setLogoId:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Сохранить логотип"
@@ -3902,10 +3924,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SetLogoIdResponse'
-  /Profile/getManufactorInfo:
+  /sIVI/Profile/getManufactorInfo:
     get:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Получить данные текущего пользователя - производителя"
@@ -3918,10 +3940,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetManufactorInfoResponse'
-  /Profile/getVendorInfo:
+  /sIVI/Profile/getVendorInfo:
     get:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - profile
       summary: "Получить данные текущего пользователя - поставщика"
@@ -3934,7 +3956,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetVendorInfo'
-  /demo/Profile/addAgreementEvent:
+  /fIVI/demo/Profile/addAgreementEvent:
     post:
       tags:
         - profile
@@ -3951,10 +3973,10 @@ paths:
         200:
           description: "OK"
   # packs part
-  /Packs/getInfo:
+  /sIVI/Packs/getInfo:
     get:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - packs
       summary: "Получить данные о пакетах расчета для текущего пользователя"
@@ -3967,10 +3989,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetPacksInfo'
-  /Packs/setAgreement:
+  /sIVI/Packs/setAgreement:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - packs
       summary: "Установить флаг соглашения с тарифами и правилами расчетов"
@@ -3979,10 +4001,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Packs/getBuySchema:
+  /sIVI/Packs/getBuySchema:
     get:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - packs
       summary: "Получить данные о вариантах покупки пакетов"
@@ -3995,10 +4017,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetBuySchema'
-  /Packs/getBill:
+  /sIVI/Packs/getBill:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - packs
       summary: "Получить счет"
@@ -4017,10 +4039,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetPacksBillResponse'
-  /Packs/refuseById:
+  /sIVI/Packs/refuseById:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - packs
       summary: "Отказаться от пакета"
@@ -4035,10 +4057,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Packs/setOrder:
+  /sIVI/Packs/setOrder:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - packs
       summary: "Изменить порядок следования пакетов"
@@ -4053,10 +4075,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Packs/sbp/getBillState:
+  /sIVI/Packs/sbp/getBillState:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - packs
       summary: "Проверка статуса платежа СБП"
@@ -4075,7 +4097,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SbpGetBillStateResponse'
-  /demo/Packs/sbp/billStateWebhook:
+  /fIVI/demo/Packs/sbp/billStateWebhook:
     post:
       tags:
       - packs
@@ -4092,10 +4114,10 @@ paths:
         200:
           description: "OK"
   # files part
-  /Files/getDocumentById:
+  /sIVI/Files/getDocumentById:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - files
       summary: "Получить документ по id"
@@ -4114,7 +4136,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDocumentByIdResponse'
-  /demo/Files/getDocumentById:
+  /fIVI/demo/Files/getDocumentById:
     post:
       tags:
         - files
@@ -4134,10 +4156,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDocumentByIdResponse'
-  /Files/getBlankProxyDocument:
+  /sIVI/Files/getBlankProxyDocument:
     get:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - files
       summary: "Получить файл бланка доверенности"
@@ -4150,10 +4172,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDocumentByIdResponse'
-  /Files/upload:
+  /sIVI/Files/upload:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - files
       summary: "Загрузить файл на сервер"
@@ -4173,10 +4195,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/FileUploadResponse'
   # order list part
-  /Orders/getList:
+  /sIVI/Orders/getList:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - orders
       summary: "Получить список заказов текущего пользователя"
@@ -4195,10 +4217,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOrderListResponse'
-  /Order/getStates:
+  /sIVI/Order/getStates:
     get:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - orders
       summary: "Получить список статусов заказов"
@@ -4211,10 +4233,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOrderStates'
-  /Orders/create:
+  /sIVI/Orders/create:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - orders
       summary: "Создать заказ на основе другого заказа"
@@ -4233,10 +4255,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOrder'
-  /Order/getOrder:
+  /sIVI/Order/getOrder:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Получение данных для карточки заказа"
@@ -4255,10 +4277,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOrderResponse'
-  /Order/getDraft:
+  /sIVI/Order/getDraft:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Получение данных для страницы загрузки спецификации"
@@ -4277,10 +4299,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDraftResponse'
-  /Order/setExcelFileId:
+  /sIVI/Order/setExcelFileId:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Подключение к заказу загруженной Excel спецификации"
@@ -4299,10 +4321,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOrder'
-  /Order/getCustomers:
+  /sIVI/Order/getCustomers:
     get:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Получить список возможных покупателей (для случая, когда пользователь - это производитель)"
@@ -4315,10 +4337,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetCustomersSchema'
-  /Order/getOptions:
+  /sIVI/Order/getOptions:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Получение дополнительных настроек для заказа"
@@ -4337,10 +4359,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOptionsResponse'
-  /Order/getSpecOptions:
+  /sIVI/Order/getSpecOptions:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Получение настроек выгрузки спецификации для заказа"
@@ -4359,10 +4381,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetSpecOptionsResponse'
-  /Order/recalc:
+  /sIVI/Order/recalc:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Пересчитать все неактуальные позиции заказа"
@@ -4377,10 +4399,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Order/searchPositions:
+  /sIVI/Order/searchPositions:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Найти соответствие позиций вводимому запросу"
@@ -4399,10 +4421,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SearchPositionsResponse'
-  /Order/changePosition:
+  /sIVI/Order/changePosition:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Запрос позиции на изменение"
@@ -4421,10 +4443,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChangePositionResponse'
-  /Order/changePositions:
+  /sIVI/Order/changePositions:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Запрос на изменение массива позиций"
@@ -4443,10 +4465,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChangePositionsResponse'
-  /Order/changeSteel:
+  /sIVI/Order/changeSteel:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Запрос на изменение типа стали в позициях"
@@ -4465,10 +4487,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChangeSteelResponse'
-  /Order/save:
+  /sIVI/Order/save:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Сохранение заказа"
@@ -4487,10 +4509,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SaveOrderResponse'
-  /Order/saveDraft:
+  /sIVI/Order/saveDraft:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Сохранение распознавания заказа"
@@ -4505,10 +4527,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Order/makeOrder:
+  /sIVI/Order/makeOrder:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Выполнить заказ"
@@ -4523,10 +4545,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Order/saveOptions:
+  /sIVI/Order/saveOptions:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Сохранить дополнительные настройки для заказа"
@@ -4541,10 +4563,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Order/saveSpecOptions:
+  /sIVI/Order/saveSpecOptions:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Сохранить настройки выгрузки спецификации для заказа"
@@ -4563,10 +4585,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDocumentByIdResponse'
-  /Order/getMaterials:
+  /sIVI/Order/getMaterials:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Получить список материалов"
@@ -4584,10 +4606,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetMaterialsResponse'
-  /Order/getPayments:
+  /sIVI/Order/getPayments:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Получить список платежных документов"
@@ -4605,10 +4627,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetPaymentsResponse'
-  /Order/getHistory:
+  /sIVI/Order/getHistory:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Получить историю событий для заказа"
@@ -4626,10 +4648,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetHistoryResponse'
-  /Order/getFiles:
+  /sIVI/Order/getFiles:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Получить список файлов для заказа"
@@ -4647,10 +4669,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetFilesResponse'
-  /Order/putFile:
+  /sIVI/Order/putFile:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Добавить файл в заказ"
@@ -4664,10 +4686,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Order/removeFile:
+  /sIVI/Order/removeFile:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Удалить файл из заказа"
@@ -4681,10 +4703,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Order/getOperations:
+  /sIVI/Order/getOperations:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Получить список операций"
@@ -4702,10 +4724,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOperationsResponse'
-  /Order/getSpec:
+  /sIVI/Order/getSpec:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Получить спецификацию заказа в соответствии с настройками /Order/saveSpecOptions"
@@ -4723,10 +4745,10 @@ paths:
             multipart/form-data:
               schema:
                 type: file
-  /Order/getDeliveryWays:
+  /sIVI/Order/getDeliveryWays:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Получить список способов доставки поставщика"
@@ -4744,10 +4766,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDeliveryWaysResponse'
-  /Order/compareVendors:
+  /sIVI/Order/compareVendors:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Пересчитать заказ у другого поставщика"
@@ -4765,10 +4787,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CompareVendorsResponse'
-  /Order/createByVendors:
+  /sIVI/Order/createByVendors:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Создать заказы у других поставщиков"
@@ -4786,10 +4808,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreateByVendorsResponse'
-  /Order/setState:
+  /sIVI/Order/setState:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - order
       summary: "Изменить состояние заказа"
@@ -4803,10 +4825,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /LogCalcs/getLogCalcs:
+  /sIVI/LogCalcs/getLogCalcs:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - logcalcs
       summary: "Получить журнал расчетов"
@@ -4824,10 +4846,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetLogCalcsResponse'
-  /LogCalcs/getConfigs:
+  /sIVI/LogCalcs/getConfigs:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - logcalcs
       summary: "Получить список конфигураций"
@@ -4840,10 +4862,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetConfigsResponse'
-  /Vendors/getVendors:
+  /sIVI/Vendors/getVendors:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - vendors
       summary: "Получить список поставщиков"
@@ -4861,10 +4883,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetVendorsResponse'
-  /Vendors/setRegionMapAreas:
+  /sIVI/Vendors/setRegionMapAreas:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - vendors
       summary: "Установить для региона географические координаты, центр, масштаб"
@@ -4878,10 +4900,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Config/Materials/getSections:
+  /sIVI/Config/Materials/getSections:
     get:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - config
       summary: "Получить список разделов материалов"
@@ -4894,10 +4916,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetMaterialsSectionsResponse'
-  /Config/Materials/getMaterials:
+  /sIVI/Config/Materials/getMaterials:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - config
       summary: "Получить список материалов для конфигурации"
@@ -4915,10 +4937,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetConfigMaterialsResponse'
-  /Config/Materials/setPrices:
+  /sIVI/Config/Materials/setPrices:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - config
       summary: "Сохранить цены для материалов"
@@ -4932,10 +4954,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Config/Economic/getEconomic:
+  /sIVI/Config/Economic/getEconomic:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - config
       summary: "Получить список экономических параметров"
@@ -4953,10 +4975,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetConfigEconomicResponse'
-  /Config/Economic/setParamValue:
+  /sIVI/Config/Economic/setParamValue:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - config
       summary: "Сохранить значения экономических параметров"
@@ -4970,10 +4992,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Config/getModel:
+  /sIVI/Config/getModel:
     get:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - config
       summary: "Получить JSON описывающий права пользователей и статусную модель управления заказами"
@@ -4986,7 +5008,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetConfigModelResponse'
-  /demo/Help/getLegalSections:
+  /fIVI/demo/Help/getLegalSections:
     get:
       tags:
         - help
@@ -5000,7 +5022,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetLegalSectionsResponse'
-  /demo/Help/getTechSections:
+  /fIVI/demo/Help/getTechSections:
     get:
       tags:
         - help
@@ -5014,7 +5036,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetLegalSectionsResponse'
-  /demo/Help/getUserAgreement:
+  /fIVI/demo/Help/getUserAgreement:
     get:
       tags:
         - help
@@ -5028,7 +5050,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetUserAgreementResponse'
-  /demo/Help/getContacts:
+  /fIVI/demo/Help/getContacts:
     get:
       tags:
         - help
@@ -5042,10 +5064,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetContactsResponse'
-  /Help/saveHelpById:
+  /sIVI/Help/saveHelpById:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - help
       summary: "Сохранить документ хелпа по его id"
@@ -5059,10 +5081,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Statistic/getInfo:
+  /sIVI/Statistic/getInfo:
     get:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - statistic
       summary: "Получить общие данные для отображения фишек в главном меню"
@@ -5075,10 +5097,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StatisticGetInfo'
-  /Downloads/getList:
+  /sIVI/Downloads/getList:
     get:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - downloads
       summary: "Получить список загрузок"
@@ -5091,10 +5113,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DownloadsGetList'
-  /News/getList:
+  /sIVI/News/getList:
     get:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - news
       summary: "Получить список новостей"
@@ -5107,10 +5129,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NewsGetList'
-  /News/setReadFlag:
+  /sIVI/News/setReadFlag:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - news
       summary: "Установить/снять флаг прочтения новостей"
@@ -5124,10 +5146,10 @@ paths:
           description: "Error"
         200:
           description: "OK"
-  /Payments/getList:
+  /sIVI/Payments/getList:
     post:
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       tags:
         - payments
       summary: "Получить список платежей"
