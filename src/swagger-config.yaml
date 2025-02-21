@@ -1222,10 +1222,12 @@ components:
           type: boolean
           example: true
           description: "Установить или снять флаг прочтения новостей"
-        id:
-          type: string
-          example: "00cd-0011-5aff-0001"
-          description: "id новости"
+        ids:
+          type: array
+          items:
+            type: string
+            example: "00cd-0011-5aff-0001"
+            description: "id новости"
     GetPaymentsList:
       type: object
       properties:
