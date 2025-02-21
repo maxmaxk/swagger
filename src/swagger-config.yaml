@@ -1207,10 +1207,14 @@ components:
             type: string
             example: "02.05.2024T09:57:00"
             description: "Дата, время"
+          read:
+            type: boolean
+            example: false
+            description: "Флаг прочтения новости"
           message:
             type: string
-            example: "Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты"
-            description: "Текст новости"
+            example: "**Наш сайт** находится в сети Интернет по адресу: [www.zakaz-ivi.online](https://www.zakaz-ivi.online)"
+            description: "Текст новости в формате md"
     NewsSetReadFlag:
       type: object
       properties:
@@ -1218,12 +1222,10 @@ components:
           type: boolean
           example: true
           description: "Установить или снять флаг прочтения новостей"
-        ids:
-          type: array
-          items:
-            type: string
-            example: "00cd-0011-5aff-0001"
-            description: "id новости"
+        id:
+          type: string
+          example: "00cd-0011-5aff-0001"
+          description: "id новости"
     GetPaymentsList:
       type: object
       properties:
