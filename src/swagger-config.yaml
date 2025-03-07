@@ -1454,7 +1454,7 @@ components:
           description: "Имя файла"
     GetOrderResponse:
       type: object
-      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "manufacturerId":"34de-21abc-12-005", "manufacturerName": "ООО ПО Трубное Решение", "orderName": "394/270-615", "orderDate": "2023-10-18T00:00:00", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "orderStatus": "new", "customerId":"34de-21abc-12-006", "amIAuthor": true, "customerName": "ИП Джумаев Мухаммади Фуркатович", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "deliveryWayId": "017-ef11-0011-00af", "loadAddress": "Склад готовой продукции", "cargoWeight": 19.365, "cargoMaxSize": 2150, "cargoVolume": 5.39, "recipient": "Бари Алибасов", "recipientPhone": "+7 911 111 11 11", "deliveryCost": 2197, "deliveryInclude": false, "deliveryComment": "Пусть заказ доставят мулаточки", "positions":[{"id": "15ef-1255-ab13", "isActual": true, "name": "Отвод х/к ст. 1.2мм, сварн., 700х400, 90град, шея1=100, шея2=100, фл25/фл25, грунт красн-кор", "printName": "Отвод  х/к ст. 1.2мм", "count": 17, "units": "шт", "price": 6828, "altCount": 23.09, "altUnits": "пог.м", "altUnitsList": ["пог.м","м2"], "altPrice": 4496, "weight": 361.3, "square": 28.051, "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция", "taxRate": "20/120", "taxSumm": 456.2, "discountRate": 10.7, "discountSumm": 1395.3, "summ": 116097}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "printNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false}, "orderSpecOptions":{"name": true, "printName": true, "count": true, "units": true, "price": true, "altUnits": true, "weight": true, "square": true, "maxSize": true, "sizeVolume": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "groupType": "system", "draft": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}, "total": {"count": 17, "weight": 361.3, "square": 28.051, "taxSumm": 456.2, "discountAvg": 10.7, "discountSumm": 1395.3, "summ": 116097}}
+      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "manufacturerId":"34de-21abc-12-005", "manufacturerName": "ООО ПО Трубное Решение", "orderName": "394/270-615", "orderDate": "2023-10-18T00:00:00", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "orderStatus": "new", "customerId":"34de-21abc-12-006", "amIAuthor": true, "customerName": "ИП Джумаев Мухаммади Фуркатович", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "deliveryWayId": "017-ef11-0011-00af", "loadAddress": "Склад готовой продукции", "cargoWeight": 19.365, "cargoMaxSize": 2150, "cargoVolume": 5.39, "recipient": "Бари Алибасов", "recipientPhone": "+7 911 111 11 11", "deliveryCost": 2197, "deliveryInclude": false, "deliveryComment": "Пусть заказ доставят мулаточки", "positions":[{"id": "15ef-1255-ab13", "isActual": true, "name": "Отвод х/к ст. 1.2мм, сварн., 700х400, 90град, шея1=100, шея2=100, фл25/фл25, грунт красн-кор", "printName": "Отвод  х/к ст. 1.2мм", "count": 17, "units": "шт", "price": 6828, "altCount": 23.09, "altUnits": "пог.м", "altUnitsList": ["пог.м","м2"], "altPrice": 4496, "weight": 361.3, "square": 28.051, "singleWeight": 151.3, "singleSquare": 18.051, "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция", "taxRate": "20/120", "taxSumm": 456.2, "discountRate": 10.7, "discountSumm": 1395.3, "summ": 116097}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "printNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false, "singleWeightVisible": false, "singleSquareVisible": false}, "orderSpecOptions":{"name": true, "printName": true, "count": true, "units": true, "price": true, "altUnits": true, "weight": true, "square": true, "maxSize": true, "sizeVolume": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "groupType": "system", "draft": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}, "total": {"count": 17, "weight": 361.3, "square": 28.051, "taxSumm": 456.2, "discountAvg": 10.7, "discountSumm": 1395.3, "summ": 116097}}
       properties:
         id:
           type: string
@@ -1743,6 +1743,12 @@ components:
         square:
           type: number
           description: "Площадь, м2"
+        singleWeight:
+          type: number
+          description: "Вес одного изделия, кг"
+        singleSquare:
+          type: number
+          description: "Площадь одного изделия, м2"
         system:
           type: string
           description: "Наименование системы"
@@ -1799,7 +1805,7 @@ components:
             description: "Наименование покупателя"
     GetOptionsResponse:
       type: object
-      example: {'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "printNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false}
+      example: {'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "printNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false, "singleWeightVisible": false, "singleSquareVisible": false}
       properties:
         altUnitsVisible:
           type: boolean
@@ -1828,40 +1834,12 @@ components:
         ndsVisible:
           type: boolean
           description: "Показывать ли в заказе колонку 'НДС'"
-    SetOptionsResponse:
-      type: object
-      example: {'id':'011-ed11-0015-1111', 'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "printNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false}
-      properties:
-        id:
-          type: string
-          description: "id заказа"
-        altUnitsVisible:
+        singleWeightVisible:
           type: boolean
-          description: "Показывать ли в заказе колонки дополнительные параметры"
-        linearMeterRounded:
-          type: string
-          description: "Способ округления погонных метров: В большую сторону(ceil), В меньшую сторону (floor)"
-          enum:
-            - ceil
-            - floor
-        squareMeterRounded:
-          type: string
-          description: "Способ округления квадратных метров: В большую сторону(ceil), В меньшую сторону (floor)"
-          enum:
-            - ceil
-            - floor
-        printNameVisible:
+          description: "Показывать ли в заказе колонку 'Вес (1 изд), кг'"
+        singleSquareVisible:
           type: boolean
-          description: "Показывать ли в заказе колонку 'Наименование в документах'"
-        systemVisible:
-          type: boolean
-          description: "Показывать ли в заказе колонку 'Система'"
-        commentVisible:
-          type: boolean
-          description: "Показывать ли в заказе колонку 'Комментарий'"
-        ndsVisible:
-          type: boolean
-          description: "Показывать ли в заказе колонку 'НДС'"
+          description: "Показывать ли в заказе колонку 'S (1 изд), м²'"
     GetSpecOptionsResponse:
       type: object
       example: {"name": true, "printName": true, "count": true, "units": true, "price": true, "altUnits": true, "weight": true, "square": true, "maxSize": true, "sizeVolume": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "groupType": "system", "draft": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}
@@ -2220,7 +2198,7 @@ components:
         $ref: '#/components/schemas/ChangePositionItem'
     SaveOrder:
       type: object
-      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "orderDate": "2023-10-18T00:00:00", "customerId": "12c0-1aa3-1411", "manufactorId": "12c0-1aa3-1412", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "deliveryWayId": "00af-ac15-0011-0000", "recipient": "Илон Маск", "recipientPhone": "+7 911 111 1111", "deliveryCost": 1516, "deliveryInclude": true, "deliveryComment": "Доставка на Марс",  "positions":[{"id": "15ef-1255-ab13", "count": 17, "altCount": 23.09, "altUnits": "пог.м", "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция"}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "printNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false}, "orderSpecOptions":{"name": true, "printName": true, "count": true, "units": true, "price": true, "altUnits": true, "weight": true, "square": true, "maxSize": true, "sizeVolume": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "groupType": "system", "draft": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}}
+      example: {"id": "34de-21abc-12-004 | 0 (если новый)", "orderDate": "2023-10-18T00:00:00", "customerId": "12c0-1aa3-1411", "manufactorId": "12c0-1aa3-1412", "objectName": "Государственный Эрмитаж", "objectAddress": "СПб, Дворцовая наб., д.38", "wishShipmentDate": "2023-11-28T00:00:00", "realShipmentDate": "2023-12-15T00:00:00", "comment": "Отличный заказ", "deliveryWayId": "00af-ac15-0011-0000", "recipient": "Илон Маск", "recipientPhone": "+7 911 111 1111", "deliveryCost": 1516, "deliveryInclude": true, "deliveryComment": "Доставка на Марс",  "positions":[{"id": "15ef-1255-ab13", "count": 17, "altCount": 23.09, "altUnits": "пог.м", "system": "ПВ1, АПВ-3", "comment": "Распрекрасная позиция"}], 'orderOptions': {'altUnitsVisible': true, "linearMeterRounded": "ceil", "squareMeterRounded": "ceil", "printNameVisible": false, "systemVisible": false, "commentVisible": false, "ndsVisible": false, "singleWeightVisible": false, "singleSquareVisible": false}, "orderSpecOptions":{"name": true, "printName": true, "count": true, "units": true, "price": true, "altUnits": true, "weight": true, "square": true, "maxSize": true, "sizeVolume": true, "system": true, "comment": true, "taxRate": true, "taxSumm": true, "discountRate": true, "discountSumm": true, "summ": true, "groupType": "system", "draft": true, "sendEmail": true, "email": "name@mail.ru", "fileFormat": "xlsx"}}
       properties:
         id:
           type: string
@@ -4341,28 +4319,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetCustomersSchema'
-  /sIVI/Order/getOptions:
-    post:
-      security:
-        - cookieAuth: []
-      tags:
-        - order
-      summary: "Получение дополнительных настроек для заказа"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GetOrder'
-        required: true
-      responses:
-        401:
-          description: "Error"
-        200:
-          description: "OK"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetOptionsResponse'
   /sIVI/Order/getSpecOptions:
     post:
       security:
@@ -4543,24 +4499,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/GetOrder'
-        required: true
-      responses:
-        401:
-          description: "Error"
-        200:
-          description: "OK"
-  /sIVI/Order/saveOptions:
-    post:
-      security:
-        - cookieAuth: []
-      tags:
-        - order
-      summary: "Сохранить дополнительные настройки для заказа"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SetOptionsResponse'
         required: true
       responses:
         401:
