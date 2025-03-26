@@ -2858,6 +2858,13 @@ components:
             type: string
             description: "Наименовании секции"
             example: "Листовой металл"
+    GetCommonSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "id схемы"
+          example: "root"
     GetConfigMaterials:
       type: object
       properties:
@@ -2877,6 +2884,9 @@ components:
           type: string
           description: "Имя последнего принятого элемента"
           example: "Болт М8х20мм"
+    GetCommonSchemaResponse:
+      type: object
+      example: {"$id": "/root","type": "object","title": "Все настройки","description": "Все настройки","properties": {"common": { "$ref": "/common" }}, "required": ["common"], "children": ["common"]}
     GetConfigMaterialsResponse:
       type: object
       properties:
@@ -4845,6 +4855,27 @@ paths:
           description: "Error"
         200:
           description: "OK"
+  /sIVI/Config/Common/getSchema:
+    post:
+      security:
+        - cookieAuth: []
+      tags:
+        - config
+      summary: "Получить схему конфигурации"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetCommonSchema'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCommonSchemaResponse'  
   /sIVI/Config/Materials/getSections:
     get:
       security:
