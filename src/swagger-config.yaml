@@ -2921,27 +2921,10 @@ components:
         section: 
           type: string
           description: "Фильтр по наименованию секции"
-          example: "priceTypes"
-          enum:
-            - priceTypes
-            - formulas
+          example: "common.seams"
     GetConfigEconomicResponse:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-            description: "id параметра"
-            example: "015-01ef-0011"
-          name:
-            type: string
-            description: "Наименование параметра"
-            example: "Ставка нормо-часа рабочего (СНЧ), руб/час"
-          value:
-            type: number | string
-            description: "Значение параметра или формулы"
-            example: 390
+      type: object
+      example: {"AddedCostTax": 0.2,"MinPriceIncrease": 0.54,"PlannedProfit": 0.05,"ProfitTax": 0.2,"WorkHourPayment": 450,"WorkOverheads": 1.91} 
     SetMaterialPrices:
       type: array
       items:
@@ -4875,7 +4858,28 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetCommonSchemaResponse'  
+                $ref: '#/components/schemas/GetCommonSchemaResponse'
+  /sIVI/Config/getData:
+    post:
+      security:
+        - cookieAuth: []
+      tags:
+        - config
+      summary: "Получить значения определенной секции конфигуратора"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetConfigEconomic'
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConfigEconomicResponse'
   /sIVI/Config/Materials/getSections:
     get:
       security:
