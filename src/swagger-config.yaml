@@ -2387,7 +2387,7 @@ components:
           description: "Координата z камеры" 
     GetProductByIdResponse:
       type: object
-      example: {"type": "RoundStraightIncut_t", "properties": {"SteelType": "galvanized", "SteelThickness": 0.45, "D": 200, "FireResistanceClass": "none"}, "common": {"names": [{"title": "Основное", "name": "Тройник прямой оц.ст. 0.65 мм"}, {"title": "Для печати", "name": "Тройник прямой оц.ст. 0.65 мм"}], "actual": true, "recalcDate": "2023-12-07T09:28:46"}, "prices": {"MaterialCost": 1012.73, "WorkCost": 960.04, "AccCost": 2236.61, "MinPrice": 9300.49, "GrossPrice": 10107.99}, "totals": {"weight": 2.476, "wasteWeight": 0.195, "time": "05:34", "laborIntensity": 5.4}, "materials": [{"id": "015-01ef-0011", "name": "Внутренний корпус ГТК из сетки оц. стали, диаметр 315, L 900", "units": "шт.", "count": 12, "waste": 0, "childs": [{"id": "011-1ef-0012", "name": "Сетка ПВС TR1606/0.7/1.47/880-5000/Zn08ПС", "count": 12, "waste": 0}]}], "operations": [{"id": "0011-ef15-0001", "stage": "Лазерная резка", "area": "Участок резки", "name": "Протяжка рулона на лазере", "time": "00:07", "laborIntensity": 0.6, "childs": [{"id": "011-1ef-0013", "name": "Врезка круг/круг седло из оц. стали, диаметр 100/100, H=100", "time": "00:07", "laborIntensity": 0.6}]}], "sizes": {"length": 2200, "width": 1750, "height": 1400, "weight": 6.073, "square": 1.25, "volume": 5.39}}
+      example: {"type": "RoundStraightIncut_t", "properties": {"SteelType": "galvanized", "SteelThickness": 0.45, "D": 200, "FireResistanceClass": "none"}, "common": {"names": [{"title": "Основное", "name": "Тройник прямой оц.ст. 0.65 мм"}, {"title": "Для печати", "name": "Тройник прямой оц.ст. 0.65 мм"}], "actual": true, "recalcDate": "2023-12-07T09:28:46"}, "prices": [{"id": "AccCost", "price": 436, "title": "Учетная цена (себестоимость)", "description": "Полная себестоимость изготовления без НДС"}], "totals": {"weight": 2.476, "wasteWeight": 0.195, "time": "05:34", "laborIntensity": 5.4}, "materials": [{"id": "015-01ef-0011", "name": "Внутренний корпус ГТК из сетки оц. стали, диаметр 315, L 900", "units": "шт.", "count": 12, "waste": 0, "childs": [{"id": "011-1ef-0012", "name": "Сетка ПВС TR1606/0.7/1.47/880-5000/Zn08ПС", "count": 12, "waste": 0}]}], "operations": [{"id": "0011-ef15-0001", "stage": "Лазерная резка", "area": "Участок резки", "name": "Протяжка рулона на лазере", "time": "00:07", "laborIntensity": 0.6, "childs": [{"id": "011-1ef-0013", "name": "Врезка круг/круг седло из оц. стали, диаметр 100/100, H=100", "time": "00:07", "laborIntensity": 0.6}]}], "sizes": {"length": 2200, "width": 1750, "height": 1400, "weight": 6.073, "square": 1.25, "volume": 5.39}}
       properties:
         type:
           type: string
@@ -2420,28 +2420,22 @@ components:
               type: string
               description: "Дата расчета"
         prices:
-          type: object
-          properties:
-            MaterialCost:
-              type: number
-              example: 986.74
-              description: "Стоимость материалов, руб"
-            WorkCost:
-              type: number
-              example: 564.00
-              description: "Стоимость работ, руб"
-            AccCost:
-              type: number
-              example: 1472.58
-              description: "Себестоимость, руб"
-            MinPrice:
-              type: number
-              example: 2453.49
-              description: "Минимальная цена, руб"
-            GrossPrice:
-              type: number
-              example: 2780.63
-              description: "Розница, руб"
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: "id цены"
+              title:
+                type: string
+                description: "Наименование цены"
+              description:
+                type: string
+                description: "Описание цены"
+              price:
+                type: number
+                description: "Цена"
         totals:
           type: object
           properties:
