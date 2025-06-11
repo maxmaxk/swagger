@@ -1278,6 +1278,69 @@ components:
             type: number
             example: 2700.00
             description: "Сумма заказа"
+    GetDemoLastMessages:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          example: "0101-ef15-0018"
+          description: "id сессии для чата с неавторизованным пользователем, генерируется фронтом, хранится в localstorage"
+    GetMessagesResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            example: "0101-ef15-0018"
+            description: "id сообщения в чате"
+          datetime:
+            type: string
+            example: "2025-05-31T15:18:44"
+            description: "Время сообщения"
+          message:
+            type: string
+            example: "Как тут что делать?"
+            description: "Текст сообщения"
+          side:
+            type: string
+            example: "user"
+            description: "Автор сообщения: user - вопрос пользователя, service - ответ сервиса"
+            enum:
+              - user
+              - service
+    PostDemoMessage:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          example: "0101-ef15-0018"
+          description: "id сессии для чата с неавторизованным пользователем, генерируется фронтом, хранится в localstorage"
+        message:
+          type: string
+          example: "Как тут что делать?"
+          description: "Текст сообщения"
+        side:
+          type: string
+          example: "user"
+          description: "Автор сообщения: user - вопрос пользователя, service - ответ сервиса"
+          enum:
+            - user
+            - service
+    PostMessage:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Как тут что делать?"
+          description: "Текст сообщения"
+        side:
+          type: string
+          example: "user"
+          description: "Автор сообщения: user - вопрос пользователя, service - ответ сервиса"
+          enum:
+            - user
+            - service
     CreateNewOrder:
       type: object
       description: "id заказа, позициями которого нужно наполнить новый заказ"
@@ -3011,6 +3074,8 @@ tags:
     description: Работа со страницей новостей
   - name: payments
     description: Работа с историей платежей
+  - name: chat
+    description: Работа с чатом поддержки пользователей
 paths:
 
   # auth part
@@ -5142,3 +5207,109 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetPaymentsListResponse'
+  /fIVI/demo/Chat/getLastMessages:
+    post:
+      tags:
+        - chat
+      summary: "Получить последние сообщения в чате (пользователь неавторизован)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetDemoLastMessages'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMessagesResponse'
+  /fIVI/demo/Chat/getHistoryMessages:
+    post:
+      tags:
+        - chat
+      summary: "Получить все сообщения в чате (пользователь неавторизован)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetDemoLastMessages'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMessagesResponse'
+  /sIVI/Chat/getLastMessages:
+    get:
+      tags:
+        - chat
+      security:
+        - cookieAuth: []
+      summary: "Получить последние сообщения в чате (пользователь авторизован)"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMessagesResponse'
+  /sIVI/Chat/getHistoryMessages:
+    get:
+      tags:
+        - chat
+      security:
+        - cookieAuth: []
+      summary: "Получить все сообщения в чате (пользователь авторизован)"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMessagesResponse'
+  /fIVI/demo/Chat/postMessage:
+    post:
+      tags:
+        - chat
+      summary: "Добавить сообщение в чат (пользователь неавторизован)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostDemoMessage'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+  /sIVI/Chat/postMessage:
+    post:
+      tags:
+        - chat
+      security:
+        - cookieAuth: []
+      summary: "Добавить сообщение в чат (пользователь авторизован)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostMessage'
+        required: true
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
