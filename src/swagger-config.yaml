@@ -2614,6 +2614,13 @@ components:
           type: number
           example: 248
           description: "Неактуальных позиций в текущем разделе"
+    GetRecalcCountResponse:
+      type: object
+      properties:
+        recalcCount:
+          type: number
+          example: 1286
+          description: "Текущее количество позиций, находящихся в процессе пересчета"
     ProductListItem:
       type: object
       properties:
@@ -3559,6 +3566,22 @@ paths:
           description: "Error"
         200:
           description: "OK"
+  /sIVI/Product/getRecalcCount:
+    get:
+      tags:
+        - product
+      security:
+        - cookieAuth: []
+      summary: "Выдать текущее количество изделий, находящихся в процессе пересчета"
+      responses:
+        401:
+          description: "Error"
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRecalcCountResponse'
   /fIVI/demo/Product/get-draft?&source={currentProduct}:
     post:
       tags:
