@@ -2335,7 +2335,7 @@ components:
           description: "id заказа"
     GetMaterialsResponse:
       type: array
-      example: [{"id": "015-01ef-0011", "name": "Внутренний корпус ГТК из сетки оц. стали, диаметр 315, L 900", "units": "шт.", "count": 12, "waste": 0.000, "childs": [{"id": "011-1ef-0012", "name": "Сетка ПВС TR1606/0.7/1.47/880-5000/Zn08ПС" ,"count": 12 ,"waste": 0.000}]}]
+      example: [{"id": "015-01ef-0011", "name": "Внутренний корпус ГТК из сетки оц. стали, диаметр 315, L 900", "units": "шт.", "price": 14.5, "count": 12, "waste": 0.000, "summ": 319, "childs": [{"id": "011-1ef-0012", "name": "Сетка ПВС TR1606/0.7/1.47/880-5000/Zn08ПС" ,"productCount": 12 ,"waste": 0.000, "summ": 319}]}]
       items:
         $ref: '#/components/schemas/OrderMaterialItem'
     OrderMaterialItem:
@@ -2350,15 +2350,21 @@ components:
         units:
           type: string
           description: "Единицы измерения"
+        price:
+          type: number
+          description: "Цена, руб"
         count:
           type: number
           description: "Количество"
         waste:
           type: number
           description: "Отход, поле может отсутствовать"
+        summ:
+          type: number
+          description: "Сумма, руб"
         childs:
           type: array
-          description: "Вложенный список сборочных единиц в таком же формате [id, name, count, waste, childs]. Может отсутствовать, может быть рекурсивным"
+          description: "Вложенный список сборочных единиц в формате [id, name, productCount, waste, summ, childs]. Может отсутствовать, может быть рекурсивным"
           items:
             $ref: '#/components/schemas/OrderMaterialItem'
     GetOperationsResponse:
