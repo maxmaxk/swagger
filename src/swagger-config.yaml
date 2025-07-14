@@ -2617,17 +2617,23 @@ components:
           example: 537
           description: "Всего неактуальных позиций"
         unactualInSections:
-          type: object
-          description: "Кол-во неактуальных позиций в разделах"
-          properties:
-            id:
-              type: string
-              description: "id раздела"
-              example: "015-01ef-0011"
-            count:
-              type: number
-              description: "Количество неактуальных позиций в разделе"
-              example: 12
+          type: array
+          items:
+            type: object
+            description: "Кол-во неактуальных позиций в разделах"
+            properties:
+              id:
+                type: string
+                description: "id раздела"
+                example: "015-01ef-0011"
+              name:
+                type: string
+                description: "Наименование раздела"
+                example: "Врезка Ø/Ø"
+              count:
+                type: number
+                description: "Количество неактуальных позиций в разделе"
+                example: 12
     GetRecalcCountResponse:
       type: object
       properties:
