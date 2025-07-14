@@ -2616,10 +2616,18 @@ components:
           type: number
           example: 537
           description: "Всего неактуальных позиций"
-        unactualInSection:
-          type: number
-          example: 248
-          description: "Неактуальных позиций в текущем разделе"
+        unactualInSections:
+          type: object
+          description: "Кол-во неактуальных позиций в разделах"
+          properties:
+            id:
+              type: string
+              description: "id раздела"
+              example: "015-01ef-0011"
+            count:
+              type: number
+              description: "Количество неактуальных позиций в разделе"
+              example: 12
     GetRecalcCountResponse:
       type: object
       properties:
@@ -3503,18 +3511,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetMaterialsSectionsResponse'
   /sIVI/Product/getUnactualCount:
-    post:
+    get:
       tags:
         - product
       security:
         - cookieAuth: []
       summary: "Получить общее кол-во неактуальных изделий и кол-во неактуальных изделий в разделе"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GetUnactualCount'
-        required: true
       responses:
         401:
           description: "Error"
